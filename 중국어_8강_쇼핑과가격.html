@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>중국어 제8강 · 쇼핑과 가격, 비교문</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+KR:wght@600;700&family=Noto+Serif+SC:wght@600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E9EBE4; --card:#F7F8F3; --ink:#15201D; --ink-2:#3D4B46;
+  --muted:#79857F; --jade:#1E6F62; --jade-soft:#DDE9E5;
+  --cinnabar:#C1402C; --line:#C9CFC7;
+  --kr:"Noto Sans KR","Malgun Gothic",sans-serif;
+  --kr-serif:"Noto Serif KR","Nanum Myeongjo",serif;
+  --zh:"Noto Serif SC","Songti SC",serif;
+  --zh-sans:"Noto Sans SC","PingFang SC",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--kr);line-height:1.75;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--jade);outline-offset:3px;border-radius:3px}
+
+.topbar{position:sticky;top:0;z-index:50;background:rgba(233,235,228,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:880px;margin:0 auto;padding:10px 22px;display:flex;align-items:center;gap:14px}
+.badge{font-family:var(--zh);font-weight:600;font-size:.85rem;color:var(--jade);letter-spacing:.08em;white-space:nowrap}
+.track{flex:1;height:3px;background:var(--line);border-radius:99px;overflow:hidden}
+.track i{display:block;height:100%;width:0;background:var(--jade);transition:width .25s ease}
+.pct{font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums;min-width:34px;text-align:right}
+
+main{max-width:880px;margin:0 auto;padding:0 22px 90px}
+section{padding:56px 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:none}
+.eyebrow{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.eyebrow .num{font-family:var(--zh);font-size:.95rem;color:var(--cinnabar);font-weight:600}
+.eyebrow .lbl{font-size:.72rem;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
+h2{font-family:var(--kr-serif);font-weight:700;font-size:clamp(1.4rem,4vw,1.85rem);margin:0 0 14px;line-height:1.35;letter-spacing:-.01em}
+h3{font-family:var(--kr-serif);font-weight:600;font-size:1.05rem;margin:32px 0 10px}
+p{margin:0 0 14px;color:var(--ink-2)}
+.lead{font-size:1.03rem;color:var(--ink)}
+small{color:var(--muted)}
+.zh-i{font-family:var(--zh);font-weight:600}
+.py-i{font-family:var(--zh-sans);color:var(--jade)}
+
+/* ---------- hero: 가격표 ---------- */
+.hero{padding:52px 0 44px;text-align:center}
+.hero .kicker{font-size:.72rem;letter-spacing:.3em;color:var(--muted);margin-bottom:24px}
+.tag{display:inline-block;background:var(--card);border:1px solid var(--line);border-radius:14px;
+     padding:22px 30px;position:relative;min-width:min(340px,88vw)}
+.tag::before{content:"";position:absolute;left:16px;top:16px;width:9px;height:9px;border-radius:50%;
+     border:2px solid var(--muted);background:var(--paper)}
+.tag .digits{font-family:var(--zh-sans);font-variant-numeric:tabular-nums;font-size:clamp(1.6rem,7vw,2.3rem);
+     font-weight:500;color:var(--muted);letter-spacing:.02em}
+.tag .digits b{color:var(--cinnabar);font-weight:500}
+.tag .phz{font-family:var(--zh);font-weight:900;font-size:clamp(1.7rem,7.5vw,2.5rem);line-height:1.25;margin-top:6px}
+.tag .ppy{font-family:var(--zh-sans);color:var(--jade);font-size:clamp(.82rem,3vw,.98rem);margin-top:4px}
+.tag .pfull{font-size:.82rem;color:var(--muted);margin-top:10px;line-height:1.6}
+.tag .pfull b{font-family:var(--zh);color:var(--ink-2);font-size:1.02rem;font-weight:600}
+.tag .play{position:absolute;right:16px;top:16px}
+
+.ctl{margin:24px auto 0;display:grid;gap:10px;max-width:440px}
+.crow{display:flex;align-items:center;gap:12px}
+.crow label{font-family:var(--zh);font-size:1rem;color:var(--ink-2);width:26px;flex:none;text-align:left}
+.crow input[type=range]{flex:1;accent-color:var(--jade)}
+.crow .cv{font-family:var(--zh-sans);font-variant-numeric:tabular-nums;font-size:1rem;width:34px;text-align:right}
+.quick{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.qbtn{border:1px solid var(--line);background:transparent;border-radius:99px;padding:4px 12px;font-size:.78rem;color:var(--muted);transition:.14s;font-variant-numeric:tabular-nums}
+.qbtn:hover{border-color:var(--jade);color:var(--jade)}
+
+.hero-thesis{margin:28px auto 0;max-width:540px;font-family:var(--kr-serif);font-size:1.02rem;color:var(--ink);line-height:1.85}
+.hero-thesis b{color:var(--cinnabar);font-weight:700}
+
+.tts-note{display:none;background:#F8E7E4;color:var(--cinnabar);border-radius:9px;padding:11px 15px;font-size:.83rem;margin:16px auto 0;max-width:560px;text-align:left}
+.tts-note.show{display:block}
+
+/* ---------- buttons ---------- */
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+.play{border:1px solid var(--line);background:#fff;color:var(--jade);width:34px;height:34px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;transition:.16s;flex:none;padding:0}
+.play:hover{background:var(--jade);color:#fff;border-color:var(--jade)}
+.play.on{background:var(--jade);color:#fff;border-color:var(--jade)}
+.play svg{width:13px;height:13px}
+.mini{border:1px solid var(--line);background:#fff;color:var(--ink-2);border-radius:7px;padding:6px 14px;font-size:.82rem;transition:.14s}
+.mini:hover{border-color:var(--jade);color:var(--jade)}
+.mini.act{background:var(--jade);border-color:var(--jade);color:#fff}
+
+/* ---------- 비교 생성기 ---------- */
+.cmp{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:20px}
+.cmp-items{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ci{background:#fff;border:1px solid var(--line);border-radius:11px;padding:16px;text-align:center}
+.ci .cihz{font-family:var(--zh);font-size:1.35rem;font-weight:600}
+.ci .cipy{font-family:var(--zh-sans);font-size:.75rem;color:var(--jade)}
+.ci .ciprice{font-family:var(--zh-sans);font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:500;margin-top:8px}
+.ci input[type=range]{width:100%;accent-color:var(--cinnabar);margin-top:6px}
+.ci.b input[type=range]{accent-color:var(--jade)}
+.cmp-out{background:#fff;border:1px solid var(--line);border-radius:11px;padding:18px 16px;margin-top:14px;position:relative;text-align:center}
+.cmp-out .ohz{font-family:var(--zh);font-size:clamp(1.2rem,5vw,1.6rem);font-weight:600;line-height:1.5}
+.cmp-out .ohz em{font-style:normal;color:var(--cinnabar)}
+.cmp-out .opy{font-family:var(--zh-sans);color:var(--jade);font-size:.85rem;margin-top:4px}
+.cmp-out .okr{font-size:.85rem;color:var(--muted);margin-top:3px}
+.cmp-out .oalt{font-size:.82rem;color:var(--muted);margin-top:12px;padding-top:10px;border-top:1px dotted var(--line);line-height:1.7}
+.cmp-out .oalt b{font-family:var(--zh);color:var(--ink-2);font-size:1.02rem;font-weight:600}
+.cmp-out .play{position:absolute;right:12px;top:12px}
+
+/* ---------- 표 ---------- */
+.ptable{width:100%;border-collapse:collapse;margin-top:16px;font-size:.9rem}
+.ptable th{text-align:left;font-size:.7rem;letter-spacing:.16em;color:var(--muted);font-weight:500;padding:0 10px 8px;border-bottom:1px solid var(--line)}
+.ptable td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle;color:var(--ink-2)}
+.ptable tr:hover td{background:var(--card)}
+.ptable .hz{font-family:var(--zh);font-size:1.2rem;font-weight:600;color:var(--ink)}
+.ptable .py{font-family:var(--zh-sans);color:var(--jade);font-size:.8rem}
+.ptable .ex{font-family:var(--zh);font-size:1rem;color:var(--ink)}
+
+/* ---------- 칩 ---------- */
+.chip-grid{display:grid;gap:8px;margin:16px 0;grid-template-columns:repeat(5,1fr)}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:11px 4px;text-align:center;transition:.14s}
+.chip:hover{background:#fff;border-color:var(--jade)}
+.chip.on{background:var(--jade);border-color:var(--jade)}
+.chip.on .c-hz,.chip.on .c-py,.chip.on .c-kr{color:#fff}
+.c-hz{font-family:var(--zh);font-size:1.1rem;font-weight:600;color:var(--ink);display:block;line-height:1.3}
+.c-py{font-family:var(--zh-sans);font-size:.72rem;color:var(--jade);display:block}
+.c-kr{font-size:.72rem;color:var(--muted);display:block}
+
+/* ---------- warn / note ---------- */
+.warn{border-left:3px solid var(--cinnabar);padding:4px 0 4px 16px;margin:20px 0}
+.warn h4{margin:0 0 4px;font-size:.95rem;font-family:var(--kr-serif)}
+.warn p{margin:0;font-size:.9rem}
+.warn s{font-family:var(--zh);font-weight:600;font-size:1.08rem;text-decoration-thickness:2px}
+.tone-note{background:var(--jade-soft);border-radius:10px;padding:16px 18px;margin-top:20px;font-size:.92rem;color:var(--ink-2)}
+.tone-note b{color:var(--jade)}
+
+/* ---------- vocab ---------- */
+.vocab{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}
+.v{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;transition:.16s}
+.v:hover{background:#fff;box-shadow:0 3px 14px rgba(21,32,29,.07)}
+.v-txt{flex:1;min-width:0}
+.v-hz{font-family:var(--zh);font-size:1.32rem;font-weight:600;line-height:1.35}
+.v-py{font-family:var(--zh-sans);font-size:.83rem;color:var(--jade)}
+.v-kr{font-size:.84rem;color:var(--muted);margin-top:2px}
+
+/* ---------- 대화 ---------- */
+.dlg{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 6px;margin-top:18px}
+.line{display:flex;gap:12px;padding:12px 14px;border-radius:10px;align-items:flex-start;transition:.2s}
+.line.hl{background:#fff;box-shadow:0 2px 12px rgba(21,32,29,.07)}
+.who{font-family:var(--zh);font-weight:700;font-size:.72rem;flex:none;padding-top:6px;width:34px}
+.who.a{color:var(--cinnabar)}
+.who.b{color:var(--jade)}
+.ltxt{flex:1;min-width:0}
+.lhz{font-family:var(--zh);font-size:1.2rem;font-weight:600;line-height:1.55}
+.lpy{font-family:var(--zh-sans);font-size:.81rem;color:var(--jade)}
+.lkr{font-size:.84rem;color:var(--muted);margin-top:2px}
+.dlg-bar{display:flex;gap:8px;padding:10px 14px 6px;flex-wrap:wrap}
+
+/* ---------- quiz ---------- */
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 20px 18px;margin-bottom:14px;position:relative;overflow:hidden}
+.q-head{display:flex;gap:10px;align-items:baseline;margin-bottom:12px}
+.q-no{font-family:var(--zh);color:var(--cinnabar);font-size:.85rem;font-weight:600;flex:none}
+.q-ask{font-size:.98rem;color:var(--ink);font-weight:500}
+.q-ask .zh-q{font-family:var(--zh);font-size:1.28rem;font-weight:600;vertical-align:-2px}
+.opts{display:grid;gap:8px;grid-template-columns:repeat(2,1fr)}
+.opt{background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 14px;text-align:left;transition:.14s;color:var(--ink);font-size:.95rem}
+.opt .zh-o{font-family:var(--zh);font-size:1.08rem;font-weight:600}
+.opt:hover:not(:disabled){border-color:var(--jade);background:var(--jade-soft)}
+.opt:disabled{cursor:default;opacity:.55}
+.opt.right{border-color:var(--jade);background:var(--jade-soft);opacity:1;font-weight:500}
+.opt.wrong{border-color:var(--cinnabar);background:#F8E7E4;opacity:1}
+.fb{margin-top:12px;font-size:.87rem;padding:10px 13px;border-radius:8px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--jade-soft);color:var(--jade)}
+.fb.no{background:#F8E7E4;color:var(--cinnabar)}
+
+.wo-slot{min-height:56px;border:1px dashed var(--line);border-radius:9px;background:#fff;display:flex;align-items:center;gap:8px;padding:8px 12px;flex-wrap:wrap;margin-bottom:10px}
+.wo-slot:empty::before{content:"아래에서 순서대로 눌러 보세요";color:var(--muted);font-size:.82rem}
+.tok{font-family:var(--zh);font-size:1.16rem;font-weight:600;background:var(--jade-soft);border:1px solid var(--jade);color:var(--jade);border-radius:7px;padding:5px 12px}
+.wo-pool{display:flex;gap:8px;flex-wrap:wrap}
+.wo-pool .tok{background:#fff;border-color:var(--line);color:var(--ink);cursor:pointer}
+.wo-pool .tok:hover{border-color:var(--jade);background:var(--jade-soft);color:var(--jade)}
+.wo-pool .tok.used{opacity:.25;pointer-events:none}
+.wo-actions{display:flex;gap:8px;margin-top:4px}
+
+.seal{position:absolute;right:16px;top:14px;width:46px;height:46px;border-radius:50%;border:2.5px solid var(--cinnabar);color:var(--cinnabar);font-family:var(--zh);font-weight:900;font-size:1.35rem;display:flex;align-items:center;justify-content:center;opacity:0;transform:rotate(-14deg) scale(1.7);transition:.32s cubic-bezier(.2,1.5,.4,1);pointer-events:none}
+.seal.on{opacity:.9;transform:rotate(-14deg) scale(1)}
+
+.score{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:18px}
+.score .n{font-family:var(--zh);font-size:2.4rem;font-weight:900;color:var(--jade);line-height:1}
+.score .n span{font-size:1.1rem;color:var(--muted);font-weight:600}
+
+.recap{background:var(--card);border-radius:14px;padding:22px 24px;border:1px solid var(--line)}
+.recap ul{margin:0;padding-left:18px}
+.recap li{margin-bottom:8px;color:var(--ink-2);font-size:.93rem}
+.next{margin-top:22px;padding:20px 24px;border-radius:14px;background:var(--jade);color:#fff}
+.next .l{font-size:.7rem;letter-spacing:.24em;opacity:.75}
+.next .t{font-family:var(--kr-serif);font-size:1.15rem;font-weight:700;margin:6px 0 4px}
+.next .d{font-size:.88rem;opacity:.88;margin:0}
+
+footer{text-align:center;padding:30px 0;color:var(--muted);font-size:.78rem;border-top:1px solid var(--line)}
+
+@media(max-width:600px){
+  main{padding:0 16px 70px}
+  section{padding:44px 0}
+  .vocab{grid-template-columns:1fr}
+  .chip-grid{grid-template-columns:repeat(3,1fr)}
+  .opts{grid-template-columns:1fr}
+  .cmp-items{grid-template-columns:1fr}
+  .ptable td,.ptable th{padding-left:6px;padding-right:6px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="badge">第八课 · 제8강</span>
+    <span class="track"><i id="bar"></i></span>
+    <span class="pct" id="pct">0%</span>
+  </div>
+</div>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="kicker">쇼핑 · 가격 · 비교문</div>
+
+  <div class="tag">
+    <button class="play" id="pPlay" aria-label="가격 발음 듣기"></button>
+    <div class="digits" id="pDigits">¥ <b>25.80</b></div>
+    <div class="phz" id="pHz"></div>
+    <div class="ppy" id="pPy"></div>
+    <div class="pfull" id="pFull"></div>
+  </div>
+
+  <div class="ctl">
+    <div class="crow"><label for="rY">块</label><input type="range" id="rY" min="0" max="200" value="25"><span class="cv" id="vY">25</span></div>
+    <div class="crow"><label for="rJ">毛</label><input type="range" id="rJ" min="0" max="9" value="8"><span class="cv" id="vJ">8</span></div>
+  </div>
+  <div class="quick" id="quick"></div>
+
+  <p class="hero-thesis">
+    중국 사람은 가격표를 <b>글자 그대로 읽지 않습니다.</b><br>
+    쓸 때는 元角分, 말할 때는 <b>块毛分</b>.<br>
+    그리고 마지막 단위는 대체로 생략합니다.
+  </p>
+
+  <div class="tts-note" id="ttsNote">
+    이 브라우저에 중국어 음성이 없어 소리가 재생되지 않습니다. Chrome이나 Edge에서 열거나
+    기기에 중국어(간체) 음성을 추가하면 들을 수 있습니다. 학습과 문제 풀이는 그대로 진행됩니다.
+  </div>
+</section>
+
+<!-- ============ 1. 돈 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">一</span><span class="lbl">Money</span></div>
+  <h2>돈을 세는 세 단위</h2>
+
+  <table class="ptable">
+    <thead><tr><th style="width:74px">말할 때</th><th style="width:74px">쓸 때</th><th style="width:80px">비율</th><th>예</th></tr></thead>
+    <tbody>
+      <tr><td class="hz">块 <span class="py">kuài</span></td><td class="hz">元 <span class="py">yuán</span></td><td>기본 단위</td><td class="ex">三块 = 3위안</td></tr>
+      <tr><td class="hz">毛 <span class="py">máo</span></td><td class="hz">角 <span class="py">jiǎo</span></td><td>1/10</td><td class="ex">五毛 = 0.5위안</td></tr>
+      <tr><td class="hz">分 <span class="py">fēn</span></td><td class="hz">分 <span class="py">fēn</span></td><td>1/100</td><td class="ex">지금은 거의 안 씁니다</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn">
+    <h4>마지막 단위는 생략합니다</h4>
+    <p>
+      25.8위안은 <span class="zh-i">二十五块八毛</span>이지만, 실제로는
+      <span class="zh-i">二十五块八</span> 라고만 합니다.
+      맨 끝 단위를 떼는 것이 자연스러운 말투입니다.
+    </p>
+  </div>
+
+  <div class="warn">
+    <h4>2위안은 二块가 아니라 两块</h4>
+    <p>
+      4강의 양사 규칙 그대로입니다. <span class="zh-i">块 · 毛</span> 는 양사이므로 앞에
+      <span class="zh-i">两</span> 을 씁니다 — <span class="zh-i">两块两毛</span>.
+      단 12위안은 <span class="zh-i">十二块</span>로 二를 그대로 씁니다.
+    </p>
+  </div>
+
+  <h3>가격 묻기</h3>
+  <p>
+    <span class="zh-i">多少钱？</span> <span class="py-i">Duōshao qián?</span> 얼마예요? ·
+    <span class="zh-i">这个多少钱？</span> 이거 얼마예요? ·
+    <span class="zh-i">一共多少钱？</span> <span class="py-i">Yígòng duōshao qián?</span> 전부 얼마예요?<br>
+    3강에서 배운 대로 가격은 수가 제한 없으므로 <span class="zh-i">几</span>가 아니라
+    <span class="zh-i">多少</span>를 씁니다.
+  </p>
+</section>
+
+<!-- ============ 2. 비교문 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">二</span><span class="lbl">Comparison</span></div>
+  <h2>比 — 무엇이 더 비싼가</h2>
+  <p class="lead">
+    기본 틀은 <b>A 比 B + 형용사</b> 입니다. 두 물건의 가격을 움직여 문장이 어떻게 바뀌는지 보세요.
+  </p>
+
+  <div class="cmp">
+    <div class="cmp-items">
+      <div class="ci">
+        <div class="cihz">这件衣服</div>
+        <div class="cipy">zhè jiàn yīfu · 이 옷</div>
+        <div class="ciprice" id="priceA">80块</div>
+        <input type="range" id="rA" min="10" max="150" step="5" value="80" aria-label="이 옷 가격">
+      </div>
+      <div class="ci b">
+        <div class="cihz">那件衣服</div>
+        <div class="cipy">nà jiàn yīfu · 저 옷</div>
+        <div class="ciprice" id="priceB">50块</div>
+        <input type="range" id="rB" min="10" max="150" step="5" value="50" aria-label="저 옷 가격">
+      </div>
+    </div>
+
+    <div class="cmp-out">
+      <button class="play" id="cPlay" aria-label="문장 듣기"></button>
+      <div class="ohz" id="cHz"></div>
+      <div class="opy" id="cPy"></div>
+      <div class="okr" id="cKr"></div>
+      <div class="oalt" id="cAlt"></div>
+    </div>
+  </div>
+
+  <div class="warn">
+    <h4>比 문장에는 很·非常을 쓸 수 없습니다</h4>
+    <p>
+      <s>这个比那个很贵。</s> 는 틀린 문장입니다.
+      比가 이미 비교의 정도를 담고 있어서 정도부사가 들어갈 자리가 없습니다.
+      더 강조하고 싶으면 형용사 <b>뒤</b>에 붙입니다 —
+      <span class="zh-i">贵得多</span> 훨씬 비싸다, <span class="zh-i">贵一点儿</span> 조금 비싸다,
+      <span class="zh-i">贵十块</span> 10위안 더 비싸다.
+    </p>
+  </div>
+
+  <h3>비교의 세 가지 형태</h3>
+  <table class="ptable">
+    <thead><tr><th style="width:110px">형태</th><th>구조</th><th>예</th></tr></thead>
+    <tbody id="cmpTable"></tbody>
+  </table>
+</section>
+
+<!-- ============ 3. 太…了 / 有点儿 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">三</span><span class="lbl">Degree</span></div>
+  <h2>“좀”이 놓이는 두 자리</h2>
+  <p class="lead">
+    한국어로는 똑같이 “좀”이지만, 형용사 앞이냐 뒤냐에 따라 뜻이 완전히 달라집니다.
+    흥정할 때 반드시 구분해야 하는 지점입니다.
+  </p>
+
+  <div class="cmp-items" style="margin-top:18px">
+    <div class="ci" style="text-align:left">
+      <div class="cihz">有点儿 + 형용사</div>
+      <div class="cipy">yǒudiǎnr</div>
+      <p style="margin:10px 0 0;font-size:.87rem">
+        불만이 섞인 “좀 ~하다”. 형용사 <b>앞</b>에 옵니다.<br>
+        <span class="zh-i">这个有点儿贵。</span> 이거 좀 비싸네요.
+      </p>
+    </div>
+    <div class="ci b" style="text-align:left">
+      <div class="cihz">형용사 + 一点儿</div>
+      <div class="cipy">yìdiǎnr</div>
+      <p style="margin:10px 0 0;font-size:.87rem">
+        “조금 더 ~하게”라는 요청·비교. 형용사 <b>뒤</b>에 옵니다.<br>
+        <span class="zh-i">便宜一点儿吧。</span> 좀 싸게 해 주세요.
+      </p>
+    </div>
+  </div>
+
+  <div class="tone-note">
+    <b>太…了.</b> 감탄과 불평을 동시에 담습니다 —
+    <span class="zh-i">太贵了！</span> <span class="py-i">Tài guì le!</span> 너무 비싸요! ·
+    <span class="zh-i">太好了！</span> 너무 좋아요!
+    반드시 <span class="zh-i">了</span> 로 닫아 줍니다.
+  </div>
+
+  <div class="warn">
+    <h4>打八折는 8% 할인이 아닙니다</h4>
+    <p>
+      중국의 할인 표기는 <b>지불하는 비율</b>을 말합니다.
+      <span class="zh-i">打八折</span> <span class="py-i">dǎ bā zhé</span> 는 정가의 80%를 낸다는 뜻,
+      즉 <b>20% 할인</b>입니다. <span class="zh-i">打五折</span> 는 반값,
+      <span class="zh-i">打九折</span> 는 10% 할인입니다. 한국식으로 읽으면 정반대가 됩니다.
+    </p>
+  </div>
+</section>
+
+<!-- ============ 4. 어휘 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">四</span><span class="lbl">Vocabulary</span></div>
+  <h2>쇼핑 어휘</h2>
+  <h3>물건과 성질</h3>
+  <div class="chip-grid" id="adjs"></div>
+  <h3>색깔</h3>
+  <div class="chip-grid" id="colors"></div>
+  <h3>동사와 표현</h3>
+  <div class="vocab" id="vocab"></div>
+</section>
+
+<!-- ============ 5. 회화 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">五</span><span class="lbl">Dialogue</span></div>
+  <h2>시장에서</h2>
+  <div class="dlg">
+    <div class="dlg-bar">
+      <button class="mini" id="playAll">전체 듣기</button>
+      <button class="mini" id="stopAll">멈추기</button>
+      <button class="mini" id="toggleKr">한국어 뜻 숨기기</button>
+    </div>
+    <div id="dialog"></div>
+  </div>
+</section>
+
+<!-- ============ 6. 연습 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">六</span><span class="lbl">Practice</span></div>
+  <h2>확인 문제</h2>
+  <p class="lead">답을 고르면 바로 채점되고 해설이 나옵니다.</p>
+
+  <div id="quiz"></div>
+
+  <div class="q" id="woBox">
+    <div class="seal" id="woSeal">对</div>
+    <div class="q-head">
+      <span class="q-no">七</span>
+      <span class="q-ask">“이게 저것보다 조금 비싸요”가 되도록 순서대로 눌러 문장을 만드세요.</span>
+    </div>
+    <div class="wo-slot" id="woSlot"></div>
+    <div class="wo-pool" id="woPool"></div>
+    <div class="wo-actions">
+      <button class="mini" id="woReset">다시 놓기</button>
+      <button class="mini" id="woCheck">정답 확인</button>
+    </div>
+    <div class="fb" id="woFb"></div>
+  </div>
+
+  <div class="score" id="score">
+    <div class="n"><span id="sNum">0</span><span> / 7</span></div>
+    <p style="margin:8px 0 0;font-size:.88rem" id="sMsg">문제를 풀면 점수가 표시됩니다.</p>
+  </div>
+</section>
+
+<!-- ============ 7. 정리 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">七</span><span class="lbl">Recap</span></div>
+  <h2>오늘 챙겨 갈 것</h2>
+  <div class="recap">
+    <ul>
+      <li>말할 때는 <span class="zh-i">块 · 毛 · 分</span>, 쓸 때는 <span class="zh-i">元 · 角 · 分</span>.</li>
+      <li>마지막 단위는 생략합니다 — <span class="zh-i">二十五块八</span>.</li>
+      <li>2위안은 <span class="zh-i">两块</span>. 块와 毛는 양사이기 때문입니다.</li>
+      <li>가격은 <span class="zh-i">多少钱？</span> 로 묻습니다. 几가 아닙니다.</li>
+      <li>비교는 <b>A 比 B + 형용사</b>. 정도는 형용사 <b>뒤</b>에 붙입니다.</li>
+      <li>比 문장에 <span class="zh-i">很 · 非常</span> 은 넣지 않습니다.</li>
+      <li>같으면 <span class="zh-i">A 跟 B 一样…</span>, 못 미치면 <span class="zh-i">A 没有 B…</span>.</li>
+      <li><span class="zh-i">有点儿</span>은 형용사 앞(불만), <span class="zh-i">一点儿</span>은 형용사 뒤(요청).</li>
+      <li><span class="zh-i">打八折</span>는 20% 할인. 남는 비율을 말합니다.</li>
+    </ul>
+  </div>
+
+  <div class="next">
+    <div class="l">NEXT · 제9강</div>
+    <div class="t">경험과 과거 — 了와 过</div>
+    <p class="d">
+      중국어에는 시제 변화가 없습니다. 대신 了와 过라는 두 글자가 “끝났다”와 “해 본 적 있다”를
+      나누어 맡습니다. 초급자가 가장 많이 헷갈리는 부분을 정면으로 다룹니다.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>중국어 첫걸음 · 제8강 쇼핑과 가격</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- TTS ---------- */
+var zhVoice=null, checked=false;
+function pickVoice(){
+  if(!("speechSynthesis" in window)) return;
+  var vs=speechSynthesis.getVoices()||[];
+  zhVoice=vs.find(function(v){return /^zh[-_]?CN/i.test(v.lang)})
+       || vs.find(function(v){return /^zh/i.test(v.lang)}) || null;
+  if(!checked && vs.length){ checked=true;
+    if(!zhVoice) document.getElementById("ttsNote").classList.add("show"); }
+}
+if("speechSynthesis" in window){
+  pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; setTimeout(pickVoice,900);
+}else{ document.getElementById("ttsNote").classList.add("show"); }
+function speak(text,onend){
+  if(!("speechSynthesis" in window)){ if(onend) onend(); return; }
+  try{
+    speechSynthesis.cancel();
+    var u=new SpeechSynthesisUtterance(text);
+    u.lang="zh-CN"; u.rate=.75;
+    if(zhVoice) u.voice=zhVoice;
+    if(onend) u.onend=onend;
+    speechSynthesis.speak(u);
+  }catch(e){ if(onend) onend(); }
+}
+var SPK='<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.5 4.2 4.6H1.6a.6.6 0 0 0-.6.6v5.6c0 .3.3.6.6.6h2.6L8 14.5zM11.2 5a.6.6 0 0 0-.1.9 3 3 0 0 1 0 4.2.6.6 0 1 0 .8.9 4.2 4.2 0 0 0 0-6 .6.6 0 0 0-.7 0zM13.2 2.9a.6.6 0 0 0-.1.9 6 6 0 0 1 0 8.4.6.6 0 1 0 .8.9 7.2 7.2 0 0 0 0-10.2.6.6 0 0 0-.7 0z"/></svg>';
+function flash(el){ el.classList.add("on"); setTimeout(function(){el.classList.remove("on")},520); }
+
+/* ---------- 숫자 ---------- */
+var D=[["零","líng"],["一","yī"],["二","èr"],["三","sān"],["四","sì"],["五","wǔ"],
+       ["六","liù"],["七","qī"],["八","bā"],["九","jiǔ"],["十","shí"]];
+function n2cn(n){
+  if(n<=10) return [D[n][0],D[n][1]];
+  if(n<20) return ["十"+D[n-10][0],"shí"+D[n-10][1]];
+  if(n<100){
+    var t=Math.floor(n/10), o=n%10;
+    return [D[t][0]+"十"+(o?D[o][0]:""), D[t][1]+"shí"+(o?D[o][1]:"")];
+  }
+  var hd=Math.floor(n/100), r=n%100, hz=D[hd][0]+"百", py=D[hd][1]+"bǎi";
+  if(hd===1){ hz="一百"; py="yìbǎi"; }
+  if(r===0) return [hz,py];
+  if(r<10) return [hz+"零"+D[r][0], py+" líng "+D[r][1]];
+  if(r<20) return [hz+"一十"+(r-10?D[r-10][0]:""), py+" yīshí"+(r-10?D[r-10][1]:"")];
+  var t2=Math.floor(r/10), o2=r%10;
+  return [hz+D[t2][0]+"十"+(o2?D[o2][0]:""), py+" "+D[t2][1]+"shí"+(o2?D[o2][1]:"")];
+}
+function amt(n){ /* 양사 앞 수량: 2는 两 */
+  if(n===2) return ["两","liǎng"];
+  return n2cn(n);
+}
+
+/* ---------- 가격표 ---------- */
+var yuan=25, jiao=8, curPrice="";
+function renderPrice(){
+  document.getElementById("vY").textContent=yuan;
+  document.getElementById("vJ").textContent=jiao;
+  document.getElementById("pDigits").innerHTML="¥ <b>"+yuan+"."+jiao+"0</b>";
+
+  var hz="", py="", full="", fullPy="";
+  if(yuan===0 && jiao===0){ hz="免费"; py="miǎnfèi"; }
+  else if(yuan===0){
+    var j0=amt(jiao);
+    hz=j0[0]+"毛"; py=j0[1]+" máo";
+    full=j0[0]+"毛钱"; fullPy=j0[1]+" máo qián";
+  }else{
+    var y=amt(yuan);
+    if(jiao===0){ hz=y[0]+"块"; py=y[1]+" kuài"; full=y[0]+"块钱"; fullPy=y[1]+" kuài qián"; }
+    else{
+      var j=amt(jiao);
+      hz=y[0]+"块"+j[0]; py=y[1]+" kuài "+j[1];
+      full=y[0]+"块"+j[0]+"毛"; fullPy=y[1]+" kuài "+j[1]+" máo";
+    }
+  }
+  curPrice=hz;
+  document.getElementById("pHz").textContent=hz;
+  document.getElementById("pPy").textContent=py;
+  var written=(yuan?n2cn(yuan)[0]+"元":"")+(jiao?n2cn(jiao)[0]+"角":"");
+  document.getElementById("pFull").innerHTML=
+    (full?'단위를 다 붙이면 <b>'+full+'</b> · '+fullPy+'<br>':'')+
+    (written?'영수증·가격표에는 <b>'+written+'</b>':'');
+}
+document.getElementById("rY").addEventListener("input",function(){yuan=+this.value;renderPrice()});
+document.getElementById("rJ").addEventListener("input",function(){jiao=+this.value;renderPrice()});
+[[2,0],[5,5],[12,0],[25,8],[99,9],[150,0]].forEach(function(t){
+  var b=document.createElement("button");
+  b.className="qbtn"; b.type="button"; b.textContent="¥"+t[0]+"."+t[1]+"0";
+  b.addEventListener("click",function(){
+    yuan=t[0]; jiao=t[1];
+    document.getElementById("rY").value=yuan; document.getElementById("rJ").value=jiao;
+    renderPrice(); speak(curPrice);
+  });
+  document.getElementById("quick").appendChild(b);
+});
+var pPlay=document.getElementById("pPlay"); pPlay.innerHTML=SPK;
+pPlay.addEventListener("click",function(){speak(curPrice);flash(pPlay)});
+renderPrice();
+
+/* ---------- 비교 생성기 ---------- */
+var pa=80, pb=50, curCmp="";
+function renderCmp(){
+  document.getElementById("priceA").textContent=pa+"块";
+  document.getElementById("priceB").textContent=pb+"块";
+  var d=pa-pb, hz, py, kr, alt;
+  if(d===0){
+    hz='这件<em>跟</em>那件<em>一样</em>贵。';
+    curCmp="这件跟那件一样贵";
+    py="Zhè jiàn gēn nà jiàn yíyàng guì.";
+    kr="이 옷은 저 옷과 똑같이 비쌉니다.";
+    alt='값이 같을 때는 <b>A 跟 B 一样 + 형용사</b> 를 씁니다. 부정은 <b>不一样</b>.';
+  }else if(d>0){
+    var a=n2cn(d)[0];
+    hz='这件<em>比</em>那件贵'+a+'块。';
+    curCmp="这件比那件贵"+a+"块";
+    py="Zhè jiàn bǐ nà jiàn guì "+n2cn(d)[1]+" kuài.";
+    kr="이 옷이 저 옷보다 "+d+"위안 더 비쌉니다.";
+    alt='차액은 형용사 <b>뒤</b>에 붙습니다. 뒤집으면 <b>那件比这件便宜'+a+'块。</b>';
+  }else{
+    var a2=n2cn(-d)[0];
+    hz='这件<em>没有</em>那件贵。';
+    curCmp="这件没有那件贵";
+    py="Zhè jiàn méiyǒu nà jiàn guì.";
+    kr="이 옷은 저 옷만큼 비싸지 않습니다.";
+    alt='못 미칠 때는 <b>A 没有 B + 형용사</b>. 같은 뜻으로 <b>这件比那件便宜'+a2+'块。</b> 라고도 합니다.';
+  }
+  document.getElementById("cHz").innerHTML=hz;
+  document.getElementById("cPy").textContent=py;
+  document.getElementById("cKr").textContent=kr;
+  document.getElementById("cAlt").innerHTML=alt;
+}
+document.getElementById("rA").addEventListener("input",function(){pa=+this.value;renderCmp()});
+document.getElementById("rB").addEventListener("input",function(){pb=+this.value;renderCmp()});
+var cPlay=document.getElementById("cPlay"); cPlay.innerHTML=SPK;
+cPlay.addEventListener("click",function(){speak(curCmp);flash(cPlay)});
+renderCmp();
+
+/* ---------- 비교 형태 표 ---------- */
+var CMPT=[
+  ["더 ~하다","A 比 B + 형용사","这个比那个贵。"],
+  ["차이만큼","A 比 B + 형용사 + 수량","这个比那个贵十块。"],
+  ["훨씬","A 比 B + 형용사 + 得多","这个比那个贵得多。"],
+  ["조금","A 比 B + 형용사 + 一点儿","这个比那个贵一点儿。"],
+  ["똑같다","A 跟 B 一样 + 형용사","这个跟那个一样贵。"],
+  ["못 미친다","A 没有 B + 형용사","这个没有那个贵。"]
+];
+var ct=document.getElementById("cmpTable");
+CMPT.forEach(function(r){
+  var tr=document.createElement("tr");
+  tr.innerHTML='<td>'+r[0]+'</td><td class="py" style="font-size:.86rem">'+r[1]+'</td><td class="ex">'+r[2]+'</td>';
+  tr.style.cursor="pointer";
+  tr.addEventListener("click",function(){speak(r[2])});
+  ct.appendChild(tr);
+});
+
+/* ---------- 칩 ---------- */
+function fillChips(list,mount){
+  var box=document.getElementById(mount);
+  list.forEach(function(c){
+    var b=document.createElement("button");
+    b.className="chip"; b.type="button";
+    b.setAttribute("aria-label",c[2]+" 발음 듣기");
+    b.innerHTML='<span class="c-hz">'+c[0]+'</span><span class="c-py">'+c[1]+'</span><span class="c-kr">'+c[2]+'</span>';
+    b.addEventListener("click",function(){speak(c[0]);flash(b)});
+    box.appendChild(b);
+  });
+}
+fillChips([
+  ["贵","guì","비싸다"],["便宜","piányi","싸다"],
+  ["大","dà","크다"],["小","xiǎo","작다"],
+  ["长","cháng","길다"],["短","duǎn","짧다"],
+  ["新","xīn","새롭다"],["旧","jiù","낡다"],
+  ["多","duō","많다"],["少","shǎo","적다"]
+],"adjs");
+fillChips([
+  ["红色","hóngsè","빨강"],["蓝色","lánsè","파랑"],
+  ["黑色","hēisè","검정"],["白色","báisè","하양"],
+  ["黄色","huángsè","노랑"],["绿色","lǜsè","초록"],
+  ["灰色","huīsè","회색"],["颜色","yánsè","색깔"]
+],"colors");
+
+/* ---------- 어휘 ---------- */
+var vBox=document.getElementById("vocab");
+[
+  ["买","mǎi","사다"],["卖","mài","팔다"],
+  ["钱","qián","돈"],["多少钱","duōshao qián","얼마예요"],
+  ["一共","yígòng","전부, 합쳐서"],["打折","dǎzhé","할인하다"],
+  ["试试","shìshi","한번 해 보다"],["穿","chuān","입다, 신다"],
+  ["号","hào","사이즈, 호"],["别的","bié de","다른 것"],
+  ["有点儿","yǒudiǎnr","(형용사 앞) 좀"],["一点儿","yìdiǎnr","(형용사 뒤) 조금"],
+  ["太…了","tài…le","너무 ~하다"],["刷卡","shuākǎ","카드로 결제하다"]
+].forEach(function(v){
+  var e=document.createElement("div"); e.className="v";
+  e.innerHTML='<div class="v-txt"><div class="v-hz">'+v[0]+'</div><div class="v-py">'+v[1]+'</div><div class="v-kr">'+v[2]+'</div></div>';
+  var b=document.createElement("button");
+  b.className="play"; b.type="button"; b.innerHTML=SPK;
+  b.setAttribute("aria-label",v[0]+" 발음 듣기");
+  b.addEventListener("click",function(){speak(v[0].replace("…",""));flash(b)});
+  e.appendChild(b); vBox.appendChild(e);
+});
+
+/* ---------- 대화 ---------- */
+var DIALOG=[
+  ["손님","这件衣服多少钱？","Zhè jiàn yīfu duōshao qián?","이 옷 얼마예요?"],
+  ["점원","一百二十块。","Yìbǎi èrshí kuài.","120위안입니다."],
+  ["손님","有点儿贵。那件呢？","Yǒudiǎnr guì. Nà jiàn ne?","좀 비싸네요. 저건요?"],
+  ["점원","那件比这件便宜二十块，一百块。","Nà jiàn bǐ zhè jiàn piányi èrshí kuài, yìbǎi kuài.","저건 이것보다 20위안 싸요, 100위안입니다."],
+  ["손님","太贵了！能不能便宜一点儿？","Tài guì le! Néng bu néng piányi yìdiǎnr?","너무 비싸요! 좀 싸게 안 될까요?"],
+  ["점원","好吧，给你打八折，八十块。","Hǎo ba, gěi nǐ dǎ bā zhé, bāshí kuài.","좋아요, 20% 깎아 드릴게요, 80위안이요."],
+  ["손님","那我买这件。可以刷卡吗？","Nà wǒ mǎi zhè jiàn. Kěyǐ shuākǎ ma?","그럼 이걸로 살게요. 카드 돼요?"]
+];
+var dlgBox=document.getElementById("dialog");
+DIALOG.forEach(function(l,i){
+  var row=document.createElement("div");
+  row.className="line"; row.id="ln"+i;
+  row.innerHTML='<span class="who '+(i%2===0?"a":"b")+'">'+l[0]+'</span>'+
+    '<div class="ltxt"><div class="lhz">'+l[1]+'</div><div class="lpy">'+l[2]+'</div><div class="lkr">'+l[3]+'</div></div>';
+  var b=document.createElement("button");
+  b.className="play"; b.type="button"; b.innerHTML=SPK;
+  b.setAttribute("aria-label",(i+1)+"번째 대사 듣기");
+  b.addEventListener("click",function(){
+    stopAll(); speak(l[1]); flash(b);
+    row.classList.add("hl"); setTimeout(function(){row.classList.remove("hl")},2200);
+  });
+  row.appendChild(b); dlgBox.appendChild(row);
+});
+var playing=false;
+function stopAll(){
+  playing=false;
+  if("speechSynthesis" in window){ try{speechSynthesis.cancel()}catch(e){} }
+  DIALOG.forEach(function(_,i){document.getElementById("ln"+i).classList.remove("hl")});
+}
+document.getElementById("stopAll").addEventListener("click",stopAll);
+document.getElementById("playAll").addEventListener("click",function(){
+  stopAll(); playing=true;
+  (function next(i){
+    if(!playing||i>=DIALOG.length){ stopAll(); return; }
+    DIALOG.forEach(function(_,j){document.getElementById("ln"+j).classList.remove("hl")});
+    var row=document.getElementById("ln"+i);
+    row.classList.add("hl"); row.scrollIntoView({block:"center",behavior:"smooth"});
+    speak(DIALOG[i][1],function(){setTimeout(function(){next(i+1)},350)});
+  })(0);
+});
+var krOn=true;
+document.getElementById("toggleKr").addEventListener("click",function(){
+  krOn=!krOn;
+  dlgBox.querySelectorAll(".lkr").forEach(function(e){e.style.display=krOn?"":"none"});
+  this.textContent=krOn?"한국어 뜻 숨기기":"한국어 뜻 보기";
+  this.classList.toggle("act",!krOn);
+});
+
+/* ---------- 퀴즈 ---------- */
+var QUIZ=[
+  {no:"一",ask:"¥25.80을 말할 때 가장 자연스러운 것은?",
+   opts:["二十五点八","二十五块八","二十五元八十","二五块八毛"],a:1,
+   why:"말할 때는 块·毛를 쓰고, 마지막 단위 毛는 생략합니다."},
+  {no:"二",ask:"2위안을 바르게 말한 것은?",
+   opts:["二块","两块","二元块","两个块"],a:1,
+   why:"块는 양사이므로 앞에 两을 씁니다. 다만 12위안은 十二块로 二를 그대로 씁니다."},
+  {no:"三",ask:"다음 중 <b>틀린</b> 문장은?",
+   opts:["这个比那个贵。","这个比那个很贵。","这个比那个贵十块。","这个跟那个一样贵。"],a:1,
+   why:"比 문장에는 很·非常 같은 정도부사를 쓸 수 없습니다. 정도는 형용사 뒤에 붙입니다."},
+  {no:"四",ask:'“이게 저것보다 10위안 더 비싸요.” 알맞은 문장은?',
+   opts:["这个比那个十块贵。","这个十块比那个贵。","这个比那个贵十块。","十块这个比那个贵。"],a:2,
+   why:"차이를 나타내는 수량은 형용사 뒤에 옵니다."},
+  {no:"五",ask:'“좀 싸게 해 주세요.” 알맞은 문장은?',
+   opts:["有点儿便宜吧。","便宜有点儿吧。","便宜一点儿吧。","一点儿便宜吧。"],a:2,
+   why:"요청은 형용사 뒤에 一点儿을 붙입니다. 有点儿은 형용사 앞에서 불만을 나타냅니다."},
+  {no:"六",ask:'<span class="zh-q">打八折</span> 는 얼마를 깎아 준다는 뜻일까요?',
+   opts:["8% 할인","20% 할인","80% 할인","8위안 할인"],a:1,
+   why:"중국의 할인 표기는 지불하는 비율입니다. 정가의 80%를 내니 20% 할인입니다."}
+];
+var solved={}, total=7, qBox=document.getElementById("quiz");
+QUIZ.forEach(function(q,qi){
+  var card=document.createElement("div"); card.className="q";
+  var opts=q.opts.map(function(o,k){
+    var zh=/[\u4e00-\u9fff]/.test(o);
+    return '<button class="opt" type="button" data-q="'+qi+'" data-o="'+k+'">'+
+      (zh?'<span class="zh-o">'+o+'</span>':o)+'</button>';
+  }).join("");
+  card.innerHTML='<div class="seal" id="seal'+qi+'">对</div>'+
+    '<div class="q-head"><span class="q-no">'+q.no+'</span><span class="q-ask">'+q.ask+'</span></div>'+
+    '<div class="opts">'+opts+'</div><div class="fb" id="fb'+qi+'"></div>';
+  qBox.appendChild(card);
+});
+qBox.addEventListener("click",function(e){
+  var btn=e.target.closest(".opt"); if(!btn||btn.disabled) return;
+  var qi=+btn.dataset.q, o=+btn.dataset.o, q=QUIZ[qi], card=btn.closest(".q");
+  card.querySelectorAll(".opt").forEach(function(b){b.disabled=true});
+  var ok=(o===q.a);
+  btn.classList.add(ok?"right":"wrong");
+  if(!ok) card.querySelectorAll(".opt")[q.a].classList.add("right");
+  var fb=document.getElementById("fb"+qi);
+  fb.className="fb show "+(ok?"ok":"no");
+  fb.innerHTML=(ok?"정답입니다. ":"아쉽네요. ")+q.why;
+  if(ok) document.getElementById("seal"+qi).classList.add("on");
+  solved[qi]=ok; updateScore();
+});
+
+/* ---------- 문장 배열 ---------- */
+var ANS=["这个","比","那个","贵","一点儿"];
+var pool=["贵","那个","一点儿","这个","比"], placed=[];
+var woSlot=document.getElementById("woSlot"), woPool=document.getElementById("woPool"),
+    woFb=document.getElementById("woFb"), woSeal=document.getElementById("woSeal");
+function renderWO(){
+  woSlot.innerHTML=placed.map(function(t){return '<span class="tok">'+t+'</span>'}).join("");
+  woPool.innerHTML=pool.map(function(t,i){
+    return '<button class="tok'+(placed.indexOf(t)>-1?" used":"")+'" type="button" data-i="'+i+'">'+t+'</button>';
+  }).join("");
+}
+renderWO();
+woPool.addEventListener("click",function(e){
+  var b=e.target.closest(".tok"); if(!b) return;
+  var t=pool[+b.dataset.i]; if(placed.indexOf(t)>-1) return;
+  placed.push(t); renderWO();
+});
+document.getElementById("woReset").addEventListener("click",function(){
+  placed=[]; renderWO(); woFb.className="fb"; woSeal.classList.remove("on");
+});
+document.getElementById("woCheck").addEventListener("click",function(){
+  if(placed.length<5){ woFb.className="fb show no"; woFb.textContent="다섯 조각을 모두 놓아 주세요."; return; }
+  var ok=placed.join("")===ANS.join("");
+  woFb.className="fb show "+(ok?"ok":"no");
+  woFb.innerHTML=ok
+    ? '정답입니다. <b>这个比那个贵一点儿。 Zhège bǐ nàge guì yìdiǎnr.</b> — 정도를 나타내는 一点儿은 형용사 뒤에 옵니다.'
+    : '一点儿의 자리를 다시 보세요. 형용사 앞이 아니라 뒤입니다.';
+  if(ok){ woSeal.classList.add("on"); speak("这个比那个贵一点儿"); }
+  solved["wo"]=ok; updateScore();
+});
+
+/* ---------- 점수 ---------- */
+function updateScore(){
+  var n=0,done=0;
+  for(var k in solved){ done++; if(solved[k]) n++; }
+  document.getElementById("sNum").textContent=n;
+  var msg=document.getElementById("sMsg");
+  if(done<total) msg.textContent=(total-done)+"문제 남았습니다.";
+  else if(n===total) msg.textContent="완벽합니다. 9강으로 넘어가도 좋습니다.";
+  else if(n>=5) msg.textContent="잘하셨습니다. 틀린 문항의 해설만 다시 읽어 보세요.";
+  else msg.textContent="比 문장의 정도 표현과 有点儿·一点儿의 자리를 한 번 더 보고 오세요.";
+}
+
+/* ---------- 진행률 ---------- */
+var bar=document.getElementById("bar"), pct=document.getElementById("pct");
+function onScroll(){
+  var hh=document.documentElement.scrollHeight-window.innerHeight;
+  var p=hh>0?Math.min(Math.round(window.scrollY/hh*100),100):0;
+  bar.style.width=p+"%"; pct.textContent=p+"%";
+}
+window.addEventListener("scroll",onScroll,{passive:true});
+window.addEventListener("resize",onScroll);
+onScroll();
+
+})();
+</script>
+</body>
+</html>

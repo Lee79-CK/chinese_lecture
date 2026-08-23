@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>중국어 제5강 · 시간과 하루 일과</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+KR:wght@600;700&family=Noto+Serif+SC:wght@600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E9EBE4; --card:#F7F8F3; --ink:#15201D; --ink-2:#3D4B46;
+  --muted:#79857F; --jade:#1E6F62; --jade-soft:#DDE9E5;
+  --cinnabar:#C1402C; --line:#C9CFC7;
+  --kr:"Noto Sans KR","Malgun Gothic",sans-serif;
+  --kr-serif:"Noto Serif KR","Nanum Myeongjo",serif;
+  --zh:"Noto Serif SC","Songti SC",serif;
+  --zh-sans:"Noto Sans SC","PingFang SC",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--kr);line-height:1.75;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--jade);outline-offset:3px;border-radius:3px}
+
+.topbar{position:sticky;top:0;z-index:50;background:rgba(233,235,228,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:880px;margin:0 auto;padding:10px 22px;display:flex;align-items:center;gap:14px}
+.badge{font-family:var(--zh);font-weight:600;font-size:.85rem;color:var(--jade);letter-spacing:.08em;white-space:nowrap}
+.track{flex:1;height:3px;background:var(--line);border-radius:99px;overflow:hidden}
+.track i{display:block;height:100%;width:0;background:var(--jade);transition:width .25s ease}
+.pct{font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums;min-width:34px;text-align:right}
+
+main{max-width:880px;margin:0 auto;padding:0 22px 90px}
+section{padding:56px 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:none}
+.eyebrow{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.eyebrow .num{font-family:var(--zh);font-size:.95rem;color:var(--cinnabar);font-weight:600}
+.eyebrow .lbl{font-size:.72rem;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
+h2{font-family:var(--kr-serif);font-weight:700;font-size:clamp(1.4rem,4vw,1.85rem);margin:0 0 14px;line-height:1.35;letter-spacing:-.01em}
+h3{font-family:var(--kr-serif);font-weight:600;font-size:1.05rem;margin:32px 0 10px}
+p{margin:0 0 14px;color:var(--ink-2)}
+.lead{font-size:1.03rem;color:var(--ink)}
+small{color:var(--muted)}
+.zh-i{font-family:var(--zh);font-weight:600}
+.py-i{font-family:var(--zh-sans);color:var(--jade)}
+
+/* ---------- hero: 시계 ---------- */
+.hero{padding:52px 0 44px;text-align:center}
+.hero .kicker{font-size:.72rem;letter-spacing:.3em;color:var(--muted);margin-bottom:24px}
+.clockwrap{display:flex;gap:34px;align-items:center;justify-content:center;flex-wrap:wrap}
+.clock{width:clamp(150px,42vw,190px);height:clamp(150px,42vw,190px);flex:none}
+.cface{fill:var(--card);stroke:var(--line);stroke-width:1.5}
+.ctick{stroke:var(--muted);stroke-width:2;stroke-linecap:round}
+.ctick.maj{stroke:var(--ink);stroke-width:3}
+.chand-h{stroke:var(--ink);stroke-width:6;stroke-linecap:round}
+.chand-m{stroke:var(--cinnabar);stroke-width:3.5;stroke-linecap:round}
+.cpin{fill:var(--ink)}
+.timetxt{text-align:left;min-width:min(300px,80vw)}
+.timetxt .thz{font-family:var(--zh);font-weight:900;font-size:clamp(1.8rem,7vw,2.6rem);line-height:1.25}
+.timetxt .tpy{font-family:var(--zh-sans);color:var(--jade);font-size:clamp(.85rem,3vw,1rem);margin-top:4px}
+.timetxt .talt{font-size:.85rem;color:var(--muted);margin-top:8px;min-height:1.4em}
+.timetxt .talt b{font-family:var(--zh);color:var(--ink-2);font-weight:600;font-size:1.05rem}
+.timetxt .play{margin-top:12px}
+
+.ctl{margin-top:26px;display:grid;gap:10px;max-width:460px;margin-left:auto;margin-right:auto}
+.crow{display:flex;align-items:center;gap:12px}
+.crow label{font-size:.7rem;letter-spacing:.16em;color:var(--muted);width:34px;flex:none;text-align:left}
+.crow input[type=range]{flex:1;accent-color:var(--jade)}
+.crow .cv{font-family:var(--zh-sans);font-variant-numeric:tabular-nums;font-size:1rem;width:30px;text-align:right;color:var(--ink)}
+.pills{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+.pill{border:1px solid var(--line);background:#fff;border-radius:99px;padding:5px 13px;font-family:var(--zh);font-size:.95rem;font-weight:600;color:var(--ink);transition:.14s}
+.pill:hover{border-color:var(--jade);color:var(--jade)}
+.pill.sel{background:var(--jade);border-color:var(--jade);color:#fff}
+.quick{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.qbtn{border:1px solid var(--line);background:transparent;border-radius:99px;padding:4px 12px;font-size:.78rem;color:var(--muted);transition:.14s;font-variant-numeric:tabular-nums}
+.qbtn:hover{border-color:var(--jade);color:var(--jade)}
+
+.hero-thesis{margin:28px auto 0;max-width:530px;font-family:var(--kr-serif);font-size:1.02rem;color:var(--ink);line-height:1.85}
+.hero-thesis b{color:var(--cinnabar);font-weight:700}
+
+.tts-note{display:none;background:#F8E7E4;color:var(--cinnabar);border-radius:9px;padding:11px 15px;font-size:.83rem;margin:16px auto 0;max-width:560px;text-align:left}
+.tts-note.show{display:block}
+
+/* ---------- buttons ---------- */
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+.play{border:1px solid var(--line);background:var(--card);color:var(--jade);width:34px;height:34px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;transition:.16s;flex:none;padding:0}
+.play:hover{background:var(--jade);color:#fff;border-color:var(--jade)}
+.play.on{background:var(--jade);color:#fff;border-color:var(--jade)}
+.play svg{width:13px;height:13px}
+.mini{border:1px solid var(--line);background:#fff;color:var(--ink-2);border-radius:7px;padding:6px 14px;font-size:.82rem;transition:.14s}
+.mini:hover{border-color:var(--jade);color:var(--jade)}
+.mini.act{background:var(--jade);border-color:var(--jade);color:#fff}
+
+/* ---------- 어순 도해 ---------- */
+.order{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:20px;overflow-x:auto}
+.obar{display:flex;gap:6px;min-width:440px}
+.oslot{flex:1;text-align:center}
+.oslot .ohead{font-size:.66rem;letter-spacing:.14em;color:var(--muted);padding-bottom:7px}
+.oslot .obox{border-radius:8px;padding:12px 6px;font-family:var(--zh);font-size:1.25rem;font-weight:600;background:#fff;border:1px solid var(--line)}
+.oslot.time .obox{background:var(--jade);border-color:var(--jade);color:#fff}
+.oslot.time .ohead{color:var(--jade)}
+.oslot .opy{font-family:var(--zh-sans);font-size:.72rem;color:var(--muted);margin-top:5px}
+.bad{margin-top:16px;padding:12px 16px;background:#F8E7E4;border-radius:10px;font-size:.9rem;color:var(--cinnabar)}
+.bad s{font-family:var(--zh);font-size:1.15rem;font-weight:600;text-decoration-thickness:2px}
+
+/* ---------- 타임라인 ---------- */
+.tl{margin-top:20px;border-left:2px solid var(--line);padding-left:0;margin-left:8px}
+.tlrow{display:flex;gap:16px;align-items:flex-start;padding:12px 0 12px 20px;position:relative;transition:.18s;border-radius:0 10px 10px 0}
+.tlrow:hover{background:var(--card)}
+.tlrow::before{content:"";position:absolute;left:-6px;top:20px;width:10px;height:10px;border-radius:50%;background:var(--paper);border:2px solid var(--jade)}
+.tlrow.hl::before{background:var(--cinnabar);border-color:var(--cinnabar)}
+.tltime{font-family:var(--zh-sans);font-variant-numeric:tabular-nums;font-size:.82rem;color:var(--muted);width:52px;flex:none;padding-top:4px}
+.tltxt{flex:1;min-width:0}
+.tlhz{font-family:var(--zh);font-size:1.2rem;font-weight:600;line-height:1.5}
+.tlpy{font-family:var(--zh-sans);font-size:.8rem;color:var(--jade)}
+.tlkr{font-size:.83rem;color:var(--muted)}
+
+/* ---------- warn / note ---------- */
+.warn{border-left:3px solid var(--cinnabar);padding:4px 0 4px 16px;margin:20px 0}
+.warn h4{margin:0 0 4px;font-size:.95rem;font-family:var(--kr-serif)}
+.warn p{margin:0;font-size:.9rem}
+.tone-note{background:var(--jade-soft);border-radius:10px;padding:16px 18px;margin-top:20px;font-size:.92rem;color:var(--ink-2)}
+.tone-note b{color:var(--jade)}
+
+/* ---------- 칩 ---------- */
+.chip-grid{display:grid;gap:8px;margin:16px 0;grid-template-columns:repeat(5,1fr)}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:11px 4px;text-align:center;transition:.14s}
+.chip:hover{background:#fff;border-color:var(--jade)}
+.chip.on{background:var(--jade);border-color:var(--jade)}
+.chip.on .c-hz,.chip.on .c-py,.chip.on .c-kr{color:#fff}
+.c-hz{font-family:var(--zh);font-size:1.15rem;font-weight:600;color:var(--ink);display:block;line-height:1.3}
+.c-py{font-family:var(--zh-sans);font-size:.72rem;color:var(--jade);display:block}
+.c-kr{font-size:.72rem;color:var(--muted);display:block}
+
+/* ---------- vocab ---------- */
+.vocab{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}
+.v{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;transition:.16s}
+.v:hover{background:#fff;box-shadow:0 3px 14px rgba(21,32,29,.07)}
+.v-txt{flex:1;min-width:0}
+.v-hz{font-family:var(--zh);font-size:1.4rem;font-weight:600;line-height:1.3}
+.v-py{font-family:var(--zh-sans);font-size:.85rem;color:var(--jade)}
+.v-kr{font-size:.85rem;color:var(--muted);margin-top:2px}
+
+/* ---------- 대화 ---------- */
+.dlg{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 6px;margin-top:18px}
+.line{display:flex;gap:12px;padding:12px 14px;border-radius:10px;align-items:flex-start;transition:.2s}
+.line.hl{background:#fff;box-shadow:0 2px 12px rgba(21,32,29,.07)}
+.who{font-family:var(--zh);font-weight:700;font-size:.85rem;width:22px;flex:none;padding-top:5px}
+.who.a{color:var(--cinnabar)}
+.who.b{color:var(--jade)}
+.ltxt{flex:1;min-width:0}
+.lhz{font-family:var(--zh);font-size:1.22rem;font-weight:600;line-height:1.55}
+.lpy{font-family:var(--zh-sans);font-size:.82rem;color:var(--jade)}
+.lkr{font-size:.85rem;color:var(--muted);margin-top:2px}
+.dlg-bar{display:flex;gap:8px;padding:10px 14px 6px;flex-wrap:wrap}
+
+/* ---------- quiz ---------- */
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 20px 18px;margin-bottom:14px;position:relative;overflow:hidden}
+.q-head{display:flex;gap:10px;align-items:baseline;margin-bottom:12px}
+.q-no{font-family:var(--zh);color:var(--cinnabar);font-size:.85rem;font-weight:600;flex:none}
+.q-ask{font-size:.98rem;color:var(--ink);font-weight:500}
+.q-ask .zh-q{font-family:var(--zh);font-size:1.3rem;font-weight:600;vertical-align:-2px}
+.opts{display:grid;gap:8px;grid-template-columns:repeat(2,1fr)}
+.opt{background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 14px;text-align:left;transition:.14s;color:var(--ink);font-size:.95rem}
+.opt .zh-o{font-family:var(--zh);font-size:1.1rem;font-weight:600}
+.opt:hover:not(:disabled){border-color:var(--jade);background:var(--jade-soft)}
+.opt:disabled{cursor:default;opacity:.55}
+.opt.right{border-color:var(--jade);background:var(--jade-soft);opacity:1;font-weight:500}
+.opt.wrong{border-color:var(--cinnabar);background:#F8E7E4;opacity:1}
+.fb{margin-top:12px;font-size:.87rem;padding:10px 13px;border-radius:8px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--jade-soft);color:var(--jade)}
+.fb.no{background:#F8E7E4;color:var(--cinnabar)}
+
+.wo-slot{min-height:56px;border:1px dashed var(--line);border-radius:9px;background:#fff;display:flex;align-items:center;gap:8px;padding:8px 12px;flex-wrap:wrap;margin-bottom:10px}
+.wo-slot:empty::before{content:"아래에서 순서대로 눌러 보세요";color:var(--muted);font-size:.82rem}
+.tok{font-family:var(--zh);font-size:1.18rem;font-weight:600;background:var(--jade-soft);border:1px solid var(--jade);color:var(--jade);border-radius:7px;padding:5px 12px}
+.wo-pool{display:flex;gap:8px;flex-wrap:wrap}
+.wo-pool .tok{background:#fff;border-color:var(--line);color:var(--ink);cursor:pointer}
+.wo-pool .tok:hover{border-color:var(--jade);background:var(--jade-soft);color:var(--jade)}
+.wo-pool .tok.used{opacity:.25;pointer-events:none}
+.wo-actions{display:flex;gap:8px;margin-top:4px}
+
+.seal{position:absolute;right:16px;top:14px;width:46px;height:46px;border-radius:50%;border:2.5px solid var(--cinnabar);color:var(--cinnabar);font-family:var(--zh);font-weight:900;font-size:1.35rem;display:flex;align-items:center;justify-content:center;opacity:0;transform:rotate(-14deg) scale(1.7);transition:.32s cubic-bezier(.2,1.5,.4,1);pointer-events:none}
+.seal.on{opacity:.9;transform:rotate(-14deg) scale(1)}
+
+.score{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:18px}
+.score .n{font-family:var(--zh);font-size:2.4rem;font-weight:900;color:var(--jade);line-height:1}
+.score .n span{font-size:1.1rem;color:var(--muted);font-weight:600}
+
+.recap{background:var(--card);border-radius:14px;padding:22px 24px;border:1px solid var(--line)}
+.recap ul{margin:0;padding-left:18px}
+.recap li{margin-bottom:8px;color:var(--ink-2);font-size:.93rem}
+.next{margin-top:22px;padding:20px 24px;border-radius:14px;background:var(--jade);color:#fff}
+.next .l{font-size:.7rem;letter-spacing:.24em;opacity:.75}
+.next .t{font-family:var(--kr-serif);font-size:1.15rem;font-weight:700;margin:6px 0 4px}
+.next .d{font-size:.88rem;opacity:.88;margin:0}
+
+footer{text-align:center;padding:30px 0;color:var(--muted);font-size:.78rem;border-top:1px solid var(--line)}
+
+@media(max-width:600px){
+  main{padding:0 16px 70px}
+  section{padding:44px 0}
+  .vocab{grid-template-columns:1fr}
+  .chip-grid{grid-template-columns:repeat(3,1fr)}
+  .opts{grid-template-columns:1fr}
+  .timetxt{text-align:center;min-width:0}
+  .clockwrap{gap:18px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="badge">第五课 · 제5강</span>
+    <span class="track"><i id="bar"></i></span>
+    <span class="pct" id="pct">0%</span>
+  </div>
+</div>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="kicker">시간 · 하루 일과 · 어순</div>
+
+  <div class="clockwrap">
+    <svg class="clock" viewBox="0 0 200 200" aria-hidden="true">
+      <circle class="cface" cx="100" cy="100" r="88"/>
+      <g id="ticks"></g>
+      <line class="chand-h" id="handH" x1="100" y1="100" x2="100" y2="56"/>
+      <line class="chand-m" id="handM" x1="100" y1="100" x2="100" y2="34"/>
+      <circle class="cpin" cx="100" cy="100" r="4.5"/>
+    </svg>
+
+    <div class="timetxt">
+      <div class="thz" id="tHz"></div>
+      <div class="tpy" id="tPy"></div>
+      <div class="talt" id="tAlt"></div>
+      <button class="play" id="tPlay" aria-label="시간 발음 듣기"></button>
+    </div>
+  </div>
+
+  <div class="ctl">
+    <div class="crow"><label for="rH">시</label><input type="range" id="rH" min="1" max="12" value="8"><span class="cv" id="vH">8</span></div>
+    <div class="crow"><label for="rM">분</label><input type="range" id="rM" min="0" max="59" value="30"><span class="cv" id="vM">30</span></div>
+  </div>
+  <div class="pills" id="periods"></div>
+  <div class="quick" id="quick"></div>
+
+  <p class="hero-thesis">
+    시간은 <b>큰 단위에서 작은 단위로</b> 흐릅니다.<br>
+    오전 → 여덟 시 → 삼십 분. 날짜와 똑같은 원리입니다.<br>
+    그리고 이 시간 덩어리는 문장에서 <b>언제나 동사 앞</b>에 놓입니다.
+  </p>
+
+  <div class="tts-note" id="ttsNote">
+    이 브라우저에 중국어 음성이 없어 소리가 재생되지 않습니다. Chrome이나 Edge에서 열거나
+    기기에 중국어(간체) 음성을 추가하면 들을 수 있습니다. 학습과 문제 풀이는 그대로 진행됩니다.
+  </div>
+</section>
+
+<!-- ============ 1. 시간 읽기 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">一</span><span class="lbl">Telling Time</span></div>
+  <h2>시 · 분을 말하는 법</h2>
+  <p class="lead">
+    시는 <span class="zh-i">点</span> <span class="py-i">diǎn</span>,
+    분은 <span class="zh-i">分</span> <span class="py-i">fēn</span> 입니다.
+    숫자는 3강에서 배운 그대로 씁니다.
+  </p>
+
+  <div class="warn">
+    <h4>2시는 二点이 아니라 两点입니다</h4>
+    <p>
+      4강의 양사 규칙과 같습니다. <span class="zh-i">点</span>은 양사이므로 앞에
+      <span class="zh-i">两</span> <span class="py-i">liǎng</span> 을 씁니다.
+      단, <b>2분</b>은 <span class="zh-i">两分</span>이 아니라 <span class="zh-i">二分</span>입니다.
+      分은 순수한 수치를 세는 자리이기 때문입니다.
+    </p>
+  </div>
+
+  <div class="warn">
+    <h4>10분 미만일 때는 零을 넣습니다</h4>
+    <p>
+      1시 5분은 <span class="zh-i">一点五分</span>이 아니라
+      <span class="zh-i">一点零五分</span> <span class="py-i">yī diǎn líng wǔ fēn</span> 입니다.
+      한 자리 수를 그냥 붙이면 알아듣기 어렵기 때문에 <span class="zh-i">零</span>으로 자리를 채웁니다.
+    </p>
+  </div>
+
+  <h3>더 자주 쓰는 표현들</h3>
+  <p>
+    <span class="zh-i">半</span> <span class="py-i">bàn</span> 30분 — <span class="zh-i">八点半</span> 8시 반<br>
+    <span class="zh-i">一刻</span> <span class="py-i">yí kè</span> 15분 — <span class="zh-i">八点一刻</span> 8시 15분<br>
+    <span class="zh-i">三刻</span> <span class="py-i">sān kè</span> 45분 — <span class="zh-i">八点三刻</span> 8시 45분<br>
+    <span class="zh-i">差</span> <span class="py-i">chà</span> ~전 — <span class="zh-i">差五分八点</span> 8시 5분 전
+  </p>
+  <p><small>차이 표현은 “모자란 만큼”을 먼저 말하고 시각을 뒤에 붙입니다. 한국어와 순서가 반대입니다.</small></p>
+
+  <h3>하루를 나누는 말</h3>
+  <div class="chip-grid" id="periodChips"></div>
+  <p>
+    시각 앞에 붙여 오전인지 오후인지 밝힙니다 —
+    <span class="zh-i">晚上八点</span> 저녁 8시. 중국어는 24시제를 거의 쓰지 않습니다.
+  </p>
+</section>
+
+<!-- ============ 2. 어순 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">二</span><span class="lbl">Word Order</span></div>
+  <h2>시간은 동사 앞에</h2>
+  <p class="lead">
+    영어는 시간을 문장 뒤에 붙이지만, 중국어는 <b>반드시 동사 앞</b>입니다.
+    이 원칙은 앞으로 배울 장소·방식 표현에도 그대로 적용됩니다.
+  </p>
+
+  <div class="order">
+    <div class="obar">
+      <div class="oslot"><div class="ohead">주어</div><div class="obox">我</div><div class="opy">wǒ</div></div>
+      <div class="oslot time"><div class="ohead">시간</div><div class="obox">七点</div><div class="opy">qī diǎn</div></div>
+      <div class="oslot"><div class="ohead">동사</div><div class="obox">起床</div><div class="opy">qǐchuáng</div></div>
+    </div>
+    <div class="bad">
+      <s>我起床七点。</s> — 동사 뒤로 시간을 보내면 틀린 문장이 됩니다.
+    </div>
+  </div>
+
+  <h3>시간은 주어 앞에 와도 됩니다</h3>
+  <p>
+    <span class="zh-i">我七点起床。</span> 와 <span class="zh-i">七点我起床。</span> 둘 다 맞습니다.
+    주어 앞으로 보내면 시간을 강조하는 느낌이 됩니다.
+    다만 <b>동사 뒤로는 절대 갈 수 없습니다.</b>
+  </p>
+
+  <h3>시간 표현이 둘이면 큰 것부터</h3>
+  <p>
+    날짜와 시각이 함께 오면 큰 단위를 앞에 놓습니다 —
+    <span class="zh-i">我明天早上八点上班。</span>
+    <span class="py-i">Wǒ míngtiān zǎoshang bā diǎn shàngbān.</span>
+    저는 내일 아침 8시에 출근합니다.
+  </p>
+
+  <div class="tone-note">
+    <b>묻는 법.</b>
+    <span class="zh-i">现在几点？</span> <span class="py-i">Xiànzài jǐ diǎn?</span> 지금 몇 시예요? ·
+    <span class="zh-i">你几点起床？</span> 몇 시에 일어나요? ·
+    <span class="zh-i">你什么时候上班？</span> 언제 출근해요?<br>
+    <span class="zh-i">几点</span>은 시각을, <span class="zh-i">什么时候</span> <span class="py-i">shénme shíhou</span> 는
+    더 넓은 “언제”를 묻습니다. 둘 다 답이 들어갈 자리를 그대로 차지합니다.
+  </div>
+</section>
+
+<!-- ============ 3. 하루 일과 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">三</span><span class="lbl">Daily Routine</span></div>
+  <h2>어느 하루</h2>
+  <p class="lead">각 줄을 누르면 문장 전체를 들을 수 있습니다. 시간 덩어리가 늘 동사 앞에 있는지 확인해 보세요.</p>
+  <div class="tl" id="timeline"></div>
+</section>
+
+<!-- ============ 4. 어휘 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">四</span><span class="lbl">Vocabulary</span></div>
+  <h2>오늘의 단어</h2>
+  <div class="vocab" id="vocab"></div>
+</section>
+
+<!-- ============ 5. 회화 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">五</span><span class="lbl">Dialogue</span></div>
+  <h2>몇 시에 만날까요</h2>
+  <div class="dlg">
+    <div class="dlg-bar">
+      <button class="mini" id="playAll">전체 듣기</button>
+      <button class="mini" id="stopAll">멈추기</button>
+      <button class="mini" id="toggleKr">한국어 뜻 숨기기</button>
+    </div>
+    <div id="dialog"></div>
+  </div>
+</section>
+
+<!-- ============ 6. 연습 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">六</span><span class="lbl">Practice</span></div>
+  <h2>확인 문제</h2>
+  <p class="lead">답을 고르면 바로 채점되고 해설이 나옵니다.</p>
+
+  <div id="quiz"></div>
+
+  <div class="q" id="woBox">
+    <div class="seal" id="woSeal">对</div>
+    <div class="q-head">
+      <span class="q-no">七</span>
+      <span class="q-ask">“저는 내일 아침 여덟 시에 출근합니다”가 되도록 순서대로 눌러 문장을 만드세요.</span>
+    </div>
+    <div class="wo-slot" id="woSlot"></div>
+    <div class="wo-pool" id="woPool"></div>
+    <div class="wo-actions">
+      <button class="mini" id="woReset">다시 놓기</button>
+      <button class="mini" id="woCheck">정답 확인</button>
+    </div>
+    <div class="fb" id="woFb"></div>
+  </div>
+
+  <div class="score" id="score">
+    <div class="n"><span id="sNum">0</span><span> / 7</span></div>
+    <p style="margin:8px 0 0;font-size:.88rem" id="sMsg">문제를 풀면 점수가 표시됩니다.</p>
+  </div>
+</section>
+
+<!-- ============ 7. 정리 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">七</span><span class="lbl">Recap</span></div>
+  <h2>오늘 챙겨 갈 것</h2>
+  <div class="recap">
+    <ul>
+      <li>시는 <span class="zh-i">点</span>, 분은 <span class="zh-i">分</span>. 2시는 <span class="zh-i">两点</span>, 2분은 <span class="zh-i">二分</span>.</li>
+      <li>10분 미만은 <span class="zh-i">零</span>을 넣습니다 — <span class="zh-i">一点零五分</span>.</li>
+      <li>30분은 <span class="zh-i">半</span>, 15분은 <span class="zh-i">一刻</span>, 45분은 <span class="zh-i">三刻</span>.</li>
+      <li>“몇 분 전”은 <span class="zh-i">差五分八点</span>처럼 모자란 쪽을 먼저 말합니다.</li>
+      <li>시간 표현은 <b>동사 앞</b>. 주어 앞으로는 갈 수 있어도 동사 뒤로는 못 갑니다.</li>
+      <li>시간 표현이 둘이면 큰 단위부터 — <span class="zh-i">明天早上八点</span>.</li>
+      <li><span class="zh-i">几点</span>은 시각을, <span class="zh-i">什么时候</span>는 넓은 “언제”를 묻습니다.</li>
+    </ul>
+  </div>
+
+  <div class="next">
+    <div class="l">NEXT · 제6강</div>
+    <div class="t">장소와 방향 — 在와 존재문</div>
+    <p class="d">
+      오늘 배운 “시간은 동사 앞” 원칙이 장소에도 그대로 적용됩니다.
+      在의 두 얼굴(~에 있다 / ~에서), 방위사, 그리고 有와 在의 결정적 차이를 다룹니다.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>중국어 첫걸음 · 제5강 시간과 하루 일과</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- TTS ---------- */
+var zhVoice=null, checked=false;
+function pickVoice(){
+  if(!("speechSynthesis" in window)) return;
+  var vs=speechSynthesis.getVoices()||[];
+  zhVoice=vs.find(function(v){return /^zh[-_]?CN/i.test(v.lang)})
+       || vs.find(function(v){return /^zh/i.test(v.lang)}) || null;
+  if(!checked && vs.length){ checked=true;
+    if(!zhVoice) document.getElementById("ttsNote").classList.add("show"); }
+}
+if("speechSynthesis" in window){
+  pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; setTimeout(pickVoice,900);
+}else{ document.getElementById("ttsNote").classList.add("show"); }
+function speak(text,onend){
+  if(!("speechSynthesis" in window)){ if(onend) onend(); return; }
+  try{
+    speechSynthesis.cancel();
+    var u=new SpeechSynthesisUtterance(text);
+    u.lang="zh-CN"; u.rate=.75;
+    if(zhVoice) u.voice=zhVoice;
+    if(onend) u.onend=onend;
+    speechSynthesis.speak(u);
+  }catch(e){ if(onend) onend(); }
+}
+var SPK='<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.5 4.2 4.6H1.6a.6.6 0 0 0-.6.6v5.6c0 .3.3.6.6.6h2.6L8 14.5zM11.2 5a.6.6 0 0 0-.1.9 3 3 0 0 1 0 4.2.6.6 0 1 0 .8.9 4.2 4.2 0 0 0 0-6 .6.6 0 0 0-.7 0zM13.2 2.9a.6.6 0 0 0-.1.9 6 6 0 0 1 0 8.4.6.6 0 1 0 .8.9 7.2 7.2 0 0 0 0-10.2.6.6 0 0 0-.7 0z"/></svg>';
+function flash(el){ el.classList.add("on"); setTimeout(function(){el.classList.remove("on")},520); }
+
+/* ---------- 숫자 ---------- */
+var D=[["零","líng"],["一","yī"],["二","èr"],["三","sān"],["四","sì"],["五","wǔ"],
+       ["六","liù"],["七","qī"],["八","bā"],["九","jiǔ"],["十","shí"]];
+function toCN(n){
+  if(n<=10) return [D[n][0],D[n][1]];
+  var t=Math.floor(n/10), o=n%10;
+  return [(t===1?"":D[t][0])+"十"+(o?D[o][0]:""),
+          (t===1?"":D[t][1])+"shí"+(o?D[o][1]:"")];
+}
+
+/* ---------- 시계 ---------- */
+var PERIODS=[
+  {hz:"早上",py:"zǎoshang",kr:"아침"},
+  {hz:"上午",py:"shàngwǔ",kr:"오전"},
+  {hz:"中午",py:"zhōngwǔ",kr:"정오"},
+  {hz:"下午",py:"xiàwǔ",kr:"오후"},
+  {hz:"晚上",py:"wǎnshang",kr:"저녁"}
+];
+var h=8, m=30, pIdx=1;
+
+var ticks=document.getElementById("ticks");
+for(var i=0;i<12;i++){
+  var a=i*30*Math.PI/180, r1=(i%3===0)?70:76, r2=80;
+  var x1=100+r1*Math.sin(a), y1=100-r1*Math.cos(a);
+  var x2=100+r2*Math.sin(a), y2=100-r2*Math.cos(a);
+  var ln=document.createElementNS("http://www.w3.org/2000/svg","line");
+  ln.setAttribute("class","ctick"+(i%3===0?" maj":""));
+  ln.setAttribute("x1",x1.toFixed(1)); ln.setAttribute("y1",y1.toFixed(1));
+  ln.setAttribute("x2",x2.toFixed(1)); ln.setAttribute("y2",y2.toFixed(1));
+  ticks.appendChild(ln);
+}
+
+function timeCN(hh,mm,pi){
+  var p=PERIODS[pi];
+  var hHz=(hh===2)?"两":toCN(hh)[0];
+  var hPy=(hh===2)?"liǎng":toCN(hh)[1];
+  var hz=p.hz+hHz+"点", py=p.py+" "+hPy+" diǎn", alt="";
+  if(mm===0){ /* 정각 */ }
+  else if(mm===30){ hz+="半"; py+=" bàn"; alt="十点整처럼 分을 쓰려면 "+hHz+"点三十分"; }
+  else if(mm<10){ hz+="零"+toCN(mm)[0]+"分"; py+=" líng "+toCN(mm)[1]+" fēn"; }
+  else { hz+=toCN(mm)[0]+"分"; py+=" "+toCN(mm)[1]+" fēn"; }
+  if(mm===15) alt="또는 "+p.hz+hHz+"点一刻";
+  if(mm===45) alt="또는 "+p.hz+hHz+"点三刻";
+  if(mm===30) alt="또는 "+p.hz+hHz+"点三十分";
+  if(mm===0)  alt="또는 "+p.hz+hHz+"点整 (정각)";
+  if(mm>=50){
+    var nh=(hh===12)?1:hh+1;
+    var nHz=(nh===2)?"两":toCN(nh)[0];
+    alt="또는 差"+toCN(60-mm)[0]+"分"+nHz+"点 ("+(60-mm)+"분 전)";
+  }
+  return [hz,py,alt];
+}
+function drawHands(){
+  var ha=(h%12)*30+m*0.5, ma=m*6;
+  document.getElementById("handH").setAttribute("transform","rotate("+ha+" 100 100)");
+  document.getElementById("handM").setAttribute("transform","rotate("+ma+" 100 100)");
+}
+var curTime="";
+function renderTime(){
+  document.getElementById("vH").textContent=h;
+  document.getElementById("vM").textContent=(m<10?"0":"")+m;
+  var t=timeCN(h,m,pIdx);
+  curTime=t[0];
+  document.getElementById("tHz").textContent=t[0];
+  document.getElementById("tPy").textContent=t[1];
+  document.getElementById("tAlt").innerHTML=t[2]?t[2].replace(/([\u4e00-\u9fff]+)/g,"<b>$1</b>"):"";
+  drawHands();
+}
+document.getElementById("rH").addEventListener("input",function(){h=+this.value;renderTime()});
+document.getElementById("rM").addEventListener("input",function(){m=+this.value;renderTime()});
+
+var pBox=document.getElementById("periods");
+PERIODS.forEach(function(p,i){
+  var b=document.createElement("button");
+  b.className="pill"+(i===1?" sel":""); b.type="button"; b.textContent=p.hz;
+  b.addEventListener("click",function(){
+    pBox.querySelectorAll(".pill").forEach(function(x){x.classList.remove("sel")});
+    b.classList.add("sel"); pIdx=i; renderTime();
+  });
+  pBox.appendChild(b);
+});
+[[7,0,0],[9,15,1],[12,30,2],[3,45,3],[8,5,4],[11,55,4]].forEach(function(t){
+  var b=document.createElement("button");
+  b.className="qbtn"; b.type="button";
+  b.textContent=t[0]+":"+(t[1]<10?"0":"")+t[1];
+  b.addEventListener("click",function(){
+    h=t[0]; m=t[1]; pIdx=t[2];
+    document.getElementById("rH").value=h; document.getElementById("rM").value=m;
+    pBox.querySelectorAll(".pill").forEach(function(x,j){x.classList.toggle("sel",j===pIdx)});
+    renderTime(); speak(curTime);
+  });
+  document.getElementById("quick").appendChild(b);
+});
+var tPlay=document.getElementById("tPlay"); tPlay.innerHTML=SPK;
+tPlay.addEventListener("click",function(){speak(curTime);flash(tPlay)});
+renderTime();
+
+/* ---------- 시간대 칩 ---------- */
+var pcBox=document.getElementById("periodChips");
+PERIODS.forEach(function(p){
+  var b=document.createElement("button");
+  b.className="chip"; b.type="button";
+  b.setAttribute("aria-label",p.kr+" 발음 듣기");
+  b.innerHTML='<span class="c-hz">'+p.hz+'</span><span class="c-py">'+p.py+'</span><span class="c-kr">'+p.kr+'</span>';
+  b.addEventListener("click",function(){speak(p.hz);flash(b)});
+  pcBox.appendChild(b);
+});
+
+/* ---------- 타임라인 ---------- */
+var TL=[
+  ["7:00","我早上七点起床。","Wǒ zǎoshang qī diǎn qǐchuáng.","저는 아침 7시에 일어납니다."],
+  ["7:30","我七点半吃早饭。","Wǒ qī diǎn bàn chī zǎofàn.","7시 반에 아침을 먹습니다."],
+  ["9:00","我上午九点上班。","Wǒ shàngwǔ jiǔ diǎn shàngbān.","오전 9시에 출근합니다."],
+  ["12:15","我十二点一刻吃午饭。","Wǒ shí'èr diǎn yí kè chī wǔfàn.","12시 15분에 점심을 먹습니다."],
+  ["18:00","我下午六点下班。","Wǒ xiàwǔ liù diǎn xiàbān.","오후 6시에 퇴근합니다."],
+  ["23:30","我晚上十一点半睡觉。","Wǒ wǎnshang shíyī diǎn bàn shuìjiào.","밤 11시 반에 잠자리에 듭니다."]
+];
+var tlBox=document.getElementById("timeline");
+TL.forEach(function(r,i){
+  var row=document.createElement("button");
+  row.className="tlrow"; row.type="button";
+  row.style.cssText+="width:100%;text-align:left;background:transparent;border:none;font:inherit;";
+  row.innerHTML='<span class="tltime">'+r[0]+'</span>'+
+    '<span class="tltxt"><span class="tlhz">'+r[1]+'</span><br>'+
+    '<span class="tlpy">'+r[2]+'</span><br><span class="tlkr">'+r[3]+'</span></span>';
+  row.addEventListener("click",function(){
+    speak(r[1]);
+    tlBox.querySelectorAll(".tlrow").forEach(function(x){x.classList.remove("hl")});
+    row.classList.add("hl");
+    setTimeout(function(){row.classList.remove("hl")},2600);
+  });
+  tlBox.appendChild(row);
+});
+
+/* ---------- 어휘 ---------- */
+function fillVocab(list,mount){
+  var box=document.getElementById(mount);
+  list.forEach(function(v){
+    var e=document.createElement("div"); e.className="v";
+    e.innerHTML='<div class="v-txt"><div class="v-hz">'+v[0]+'</div><div class="v-py">'+v[1]+'</div><div class="v-kr">'+v[2]+'</div></div>';
+    var b=document.createElement("button");
+    b.className="play"; b.type="button"; b.innerHTML=SPK;
+    b.setAttribute("aria-label",v[0]+" 발음 듣기");
+    b.addEventListener("click",function(){speak(v[0]);flash(b)});
+    e.appendChild(b); box.appendChild(e);
+  });
+}
+fillVocab([
+  ["现在","xiànzài","지금"],["点","diǎn","시"],
+  ["分","fēn","분"],["半","bàn","반, 30분"],
+  ["刻","kè","15분"],["差","chà","모자라다, ~전"],
+  ["什么时候","shénme shíhou","언제"],["起床","qǐchuáng","일어나다"],
+  ["睡觉","shuìjiào","잠자다"],["吃饭","chīfàn","밥을 먹다"],
+  ["上班","shàngbān","출근하다"],["下班","xiàbān","퇴근하다"],
+  ["上课","shàngkè","수업을 듣다"],["回家","huíjiā","집에 돌아가다"]
+],"vocab");
+
+/* ---------- 대화 ---------- */
+var DIALOG=[
+  ["A","现在几点？","Xiànzài jǐ diǎn?","지금 몇 시예요?"],
+  ["B","现在下午三点一刻。","Xiànzài xiàwǔ sān diǎn yí kè.","지금 오후 3시 15분이에요."],
+  ["A","你今天几点下班？","Nǐ jīntiān jǐ diǎn xiàbān?","오늘 몇 시에 퇴근해요?"],
+  ["B","我六点下班。你呢？","Wǒ liù diǎn xiàbān. Nǐ ne?","6시에 퇴근해요. 당신은요?"],
+  ["A","我也是。我们晚上七点半吃饭，好吗？","Wǒ yě shì. Wǒmen wǎnshang qī diǎn bàn chīfàn, hǎo ma?","저도요. 우리 저녁 7시 반에 밥 먹어요, 어때요?"],
+  ["B","好！明天早上我八点上班，今天不太晚。","Hǎo! Míngtiān zǎoshang wǒ bā diǎn shàngbān, jīntiān bú tài wǎn.","좋아요! 내일 아침 8시에 출근하니까 오늘은 너무 늦지 않게요."]
+];
+var dlgBox=document.getElementById("dialog");
+DIALOG.forEach(function(l,i){
+  var row=document.createElement("div");
+  row.className="line"; row.id="ln"+i;
+  row.innerHTML='<span class="who '+(l[0]==="A"?"a":"b")+'">'+l[0]+'</span>'+
+    '<div class="ltxt"><div class="lhz">'+l[1]+'</div><div class="lpy">'+l[2]+'</div><div class="lkr">'+l[3]+'</div></div>';
+  var b=document.createElement("button");
+  b.className="play"; b.type="button"; b.innerHTML=SPK;
+  b.setAttribute("aria-label",(i+1)+"번째 대사 듣기");
+  b.addEventListener("click",function(){
+    stopAll(); speak(l[1]); flash(b);
+    row.classList.add("hl"); setTimeout(function(){row.classList.remove("hl")},2200);
+  });
+  row.appendChild(b); dlgBox.appendChild(row);
+});
+var playing=false;
+function stopAll(){
+  playing=false;
+  if("speechSynthesis" in window){ try{speechSynthesis.cancel()}catch(e){} }
+  DIALOG.forEach(function(_,i){document.getElementById("ln"+i).classList.remove("hl")});
+}
+document.getElementById("stopAll").addEventListener("click",stopAll);
+document.getElementById("playAll").addEventListener("click",function(){
+  stopAll(); playing=true;
+  (function next(i){
+    if(!playing||i>=DIALOG.length){ stopAll(); return; }
+    DIALOG.forEach(function(_,j){document.getElementById("ln"+j).classList.remove("hl")});
+    var row=document.getElementById("ln"+i);
+    row.classList.add("hl"); row.scrollIntoView({block:"center",behavior:"smooth"});
+    speak(DIALOG[i][1],function(){setTimeout(function(){next(i+1)},350)});
+  })(0);
+});
+var krOn=true;
+document.getElementById("toggleKr").addEventListener("click",function(){
+  krOn=!krOn;
+  dlgBox.querySelectorAll(".lkr").forEach(function(e){e.style.display=krOn?"":"none"});
+  this.textContent=krOn?"한국어 뜻 숨기기":"한국어 뜻 보기";
+  this.classList.toggle("act",!krOn);
+});
+
+/* ---------- 퀴즈 ---------- */
+var QUIZ=[
+  {no:"一",ask:"2시를 바르게 쓴 것은?",
+   opts:["二点","两点","二时","两分"],a:1,
+   why:"点은 양사이므로 앞에 两을 씁니다. 다만 2분은 二分이라고 합니다."},
+  {no:"二",ask:"1시 5분을 바르게 쓴 것은?",
+   opts:["一点五分","一点零五分","一点五","零一点五分"],a:1,
+   why:"10분 미만일 때는 零으로 자리를 채웁니다. yī diǎn líng wǔ fēn."},
+  {no:"三",ask:'“8시 반”을 가장 자연스럽게 말한 것은?',
+   opts:["八点半","半八点","八半点","八点半分"],a:0,
+   why:"半은 分 없이 点 뒤에 바로 붙입니다. 八点三十分도 맞지만 八点半이 더 흔합니다."},
+  {no:"四",ask:'“저는 7시에 일어납니다.” 알맞은 문장은?',
+   opts:["我起床七点。","我七点起床。","七点起床我。","我起床在七点。"],a:1,
+   why:"시간은 반드시 동사 앞에 옵니다. 七点我起床。도 맞지만 동사 뒤로는 갈 수 없습니다."},
+  {no:"五",ask:'“지금 몇 시예요?” 알맞은 문장은?',
+   opts:["现在几点？","现在多少点？","几点现在吗？","现在什么点？"],a:0,
+   why:"시각을 물을 때는 几点을 씁니다. 多少는 시각에 쓰지 않습니다."},
+  {no:"六",ask:'“내일 아침 8시”를 바르게 쓴 것은?',
+   opts:["八点早上明天","早上明天八点","明天早上八点","明天八点早上"],a:2,
+   why:"시간 표현이 여러 개면 큰 단위부터 씁니다. 날짜 → 시간대 → 시각 순서입니다."}
+];
+var solved={}, total=7, qBox=document.getElementById("quiz");
+QUIZ.forEach(function(q,qi){
+  var card=document.createElement("div"); card.className="q";
+  var opts=q.opts.map(function(o,k){
+    return '<button class="opt" type="button" data-q="'+qi+'" data-o="'+k+'"><span class="zh-o">'+o+'</span></button>';
+  }).join("");
+  card.innerHTML='<div class="seal" id="seal'+qi+'">对</div>'+
+    '<div class="q-head"><span class="q-no">'+q.no+'</span><span class="q-ask">'+q.ask+'</span></div>'+
+    '<div class="opts">'+opts+'</div><div class="fb" id="fb'+qi+'"></div>';
+  qBox.appendChild(card);
+});
+qBox.addEventListener("click",function(e){
+  var btn=e.target.closest(".opt"); if(!btn||btn.disabled) return;
+  var qi=+btn.dataset.q, o=+btn.dataset.o, q=QUIZ[qi], card=btn.closest(".q");
+  card.querySelectorAll(".opt").forEach(function(b){b.disabled=true});
+  var ok=(o===q.a);
+  btn.classList.add(ok?"right":"wrong");
+  if(!ok) card.querySelectorAll(".opt")[q.a].classList.add("right");
+  var fb=document.getElementById("fb"+qi);
+  fb.className="fb show "+(ok?"ok":"no");
+  fb.innerHTML=(ok?"정답입니다. ":"아쉽네요. ")+q.why;
+  if(ok) document.getElementById("seal"+qi).classList.add("on");
+  solved[qi]=ok; updateScore();
+});
+
+/* ---------- 문장 배열 ---------- */
+var ANS=["我","明天","早上","八点","上班"];
+var pool=["八点","上班","我","早上","明天"], placed=[];
+var woSlot=document.getElementById("woSlot"), woPool=document.getElementById("woPool"),
+    woFb=document.getElementById("woFb"), woSeal=document.getElementById("woSeal");
+function renderWO(){
+  woSlot.innerHTML=placed.map(function(t){return '<span class="tok">'+t+'</span>'}).join("");
+  woPool.innerHTML=pool.map(function(t,i){
+    return '<button class="tok'+(placed.indexOf(t)>-1?" used":"")+'" type="button" data-i="'+i+'">'+t+'</button>';
+  }).join("");
+}
+renderWO();
+woPool.addEventListener("click",function(e){
+  var b=e.target.closest(".tok"); if(!b) return;
+  var t=pool[+b.dataset.i]; if(placed.indexOf(t)>-1) return;
+  placed.push(t); renderWO();
+});
+document.getElementById("woReset").addEventListener("click",function(){
+  placed=[]; renderWO(); woFb.className="fb"; woSeal.classList.remove("on");
+});
+document.getElementById("woCheck").addEventListener("click",function(){
+  if(placed.length<5){ woFb.className="fb show no"; woFb.textContent="다섯 조각을 모두 놓아 주세요."; return; }
+  var ok=placed.join("")===ANS.join("");
+  woFb.className="fb show "+(ok?"ok":"no");
+  woFb.innerHTML=ok
+    ? '정답입니다. <b>我明天早上八点上班。 Wǒ míngtiān zǎoshang bā diǎn shàngbān.</b> — 큰 단위부터 좁혀 들어가고, 시간 덩어리 전체가 동사 앞에 놓입니다.'
+    : '시간 표현의 순서를 다시 보세요. 날짜 → 시간대 → 시각이며, 동사는 맨 뒤입니다.';
+  if(ok){ woSeal.classList.add("on"); speak("我明天早上八点上班"); }
+  solved["wo"]=ok; updateScore();
+});
+
+/* ---------- 점수 ---------- */
+function updateScore(){
+  var n=0,done=0;
+  for(var k in solved){ done++; if(solved[k]) n++; }
+  document.getElementById("sNum").textContent=n;
+  var msg=document.getElementById("sMsg");
+  if(done<total) msg.textContent=(total-done)+"문제 남았습니다.";
+  else if(n===total) msg.textContent="완벽합니다. 6강으로 넘어가도 좋습니다.";
+  else if(n>=5) msg.textContent="잘하셨습니다. 틀린 문항의 해설만 다시 읽어 보세요.";
+  else msg.textContent="시간 표현의 자리와 零·两의 쓰임을 한 번 더 보고 오세요.";
+}
+
+/* ---------- 진행률 ---------- */
+var bar=document.getElementById("bar"), pct=document.getElementById("pct");
+function onScroll(){
+  var hh=document.documentElement.scrollHeight-window.innerHeight;
+  var p=hh>0?Math.min(Math.round(window.scrollY/hh*100),100):0;
+  bar.style.width=p+"%"; pct.textContent=p+"%";
+}
+window.addEventListener("scroll",onScroll,{passive:true});
+window.addEventListener("resize",onScroll);
+onScroll();
+
+})();
+</script>
+</body>
+</html>

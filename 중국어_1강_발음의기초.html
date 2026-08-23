@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>중국어 제1강 · 소리에는 높낮이가 있다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+KR:wght@600;700&family=Noto+Serif+SC:wght@600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E9EBE4;
+  --card:#F7F8F3;
+  --ink:#15201D;
+  --ink-2:#3D4B46;
+  --muted:#79857F;
+  --jade:#1E6F62;
+  --jade-soft:#DDE9E5;
+  --cinnabar:#C1402C;
+  --line:#C9CFC7;
+  --kr:"Noto Sans KR","Malgun Gothic",sans-serif;
+  --kr-serif:"Noto Serif KR","Nanum Myeongjo",serif;
+  --zh:"Noto Serif SC","Songti SC",serif;
+  --zh-sans:"Noto Sans SC","PingFang SC",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--kr);line-height:1.75;-webkit-font-smoothing:antialiased;
+}
+:focus-visible{outline:2px solid var(--jade);outline-offset:3px;border-radius:3px}
+
+/* ---------- progress bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:50;background:rgba(233,235,228,.92);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+}
+.topbar-in{
+  max-width:880px;margin:0 auto;padding:10px 22px;
+  display:flex;align-items:center;gap:14px;
+}
+.badge{
+  font-family:var(--zh);font-weight:600;font-size:.85rem;color:var(--jade);
+  letter-spacing:.08em;white-space:nowrap;
+}
+.track{flex:1;height:3px;background:var(--line);border-radius:99px;overflow:hidden}
+.track i{display:block;height:100%;width:0;background:var(--jade);transition:width .25s ease}
+.pct{font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums;min-width:34px;text-align:right}
+
+/* ---------- layout ---------- */
+main{max-width:880px;margin:0 auto;padding:0 22px 90px}
+section{padding:56px 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:none}
+.eyebrow{
+  display:flex;align-items:baseline;gap:12px;margin-bottom:6px;
+}
+.eyebrow .num{
+  font-family:var(--zh);font-size:.95rem;color:var(--cinnabar);font-weight:600;
+}
+.eyebrow .lbl{
+  font-size:.72rem;letter-spacing:.22em;color:var(--muted);text-transform:uppercase;
+}
+h2{
+  font-family:var(--kr-serif);font-weight:700;font-size:clamp(1.4rem,4vw,1.85rem);
+  margin:0 0 14px;line-height:1.35;letter-spacing:-.01em;
+}
+h3{font-family:var(--kr-serif);font-weight:600;font-size:1.05rem;margin:32px 0 10px}
+p{margin:0 0 14px;color:var(--ink-2)}
+.lead{font-size:1.03rem;color:var(--ink)}
+small{color:var(--muted)}
+
+/* ---------- hero ---------- */
+.hero{padding:64px 0 52px;text-align:center}
+.hero .kicker{
+  font-size:.72rem;letter-spacing:.3em;color:var(--muted);margin-bottom:26px;
+}
+.hero-word{display:inline-flex;gap:26px;align-items:flex-start}
+.syl{display:flex;flex-direction:column;align-items:center;gap:2px}
+.syl .py{
+  font-family:var(--zh-sans);font-size:clamp(.9rem,3vw,1.15rem);color:var(--jade);
+  letter-spacing:.06em;
+}
+.syl .hz{
+  font-family:var(--zh);font-weight:900;font-size:clamp(4rem,17vw,7rem);line-height:1;
+}
+.syl svg{display:block;margin-top:8px}
+.contour{fill:none;stroke:var(--cinnabar);stroke-width:3.5;stroke-linecap:round}
+.contour-anim{stroke-dasharray:120;stroke-dashoffset:120;animation:draw 1.1s .4s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.hero-thesis{
+  margin:34px auto 0;max-width:520px;font-family:var(--kr-serif);
+  font-size:1.05rem;color:var(--ink);line-height:1.85;
+}
+.hero-thesis b{color:var(--cinnabar);font-weight:700}
+
+/* ---------- buttons ---------- */
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+.play{
+  border:1px solid var(--line);background:var(--card);color:var(--jade);
+  width:34px;height:34px;border-radius:50%;display:inline-flex;
+  align-items:center;justify-content:center;transition:.16s;flex:none;padding:0;
+}
+.play:hover{background:var(--jade);color:#fff;border-color:var(--jade)}
+.play.on{background:var(--jade);color:#fff;border-color:var(--jade)}
+.play svg{width:13px;height:13px}
+
+/* ---------- tone grid ---------- */
+.tones{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0 8px}
+.tone{
+  background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:14px 8px 12px;text-align:center;transition:.16s;
+}
+.tone:hover{border-color:var(--jade);transform:translateY(-2px)}
+.tone.on{border-color:var(--cinnabar);background:#fff}
+.tone .t-name{font-size:.72rem;letter-spacing:.12em;color:var(--muted)}
+.tone .t-hz{font-family:var(--zh);font-size:1.9rem;font-weight:600;line-height:1.2}
+.tone .t-py{font-family:var(--zh-sans);color:var(--jade);font-size:1rem}
+.tone .t-mean{font-size:.75rem;color:var(--muted)}
+.grid-line{stroke:var(--line);stroke-width:1}
+.grid-line.mid{stroke-dasharray:3 4}
+.dot{fill:var(--cinnabar)}
+.tone-note{
+  background:var(--jade-soft);border-radius:10px;padding:16px 18px;margin-top:20px;
+  font-size:.92rem;color:var(--ink-2);
+}
+.tone-note b{color:var(--jade)}
+
+/* ---------- pinyin tables ---------- */
+.chip-grid{display:grid;gap:8px;margin:16px 0}
+.cols-4{grid-template-columns:repeat(4,1fr)}
+.cols-6{grid-template-columns:repeat(6,1fr)}
+.chip{
+  background:var(--card);border:1px solid var(--line);border-radius:9px;
+  padding:10px 4px;text-align:center;transition:.14s;
+}
+.chip:hover{background:#fff;border-color:var(--jade)}
+.chip.on{background:var(--jade);border-color:var(--jade)}
+.chip.on .c-key,.chip.on .c-ex,.chip.on .c-py{color:#fff}
+.c-key{font-family:var(--zh-sans);font-size:1.05rem;font-weight:500;color:var(--ink);display:block}
+.c-ex{font-family:var(--zh);font-size:.9rem;color:var(--ink-2);display:block;margin-top:2px}
+.c-py{font-family:var(--zh-sans);font-size:.72rem;color:var(--muted);display:block}
+
+/* ---------- warn box ---------- */
+.warn{
+  border-left:3px solid var(--cinnabar);padding:4px 0 4px 16px;margin:20px 0;
+}
+.warn h4{margin:0 0 4px;font-size:.95rem;font-family:var(--kr-serif)}
+.warn p{margin:0;font-size:.9rem}
+.zh-i{font-family:var(--zh);font-weight:600}
+.py-i{font-family:var(--zh-sans);color:var(--jade)}
+
+/* ---------- vocab ---------- */
+.vocab{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}
+.v{
+  background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:14px 16px;display:flex;align-items:center;gap:12px;transition:.16s;
+}
+.v:hover{background:#fff;box-shadow:0 3px 14px rgba(21,32,29,.07)}
+.v-txt{flex:1;min-width:0}
+.v-hz{font-family:var(--zh);font-size:1.45rem;font-weight:600;line-height:1.3}
+.v-py{font-family:var(--zh-sans);font-size:.85rem;color:var(--jade)}
+.v-kr{font-size:.85rem;color:var(--muted);margin-top:2px}
+
+/* ---------- pronoun table ---------- */
+.ptable{width:100%;border-collapse:collapse;margin-top:16px;font-size:.92rem}
+.ptable th{
+  text-align:left;font-size:.7rem;letter-spacing:.16em;color:var(--muted);
+  font-weight:500;padding:0 10px 8px;border-bottom:1px solid var(--line);
+}
+.ptable td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+.ptable tr:hover td{background:var(--card)}
+.ptable .hz{font-family:var(--zh);font-size:1.25rem;font-weight:600}
+.ptable .py{font-family:var(--zh-sans);color:var(--jade);font-size:.85rem}
+
+/* ---------- quiz ---------- */
+.q{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:20px 20px 18px;margin-bottom:14px;position:relative;overflow:hidden;
+}
+.q-head{display:flex;gap:10px;align-items:baseline;margin-bottom:12px}
+.q-no{font-family:var(--zh);color:var(--cinnabar);font-size:.85rem;font-weight:600;flex:none}
+.q-ask{font-size:.98rem;color:var(--ink);font-weight:500}
+.q-ask .zh-q{font-family:var(--zh);font-size:1.35rem;font-weight:600;vertical-align:-2px}
+.opts{display:grid;gap:8px}
+.cols2{grid-template-columns:repeat(2,1fr)}
+.opt{
+  background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 14px;
+  text-align:left;transition:.14s;color:var(--ink);font-size:.95rem;
+}
+.opt:hover:not(:disabled){border-color:var(--jade);background:var(--jade-soft)}
+.opt:disabled{cursor:default;opacity:.55}
+.opt.right{border-color:var(--jade);background:var(--jade-soft);opacity:1;font-weight:500}
+.opt.wrong{border-color:var(--cinnabar);background:#F8E7E4;opacity:1}
+.opt .py-o{font-family:var(--zh-sans);color:var(--jade)}
+.fb{
+  margin-top:12px;font-size:.87rem;padding:10px 13px;border-radius:8px;display:none;
+}
+.fb.show{display:block}
+.fb.ok{background:var(--jade-soft);color:var(--jade)}
+.fb.no{background:#F8E7E4;color:var(--cinnabar)}
+
+/* word order */
+.wo-slot{
+  min-height:56px;border:1px dashed var(--line);border-radius:9px;background:#fff;
+  display:flex;align-items:center;gap:8px;padding:8px 12px;flex-wrap:wrap;margin-bottom:10px;
+}
+.wo-slot:empty::before{content:"아래에서 순서대로 눌러 보세요";color:var(--muted);font-size:.82rem}
+.tok{
+  font-family:var(--zh);font-size:1.2rem;font-weight:600;background:var(--jade-soft);
+  border:1px solid var(--jade);color:var(--jade);border-radius:7px;padding:5px 12px;
+}
+.wo-pool{display:flex;gap:8px;flex-wrap:wrap}
+.wo-pool .tok{background:#fff;border-color:var(--line);color:var(--ink);cursor:pointer}
+.wo-pool .tok:hover{border-color:var(--jade);background:var(--jade-soft);color:var(--jade)}
+.wo-pool .tok.used{opacity:.25;pointer-events:none}
+.wo-actions{display:flex;gap:8px;margin-top:4px}
+.mini{
+  border:1px solid var(--line);background:#fff;color:var(--ink-2);
+  border-radius:7px;padding:6px 14px;font-size:.82rem;transition:.14s;
+}
+.mini:hover{border-color:var(--jade);color:var(--jade)}
+
+/* seal stamp */
+.seal{
+  position:absolute;right:16px;top:14px;width:46px;height:46px;border-radius:50%;
+  border:2.5px solid var(--cinnabar);color:var(--cinnabar);font-family:var(--zh);
+  font-weight:900;font-size:1.35rem;display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:rotate(-14deg) scale(1.7);transition:.32s cubic-bezier(.2,1.5,.4,1);
+  pointer-events:none;
+}
+.seal.on{opacity:.9;transform:rotate(-14deg) scale(1)}
+
+/* score */
+.score{
+  text-align:center;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:22px;margin-top:18px;
+}
+.score .n{font-family:var(--zh);font-size:2.4rem;font-weight:900;color:var(--jade);line-height:1}
+.score .n span{font-size:1.1rem;color:var(--muted);font-weight:600}
+
+/* recap */
+.recap{background:var(--card);border-radius:14px;padding:22px 24px;border:1px solid var(--line)}
+.recap ul{margin:0;padding-left:18px}
+.recap li{margin-bottom:8px;color:var(--ink-2);font-size:.93rem}
+.next{
+  margin-top:22px;padding:20px 24px;border-radius:14px;
+  background:var(--jade);color:#fff;
+}
+.next .l{font-size:.7rem;letter-spacing:.24em;opacity:.75}
+.next .t{font-family:var(--kr-serif);font-size:1.15rem;font-weight:700;margin:6px 0 4px}
+.next .d{font-size:.88rem;opacity:.88;margin:0}
+
+/* tts notice */
+.tts-note{
+  display:none;background:#F8E7E4;color:var(--cinnabar);border-radius:9px;
+  padding:11px 15px;font-size:.83rem;margin:14px 0;
+}
+.tts-note.show{display:block}
+
+footer{text-align:center;padding:30px 0;color:var(--muted);font-size:.78rem;border-top:1px solid var(--line)}
+
+@media(max-width:600px){
+  main{padding:0 16px 70px}
+  section{padding:44px 0}
+  .tones{grid-template-columns:repeat(2,1fr)}
+  .vocab{grid-template-columns:1fr}
+  .cols-6{grid-template-columns:repeat(3,1fr)}
+  .cols-4{grid-template-columns:repeat(3,1fr)}
+  .opts.cols2{grid-template-columns:1fr}
+  .hero-word{gap:14px}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="badge">第一课 · 제1강</span>
+    <span class="track"><i id="bar"></i></span>
+    <span class="pct" id="pct">0%</span>
+  </div>
+</div>
+
+<main>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="kicker">중국어 첫걸음 · 발음의 기초</div>
+
+  <div class="hero-word">
+    <div class="syl">
+      <span class="py">ní</span>
+      <span class="hz">你</span>
+      <svg width="70" height="34" viewBox="0 0 70 34" aria-hidden="true">
+        <path class="contour contour-anim" d="M8,26 L62,8"/>
+      </svg>
+    </div>
+    <div class="syl">
+      <span class="py">hǎo</span>
+      <span class="hz">好</span>
+      <svg width="70" height="34" viewBox="0 0 70 34" aria-hidden="true">
+        <path class="contour contour-anim" d="M8,14 Q22,32 34,30 L62,8"/>
+      </svg>
+    </div>
+  </div>
+
+  <p class="hero-thesis">
+    한국어는 “안녕”을 어떻게 발음하든 뜻이 같습니다.<br>
+    중국어는 <b>음의 높낮이가 바뀌면 단어 자체가 바뀝니다.</b><br>
+    첫 강의에서 배울 것은 글자가 아니라 이 <b>소리의 선</b>입니다.
+  </p>
+
+  <div class="tts-note" id="ttsNote">
+    이 브라우저에 중국어 음성이 설치되어 있지 않아 소리가 나오지 않습니다.
+    Chrome 또는 Edge에서 열거나, 기기 설정에서 중국어(간체) 음성을 추가하면 발음을 들을 수 있습니다.
+    소리 없이도 모든 학습과 문제 풀이는 그대로 진행됩니다.
+  </div>
+</section>
+
+<!-- ================= 1. 오리엔테이션 ================= -->
+<section>
+  <div class="eyebrow"><span class="num">一</span><span class="lbl">Orientation</span></div>
+  <h2>중국어를 이루는 세 가지</h2>
+  <p class="lead">중국어 학습은 결국 이 세 개의 층을 쌓는 일입니다. 오늘은 아래 두 층, 병음과 성조를 다룹니다.</p>
+
+  <div class="vocab" style="grid-template-columns:repeat(3,1fr)">
+    <div class="v" style="display:block">
+      <div class="v-hz" style="font-size:1.6rem">汉字</div>
+      <div class="v-py">hànzì · 한자</div>
+      <div class="v-kr" style="line-height:1.6">중국 본토는 획을 줄인 <b>간체자</b>를 씁니다. 韓國 → 韩国</div>
+    </div>
+    <div class="v" style="display:block">
+      <div class="v-hz" style="font-size:1.6rem">拼音</div>
+      <div class="v-py">pīnyīn · 병음</div>
+      <div class="v-kr" style="line-height:1.6">한자의 소리를 알파벳으로 적은 것. 사전과 자판의 기준입니다.</div>
+    </div>
+    <div class="v" style="display:block">
+      <div class="v-hz" style="font-size:1.6rem">声调</div>
+      <div class="v-py">shēngdiào · 성조</div>
+      <div class="v-kr" style="line-height:1.6">음의 높낮이. 틀리면 다른 단어가 됩니다.</div>
+    </div>
+  </div>
+
+  <h3>병음은 이렇게 조립됩니다</h3>
+  <p>
+    한 음절 = <b class="py-i">성모</b>(첫 자음) + <b class="py-i">운모</b>(나머지 모음) + <b class="py-i">성조</b>(높낮이).<br>
+    예를 들어 <span class="zh-i">好</span> <span class="py-i">hǎo</span> 는 성모 <span class="py-i">h</span> + 운모 <span class="py-i">ao</span> + 3성입니다.
+    한자 한 글자는 언제나 딱 한 음절입니다.
+  </p>
+</section>
+
+<!-- ================= 2. 성조 ================= -->
+<section>
+  <div class="eyebrow"><span class="num">二</span><span class="lbl">Tones</span></div>
+  <h2>네 개의 성조</h2>
+  <p class="lead">
+    아래 눈금은 목소리 높이를 5단계로 나눈 것입니다. 맨 위가 가장 높은 소리, 맨 아래가 가장 낮은 소리입니다.
+    카드를 누르면 점이 그 선을 따라 움직입니다. 소리를 따라 하기보다 <b>선의 모양을 먼저 외우세요.</b>
+  </p>
+
+  <div class="tones" id="toneRow"></div>
+
+  <div class="tone-note">
+    <b>같은 ma, 네 개의 뜻.</b> 성조를 빼먹으면 “엄마”가 “욕하다”가 됩니다.
+    한국어에는 없는 개념이라 어색하지만, 성조는 장식이 아니라 <b>자음·모음과 똑같은 필수 정보</b>입니다.
+  </div>
+
+  <h3>다섯 번째 소리, 경성(轻声)</h3>
+  <p>
+    성조 부호 없이 짧고 가볍게 흘리는 소리를 <b>경성</b>이라고 합니다. 앞 음절에 얹혀 툭 떨어지듯 발음합니다.
+    <span class="zh-i">谢谢</span> <span class="py-i">xièxie</span>의 두 번째 <span class="py-i">xie</span>,
+    <span class="zh-i">妈妈</span> <span class="py-i">māma</span>의 두 번째 <span class="py-i">ma</span>가 그렇습니다.
+  </p>
+
+  <h3>성조 부호는 어디에 찍나요</h3>
+  <p>
+    <b>a</b>가 있으면 무조건 a 위에 (h<b class="py-i">ǎ</b>o).
+    a가 없으면 <b>o</b>나 <b>e</b> 위에 (d<b class="py-i">ō</b>u, x<b class="py-i">iè</b>).
+    <b>iu</b>와 <b>ui</b>는 뒤 글자에 (li<b class="py-i">ù</b>, hu<b class="py-i">ì</b>).
+    <b>i</b> 위에 찍을 때는 점을 지웁니다 (n<b class="py-i">ǐ</b>).
+  </p>
+</section>
+
+<!-- ================= 3. 병음 ================= -->
+<section>
+  <div class="eyebrow"><span class="num">三</span><span class="lbl">Pinyin</span></div>
+  <h2>소리의 재료</h2>
+
+  <h3>단운모 6개</h3>
+  <p>모든 운모의 기본입니다. 누르면 예시 한자의 발음이 나옵니다.</p>
+  <div class="chip-grid cols-6" id="finals"></div>
+
+  <h3>성모 21개</h3>
+  <p>한국어에 없는 소리는 아래 주의 상자에서 따로 다룹니다.</p>
+  <div class="chip-grid cols-4" id="initials"></div>
+
+  <div class="warn">
+    <h4>zh · ch · sh · r — 혀를 말아 올립니다</h4>
+    <p>혀끝을 입천장 쪽으로 살짝 말아 올린 채 발음합니다. 한국어 “ㅈ, ㅊ, ㅅ”보다 훨씬 뒤쪽에서 소리가 납니다.</p>
+  </div>
+  <div class="warn">
+    <h4>z · c · s — 혀를 평평하게 둡니다</h4>
+    <p>혀끝을 윗니 뒤에 붙였다 떼는 소리입니다. zh/ch/sh와 짝을 이루며, 이 구분이 중국어 발음의 첫 관문입니다.</p>
+  </div>
+  <div class="warn">
+    <h4>ü — 한국어 “위”를 입술 고정한 채</h4>
+    <p>
+      “이” 입 모양 그대로 입술만 동그랗게 오므립니다. 단,
+      <span class="py-i">j · q · x</span> 뒤에서는 점을 생략해 <span class="py-i">ju · qu · xu</span>로 적지만 소리는 그대로 ü입니다.
+    </p>
+  </div>
+</section>
+
+<!-- ================= 4. 변조 ================= -->
+<section>
+  <div class="eyebrow"><span class="num">四</span><span class="lbl">Tone Sandhi</span></div>
+  <h2>적힌 대로 읽지 않는 두 경우</h2>
+  <p class="lead">중국어에는 “표기는 그대로 두고 발음만 바뀌는” 규칙이 있습니다. 첫날부터 만나는 것이 이 둘입니다.</p>
+
+  <h3>3성 + 3성 → 2성 + 3성</h3>
+  <p>
+    3성이 연달아 오면 앞의 3성을 2성으로 올려 읽습니다. 그래서
+    <span class="zh-i">你好</span>는 표기가 <span class="py-i">nǐ hǎo</span>지만 실제로는
+    <b class="py-i">ní hǎo</b>로 들립니다. 페이지 맨 위 곡선이 바로 이 모습입니다.
+  </p>
+
+  <h3>不 bù 의 변조</h3>
+  <p>
+    <span class="zh-i">不</span>는 원래 4성이지만, 뒤에 4성이 오면 2성으로 바뀝니다.
+    <span class="zh-i">不客气</span>는 <span class="py-i">bù</span>가 아니라
+    <b class="py-i">bú kèqi</b>입니다.
+  </p>
+
+  <div class="tone-note">
+    <b>외우는 요령.</b> 두 규칙 모두 “높은 소리끼리, 낮은 소리끼리 부딪히면 앞이 양보한다”는 하나의 원리입니다.
+    입으로 소리 내 보면 왜 그런지 바로 느껴집니다.
+  </div>
+</section>
+
+<!-- ================= 5. 인사 ================= -->
+<section>
+  <div class="eyebrow"><span class="num">五</span><span class="lbl">Greetings</span></div>
+  <h2>오늘의 표현 12개</h2>
+  <p class="lead">중국에서 하루를 보내는 데 필요한 최소한의 문장입니다. 스피커를 눌러 소리를 확인하세요.</p>
+  <div class="vocab" id="vocab"></div>
+</section>
+
+<!-- ================= 6. 인칭대명사 ================= -->
+<section>
+  <div class="eyebrow"><span class="num">六</span><span class="lbl">Pronouns</span></div>
+  <h2>사람을 가리키는 말</h2>
+  <p class="lead">
+    복수형은 예외 없이 <span class="zh-i">们</span> <span class="py-i">men</span> 하나만 붙이면 끝입니다.
+    한국어의 존댓말 체계에 비하면 놀라울 만큼 단순합니다.
+  </p>
+  <table class="ptable">
+    <thead><tr><th style="width:96px">한자</th><th style="width:110px">병음</th><th>뜻</th><th style="width:56px"></th></tr></thead>
+    <tbody id="pronouns"></tbody>
+  </table>
+  <p style="margin-top:14px">
+    <small><span class="zh-i">您</span> <span class="py-i">nín</span>은 <span class="zh-i">你</span>의 높임말로, 어른이나 손님에게 씁니다.
+    <span class="zh-i">他</span>와 <span class="zh-i">她</span>는 글자만 다를 뿐 발음이 <span class="py-i">tā</span>로 완전히 같습니다.</small>
+  </p>
+</section>
+
+<!-- ================= 7. 연습 ================= -->
+<section>
+  <div class="eyebrow"><span class="num">七</span><span class="lbl">Practice</span></div>
+  <h2>확인 문제</h2>
+  <p class="lead">한 번에 한 문제씩, 답을 고르면 바로 채점됩니다.</p>
+
+  <div id="quiz"></div>
+
+  <!-- word order -->
+  <div class="q" id="woBox">
+    <div class="seal" id="woSeal">对</div>
+    <div class="q-head">
+      <span class="q-no">七</span>
+      <span class="q-ask">“저는 잘 지내요”가 되도록 순서대로 눌러 문장을 만드세요.</span>
+    </div>
+    <div class="wo-slot" id="woSlot"></div>
+    <div class="wo-pool" id="woPool"></div>
+    <div class="wo-actions">
+      <button class="mini" id="woReset">다시 놓기</button>
+      <button class="mini" id="woCheck">정답 확인</button>
+    </div>
+    <div class="fb" id="woFb"></div>
+  </div>
+
+  <div class="score" id="score">
+    <div class="n"><span id="sNum">0</span><span> / 7</span></div>
+    <p style="margin:8px 0 0;font-size:.88rem" id="sMsg">문제를 풀면 점수가 표시됩니다.</p>
+  </div>
+</section>
+
+<!-- ================= 8. 정리 ================= -->
+<section>
+  <div class="eyebrow"><span class="num">八</span><span class="lbl">Recap</span></div>
+  <h2>오늘 챙겨 갈 것</h2>
+  <div class="recap">
+    <ul>
+      <li>중국어 한 음절 = 성모 + 운모 + <b>성조</b>. 성조는 빠뜨리면 뜻이 달라지는 필수 정보입니다.</li>
+      <li>1성은 높고 평평하게, 2성은 올리고, 3성은 내렸다 올리고, 4성은 위에서 아래로 떨어뜨립니다.</li>
+      <li>성조 부호는 a 우선, 없으면 o·e, iu·ui는 뒤 글자에 찍습니다.</li>
+      <li>zh·ch·sh·r(혀 말기)과 z·c·s(혀 평평)의 구분을 오늘부터 의식하세요.</li>
+      <li>3성이 연달아 오면 앞이 2성으로, <span class="zh-i">不</span>는 4성 앞에서 2성으로 바뀝니다.</li>
+      <li>인사 12개와 인칭대명사 7개는 다음 강의의 재료로 그대로 쓰입니다.</li>
+    </ul>
+  </div>
+
+  <div class="next">
+    <div class="l">NEXT · 제2강</div>
+    <div class="t">이름과 국적 — 是 구문</div>
+    <p class="d">
+      我是韩国人。오늘 배운 인칭대명사에 동사 하나를 붙여 첫 완성 문장을 만듭니다.
+      이름 묻기, 국적 말하기, 그리고 부정문 不까지 다룹니다.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>중국어 첫걸음 · 제1강 발음의 기초</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------------- TTS ---------------- */
+var zhVoice=null, ttsChecked=false;
+function pickVoice(){
+  if(!("speechSynthesis" in window)) return;
+  var vs=speechSynthesis.getVoices()||[];
+  zhVoice=vs.find(function(v){return /^zh[-_]?CN/i.test(v.lang)})
+       || vs.find(function(v){return /^zh/i.test(v.lang)}) || null;
+  if(!ttsChecked && vs.length){
+    ttsChecked=true;
+    if(!zhVoice) document.getElementById("ttsNote").classList.add("show");
+  }
+}
+if("speechSynthesis" in window){
+  pickVoice();
+  speechSynthesis.onvoiceschanged=pickVoice;
+  setTimeout(pickVoice,900);
+}else{
+  document.getElementById("ttsNote").classList.add("show");
+}
+function speak(text){
+  if(!("speechSynthesis" in window)) return;
+  try{
+    speechSynthesis.cancel();
+    var u=new SpeechSynthesisUtterance(text);
+    u.lang="zh-CN"; u.rate=.75;
+    if(zhVoice) u.voice=zhVoice;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+var SPK='<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.5 4.2 4.6H1.6a.6.6 0 0 0-.6.6v5.6c0 .3.3.6.6.6h2.6L8 14.5zM11.2 5a.6.6 0 0 0-.1.9 3 3 0 0 1 0 4.2.6.6 0 1 0 .8.9 4.2 4.2 0 0 0 0-6 .6.6 0 0 0-.7 0zM13.2 2.9a.6.6 0 0 0-.1.9 6 6 0 0 1 0 8.4.6.6 0 1 0 .8.9 7.2 7.2 0 0 0 0-10.2.6.6 0 0 0-.7 0z"/></svg>';
+
+function flash(el){
+  el.classList.add("on");
+  setTimeout(function(){el.classList.remove("on")},520);
+}
+
+/* ---------------- 성조 카드 ---------------- */
+var TONES=[
+  {name:"제1성",mark:"55",hz:"妈",py:"mā",mean:"엄마",d:"M18,20 L102,20",desc:"높은 곳에서 평평하게"},
+  {name:"제2성",mark:"35",hz:"麻",py:"má",mean:"삼베",d:"M18,60 L102,20",desc:"중간에서 위로"},
+  {name:"제3성",mark:"214",hz:"马",py:"mǎ",mean:"말",d:"M18,80 Q40,104 58,100 L102,42",desc:"내렸다가 올리기"},
+  {name:"제4성",mark:"51",hz:"骂",py:"mà",mean:"꾸짖다",d:"M18,20 L102,100"}
+];
+var toneRow=document.getElementById("toneRow");
+TONES.forEach(function(t,i){
+  var b=document.createElement("button");
+  b.className="tone"; b.type="button";
+  b.setAttribute("aria-label",t.name+" "+t.py+" "+t.mean+" 발음 듣기");
+  b.innerHTML=
+    '<div class="t-name">'+t.name+' <span style="opacity:.6">'+t.mark+'</span></div>'+
+    '<svg viewBox="0 0 120 120" width="100%" height="86" aria-hidden="true">'+
+      '<line class="grid-line" x1="10" y1="20" x2="110" y2="20"/>'+
+      '<line class="grid-line mid" x1="10" y1="60" x2="110" y2="60"/>'+
+      '<line class="grid-line" x1="10" y1="100" x2="110" y2="100"/>'+
+      '<path class="contour" id="tp'+i+'" d="'+t.d+'"/>'+
+      '<circle class="dot" id="td'+i+'" r="5" cx="18" cy="20" opacity="0"/>'+
+    '</svg>'+
+    '<div class="t-hz">'+t.hz+'</div>'+
+    '<div class="t-py">'+t.py+'</div>'+
+    '<div class="t-mean">'+t.mean+'</div>';
+  b.addEventListener("click",function(){
+    TONES.forEach(function(_,j){document.getElementById("tp"+j).parentNode.parentNode.classList.remove("on")});
+    b.classList.add("on");
+    speak(t.hz);
+    runDot(document.getElementById("tp"+i),document.getElementById("td"+i));
+    setTimeout(function(){b.classList.remove("on")},1500);
+  });
+  toneRow.appendChild(b);
+});
+
+function runDot(path,dot){
+  if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  var len;
+  try{len=path.getTotalLength()}catch(e){return}
+  var dur=1100,t0=null;
+  dot.setAttribute("opacity","1");
+  function step(ts){
+    if(t0===null)t0=ts;
+    var p=Math.min((ts-t0)/dur,1);
+    var pt=path.getPointAtLength(len*p);
+    dot.setAttribute("cx",pt.x); dot.setAttribute("cy",pt.y);
+    if(p<1) requestAnimationFrame(step);
+    else setTimeout(function(){dot.setAttribute("opacity","0")},260);
+  }
+  requestAnimationFrame(step);
+}
+
+/* ---------------- 병음 칩 ---------------- */
+var FINALS=[
+  ["a","啊","ā"],["o","哦","ó"],["e","鹅","é"],
+  ["i","衣","yī"],["u","五","wǔ"],["ü","鱼","yú"]
+];
+var INITIALS=[
+  ["b","爸","bà"],["p","怕","pà"],["m","妈","mā"],["f","发","fā"],
+  ["d","大","dà"],["t","他","tā"],["n","那","nà"],["l","辣","là"],
+  ["g","哥","gē"],["k","渴","kě"],["h","喝","hē"],["j","鸡","jī"],
+  ["q","七","qī"],["x","西","xī"],["zh","知","zhī"],["ch","吃","chī"],
+  ["sh","十","shí"],["r","日","rì"],["z","字","zì"],["c","词","cí"],
+  ["s","四","sì"]
+];
+function buildChips(list,mount){
+  var box=document.getElementById(mount);
+  list.forEach(function(c){
+    var b=document.createElement("button");
+    b.className="chip"; b.type="button";
+    b.setAttribute("aria-label",c[0]+" 예시 "+c[2]+" 발음 듣기");
+    b.innerHTML='<span class="c-key">'+c[0]+'</span><span class="c-ex">'+c[1]+'</span><span class="c-py">'+c[2]+'</span>';
+    b.addEventListener("click",function(){speak(c[1]);flash(b)});
+    box.appendChild(b);
+  });
+}
+buildChips(FINALS,"finals");
+buildChips(INITIALS,"initials");
+
+/* ---------------- 인사 표현 ---------------- */
+var VOCAB=[
+  ["你好","nǐ hǎo","안녕하세요 (실제 발음 ní hǎo)"],
+  ["您好","nín hǎo","안녕하십니까 (높임)"],
+  ["你好吗？","nǐ hǎo ma","잘 지내세요?"],
+  ["我很好。","wǒ hěn hǎo","저는 잘 지내요"],
+  ["早上好","zǎoshang hǎo","좋은 아침이에요"],
+  ["晚上好","wǎnshang hǎo","좋은 저녁이에요"],
+  ["谢谢","xièxie","고맙습니다"],
+  ["不客气","bú kèqi","천만에요"],
+  ["对不起","duìbuqǐ","죄송합니다"],
+  ["没关系","méi guānxi","괜찮아요"],
+  ["再见","zàijiàn","안녕히 가세요"],
+  ["晚安","wǎn'ān","잘 자요"]
+];
+var vBox=document.getElementById("vocab");
+VOCAB.forEach(function(v){
+  var d=document.createElement("div");
+  d.className="v";
+  d.innerHTML='<div class="v-txt"><div class="v-hz">'+v[0]+'</div><div class="v-py">'+v[1]+'</div><div class="v-kr">'+v[2]+'</div></div>';
+  var b=document.createElement("button");
+  b.className="play"; b.type="button"; b.innerHTML=SPK;
+  b.setAttribute("aria-label",v[0]+" 발음 듣기");
+  b.addEventListener("click",function(){speak(v[0]);flash(b)});
+  d.appendChild(b);
+  vBox.appendChild(d);
+});
+
+/* ---------------- 인칭대명사 ---------------- */
+var PRON=[
+  ["我","wǒ","나, 저"],["你","nǐ","너, 당신"],["您","nín","당신 (높임)"],
+  ["他","tā","그"],["她","tā","그녀"],
+  ["我们","wǒmen","우리"],["你们","nǐmen","너희"],["他们","tāmen","그들"]
+];
+var pBody=document.getElementById("pronouns");
+PRON.forEach(function(p){
+  var tr=document.createElement("tr");
+  tr.innerHTML='<td class="hz">'+p[0]+'</td><td class="py">'+p[1]+'</td><td>'+p[2]+'</td>';
+  var td=document.createElement("td");
+  var b=document.createElement("button");
+  b.className="play"; b.type="button"; b.innerHTML=SPK;
+  b.setAttribute("aria-label",p[0]+" 발음 듣기");
+  b.addEventListener("click",function(){speak(p[0]);flash(b)});
+  td.appendChild(b); tr.appendChild(td); pBody.appendChild(tr);
+});
+
+/* ---------------- 퀴즈 ---------------- */
+var QUIZ=[
+  {no:"一",
+   ask:'<span class="zh-q">好</span> 의 올바른 병음 표기는?',
+   opts:["hāo","háo","hǎo","hào"],a:2,
+   why:"3성입니다. 부호는 a가 있으면 무조건 a 위에 찍으므로 hǎo가 됩니다."},
+  {no:"二",
+   ask:"성조 부호를 찍는 위치가 <b>틀린</b> 것은?",
+   opts:["xiè","liù","huì","dōu"],a:-1,
+   custom:"pos"},
+  {no:"三",
+   ask:'<span class="zh-q">你好</span> 를 실제로 읽을 때의 발음은?',
+   opts:["nǐ hǎo","ní hǎo","nì hào","nī hāo"],a:1,
+   why:"3성이 연달아 오면 앞을 2성으로 올려 읽습니다. 표기는 nǐ hǎo 그대로 둡니다."},
+  {no:"四",
+   ask:"혀를 말아 올려 발음하는 소리끼리 묶인 것은?",
+   opts:["z · c · s","zh · ch · sh · r","j · q · x","b · p · m · f"],a:1,
+   why:"zh·ch·sh·r은 혀끝을 말아 올리는 권설음, z·c·s는 혀를 평평하게 두는 소리입니다."},
+  {no:"五",
+   ask:'상대가 <span class="zh-q">谢谢</span> 라고 했습니다. 무엇이라고 답할까요?',
+   opts:["没关系","不客气","晚安","你好吗？"],a:1,
+   why:"不客气 bú kèqi 는 “천만에요”입니다. 没关系 méi guānxi 는 사과를 받았을 때 씁니다."},
+  {no:"六",
+   ask:'<span class="zh-q">不客气</span> 에서 <span class="zh-q">不</span> 의 실제 성조는?',
+   opts:["1성","2성","3성","4성"],a:1,
+   why:"不는 원래 4성이지만 뒤에 4성(kè)이 오면 2성으로 바뀌어 bú로 읽습니다."}
+];
+/* 2번 문항은 정답이 "틀린 것 고르기"라 별도 처리 */
+QUIZ[1].opts=["xiè","liú","huì","dōu"];
+QUIZ[1].a=1;
+QUIZ[1].why="iu는 뒤 글자에 찍습니다. 六은 liú가 아니라 liù입니다.";
+
+var solved={}, total=7;
+var qBox=document.getElementById("quiz");
+
+QUIZ.forEach(function(q,qi){
+  var card=document.createElement("div");
+  card.className="q";
+  var opts=q.opts.map(function(o,oi){
+    var isPy=/[a-zü]/i.test(o)&&!/성$/.test(o);
+    return '<button class="opt" type="button" data-q="'+qi+'" data-o="'+oi+'">'+
+           (isPy?'<span class="py-o">'+o+'</span>':o)+'</button>';
+  }).join("");
+  card.innerHTML=
+    '<div class="seal" id="seal'+qi+'">对</div>'+
+    '<div class="q-head"><span class="q-no">'+q.no+'</span><span class="q-ask">'+q.ask+'</span></div>'+
+    '<div class="opts cols2">'+opts+'</div>'+
+    '<div class="fb" id="fb'+qi+'"></div>';
+  qBox.appendChild(card);
+});
+
+qBox.addEventListener("click",function(e){
+  var btn=e.target.closest(".opt");
+  if(!btn||btn.disabled) return;
+  var qi=+btn.dataset.q, oi=+btn.dataset.o, q=QUIZ[qi];
+  var card=btn.closest(".q");
+  card.querySelectorAll(".opt").forEach(function(b){b.disabled=true});
+  var ok=(oi===q.a);
+  btn.classList.add(ok?"right":"wrong");
+  if(!ok) card.querySelectorAll(".opt")[q.a].classList.add("right");
+  var fb=document.getElementById("fb"+qi);
+  fb.className="fb show "+(ok?"ok":"no");
+  fb.innerHTML=(ok?"정답입니다. ":"아쉽네요. ")+q.why;
+  if(ok){
+    var s=document.getElementById("seal"+qi);
+    s.classList.add("on");
+  }
+  solved[qi]=ok;
+  updateScore();
+});
+
+/* ---------------- 문장 배열 ---------------- */
+var WO_ANS=["我","很","好"];
+var pool=["很","好","我"];
+var placed=[];
+var woSlot=document.getElementById("woSlot"),
+    woPool=document.getElementById("woPool"),
+    woFb=document.getElementById("woFb"),
+    woSeal=document.getElementById("woSeal");
+
+function renderWO(){
+  woSlot.innerHTML=placed.map(function(t){return '<span class="tok">'+t+'</span>'}).join("");
+  woPool.innerHTML=pool.map(function(t,i){
+    var used=placed.indexOf(t)>-1;
+    return '<button class="tok'+(used?" used":"")+'" type="button" data-i="'+i+'">'+t+'</button>';
+  }).join("");
+}
+renderWO();
+
+woPool.addEventListener("click",function(e){
+  var b=e.target.closest(".tok"); if(!b) return;
+  var t=pool[+b.dataset.i];
+  if(placed.indexOf(t)>-1) return;
+  placed.push(t); renderWO();
+});
+document.getElementById("woReset").addEventListener("click",function(){
+  placed=[]; renderWO(); woFb.className="fb"; woSeal.classList.remove("on");
+});
+document.getElementById("woCheck").addEventListener("click",function(){
+  if(placed.length<3){
+    woFb.className="fb show no"; woFb.textContent="글자 세 개를 모두 놓아 주세요."; return;
+  }
+  var ok=placed.join("")===WO_ANS.join("");
+  woFb.className="fb show "+(ok?"ok":"no");
+  woFb.innerHTML=ok
+    ? '정답입니다. <b>我很好。 wǒ hěn hǎo</b> — 중국어는 “좋다” 앞에 很을 붙이는 것이 자연스럽습니다.'
+    : '순서를 다시 보세요. 주어 → 정도부사 → 형용사 순서입니다.';
+  if(ok){ woSeal.classList.add("on"); speak("我很好"); }
+  solved["wo"]=ok;
+  updateScore();
+});
+
+/* ---------------- 점수 ---------------- */
+function updateScore(){
+  var n=0,done=0;
+  for(var k in solved){ done++; if(solved[k]) n++; }
+  document.getElementById("sNum").textContent=n;
+  var msg=document.getElementById("sMsg");
+  if(done<total) msg.textContent=(total-done)+"문제 남았습니다.";
+  else if(n===total) msg.textContent="완벽합니다. 2강으로 넘어가도 좋습니다.";
+  else if(n>=5) msg.textContent="잘하셨습니다. 틀린 부분만 다시 읽어 보세요.";
+  else msg.textContent="성조 부분을 한 번 더 보고 오시면 훨씬 쉬워집니다.";
+}
+
+/* ---------------- 진행률 ---------------- */
+var bar=document.getElementById("bar"), pct=document.getElementById("pct");
+function onScroll(){
+  var h=document.documentElement.scrollHeight-window.innerHeight;
+  var p=h>0?Math.min(Math.round(window.scrollY/h*100),100):0;
+  bar.style.width=p+"%"; pct.textContent=p+"%";
+}
+window.addEventListener("scroll",onScroll,{passive:true});
+window.addEventListener("resize",onScroll);
+onScroll();
+
+})();
+</script>
+</body>
+</html>

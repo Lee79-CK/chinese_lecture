@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>중국어 제6강 · 장소와 방향, 在와 존재문</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+KR:wght@600;700&family=Noto+Serif+SC:wght@600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E9EBE4; --card:#F7F8F3; --ink:#15201D; --ink-2:#3D4B46;
+  --muted:#79857F; --jade:#1E6F62; --jade-soft:#DDE9E5;
+  --cinnabar:#C1402C; --line:#C9CFC7;
+  --kr:"Noto Sans KR","Malgun Gothic",sans-serif;
+  --kr-serif:"Noto Serif KR","Nanum Myeongjo",serif;
+  --zh:"Noto Serif SC","Songti SC",serif;
+  --zh-sans:"Noto Sans SC","PingFang SC",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--kr);line-height:1.75;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--jade);outline-offset:3px;border-radius:3px}
+
+.topbar{position:sticky;top:0;z-index:50;background:rgba(233,235,228,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:880px;margin:0 auto;padding:10px 22px;display:flex;align-items:center;gap:14px}
+.badge{font-family:var(--zh);font-weight:600;font-size:.85rem;color:var(--jade);letter-spacing:.08em;white-space:nowrap}
+.track{flex:1;height:3px;background:var(--line);border-radius:99px;overflow:hidden}
+.track i{display:block;height:100%;width:0;background:var(--jade);transition:width .25s ease}
+.pct{font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums;min-width:34px;text-align:right}
+
+main{max-width:880px;margin:0 auto;padding:0 22px 90px}
+section{padding:56px 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:none}
+.eyebrow{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.eyebrow .num{font-family:var(--zh);font-size:.95rem;color:var(--cinnabar);font-weight:600}
+.eyebrow .lbl{font-size:.72rem;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
+h2{font-family:var(--kr-serif);font-weight:700;font-size:clamp(1.4rem,4vw,1.85rem);margin:0 0 14px;line-height:1.35;letter-spacing:-.01em}
+h3{font-family:var(--kr-serif);font-weight:600;font-size:1.05rem;margin:32px 0 10px}
+p{margin:0 0 14px;color:var(--ink-2)}
+.lead{font-size:1.03rem;color:var(--ink)}
+small{color:var(--muted)}
+.zh-i{font-family:var(--zh);font-weight:600}
+.py-i{font-family:var(--zh-sans);color:var(--jade)}
+
+/* ---------- hero ---------- */
+.hero{padding:56px 0 46px;text-align:center}
+.hero .kicker{font-size:.72rem;letter-spacing:.3em;color:var(--muted);margin-bottom:26px}
+.faces{display:inline-flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:stretch}
+.face{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;min-width:180px;text-align:left}
+.face .fnum{font-family:var(--zh);font-size:.75rem;color:var(--cinnabar);font-weight:600;letter-spacing:.1em}
+.face .fhz{font-family:var(--zh);font-size:1.35rem;font-weight:600;margin-top:4px;line-height:1.4}
+.face .fhz em{font-style:normal;color:var(--cinnabar)}
+.face .fpy{font-family:var(--zh-sans);font-size:.76rem;color:var(--jade)}
+.face .fkr{font-size:.8rem;color:var(--muted);margin-top:3px}
+.hero-thesis{margin:30px auto 0;max-width:540px;font-family:var(--kr-serif);font-size:1.02rem;color:var(--ink);line-height:1.85}
+.hero-thesis b{color:var(--cinnabar);font-weight:700}
+
+.tts-note{display:none;background:#F8E7E4;color:var(--cinnabar);border-radius:9px;padding:11px 15px;font-size:.83rem;margin:16px auto 0;max-width:560px;text-align:left}
+.tts-note.show{display:block}
+
+/* ---------- buttons ---------- */
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+.play{border:1px solid var(--line);background:var(--card);color:var(--jade);width:34px;height:34px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;transition:.16s;flex:none;padding:0}
+.play:hover{background:var(--jade);color:#fff;border-color:var(--jade)}
+.play.on{background:var(--jade);color:#fff;border-color:var(--jade)}
+.play svg{width:13px;height:13px}
+.mini{border:1px solid var(--line);background:#fff;color:var(--ink-2);border-radius:7px;padding:6px 14px;font-size:.82rem;transition:.14s}
+.mini:hover{border-color:var(--jade);color:var(--jade)}
+.mini.act{background:var(--jade);border-color:var(--jade);color:#fff}
+
+/* ---------- 방위 위젯 ---------- */
+.pos{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:20px;display:flex;gap:26px;align-items:center;flex-wrap:wrap;justify-content:center}
+.posbox{width:min(260px,72vw);flex:none}
+.pbox{fill:var(--jade-soft);stroke:var(--jade);stroke-width:2}
+.pbox-lid{fill:none;stroke:var(--jade);stroke-width:2;stroke-dasharray:4 4}
+.cat circle{fill:var(--cinnabar)}
+.cat text{fill:#fff;font-family:var(--zh);font-weight:600;font-size:17px;text-anchor:middle;dominant-baseline:central}
+.cat{transition:transform .45s cubic-bezier(.3,1.3,.5,1)}
+.posout{flex:1;min-width:min(280px,84vw);text-align:left}
+.posout .phz{font-family:var(--zh);font-size:clamp(1.4rem,5.5vw,1.9rem);font-weight:600;line-height:1.4}
+.posout .phz em{font-style:normal;color:var(--cinnabar)}
+.posout .ppy{font-family:var(--zh-sans);color:var(--jade);font-size:.88rem;margin-top:4px}
+.posout .pkr{font-size:.86rem;color:var(--muted);margin-top:2px}
+.posout .pshort{font-size:.82rem;color:var(--muted);margin-top:10px}
+.posout .pshort b{font-family:var(--zh);color:var(--ink-2);font-size:1.02rem;font-weight:600}
+.posbtns{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.pbtn{border:1px solid var(--line);background:#fff;border-radius:99px;padding:5px 13px;font-family:var(--zh);font-size:.98rem;font-weight:600;color:var(--ink);transition:.14s}
+.pbtn:hover{border-color:var(--jade);color:var(--jade)}
+.pbtn.sel{background:var(--jade);border-color:var(--jade);color:#fff}
+
+/* ---------- 어순 도해 ---------- */
+.order{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:20px;overflow-x:auto}
+.obar{display:flex;gap:6px;min-width:520px}
+.oslot{flex:1;text-align:center}
+.oslot .ohead{font-size:.64rem;letter-spacing:.12em;color:var(--muted);padding-bottom:7px}
+.oslot .obox{border-radius:8px;padding:12px 6px;font-family:var(--zh);font-size:1.2rem;font-weight:600;background:#fff;border:1px solid var(--line)}
+.oslot.time .obox{background:var(--jade);border-color:var(--jade);color:#fff}
+.oslot.time .ohead{color:var(--jade)}
+.oslot.place .obox{background:var(--cinnabar);border-color:var(--cinnabar);color:#fff}
+.oslot.place .ohead{color:var(--cinnabar)}
+.oslot .opy{font-family:var(--zh-sans);font-size:.7rem;color:var(--muted);margin-top:5px}
+.bad{margin-top:16px;padding:12px 16px;background:#F8E7E4;border-radius:10px;font-size:.9rem;color:var(--cinnabar)}
+.bad s{font-family:var(--zh);font-size:1.15rem;font-weight:600;text-decoration-thickness:2px}
+
+/* ---------- 비교 카드 ---------- */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.vs-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+.vs-card h4{margin:0 0 6px;font-family:var(--zh);font-size:1.5rem;font-weight:600}
+.vs-card .vpy{font-family:var(--zh-sans);color:var(--jade);font-size:.8rem;margin-bottom:10px}
+.vs-card ul{margin:0;padding-left:16px;font-size:.87rem;color:var(--ink-2)}
+.vs-card li{margin-bottom:5px}
+
+/* ---------- 칩 ---------- */
+.chip-grid{display:grid;gap:8px;margin:16px 0;grid-template-columns:repeat(4,1fr)}
+.chip{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:11px 4px;text-align:center;transition:.14s}
+.chip:hover{background:#fff;border-color:var(--jade)}
+.chip.on{background:var(--jade);border-color:var(--jade)}
+.chip.on .c-hz,.chip.on .c-py,.chip.on .c-kr{color:#fff}
+.c-hz{font-family:var(--zh);font-size:1.1rem;font-weight:600;color:var(--ink);display:block;line-height:1.3}
+.c-py{font-family:var(--zh-sans);font-size:.72rem;color:var(--jade);display:block}
+.c-kr{font-size:.72rem;color:var(--muted);display:block}
+
+/* ---------- warn / note ---------- */
+.warn{border-left:3px solid var(--cinnabar);padding:4px 0 4px 16px;margin:20px 0}
+.warn h4{margin:0 0 4px;font-size:.95rem;font-family:var(--kr-serif)}
+.warn p{margin:0;font-size:.9rem}
+.tone-note{background:var(--jade-soft);border-radius:10px;padding:16px 18px;margin-top:20px;font-size:.92rem;color:var(--ink-2)}
+.tone-note b{color:var(--jade)}
+
+/* ---------- vocab ---------- */
+.vocab{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}
+.v{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;transition:.16s}
+.v:hover{background:#fff;box-shadow:0 3px 14px rgba(21,32,29,.07)}
+.v-txt{flex:1;min-width:0}
+.v-hz{font-family:var(--zh);font-size:1.4rem;font-weight:600;line-height:1.3}
+.v-py{font-family:var(--zh-sans);font-size:.85rem;color:var(--jade)}
+.v-kr{font-size:.85rem;color:var(--muted);margin-top:2px}
+
+/* ---------- 대화 ---------- */
+.dlg{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 6px;margin-top:18px}
+.line{display:flex;gap:12px;padding:12px 14px;border-radius:10px;align-items:flex-start;transition:.2s}
+.line.hl{background:#fff;box-shadow:0 2px 12px rgba(21,32,29,.07)}
+.who{font-family:var(--zh);font-weight:700;font-size:.85rem;width:22px;flex:none;padding-top:5px}
+.who.a{color:var(--cinnabar)}
+.who.b{color:var(--jade)}
+.ltxt{flex:1;min-width:0}
+.lhz{font-family:var(--zh);font-size:1.22rem;font-weight:600;line-height:1.55}
+.lpy{font-family:var(--zh-sans);font-size:.82rem;color:var(--jade)}
+.lkr{font-size:.85rem;color:var(--muted);margin-top:2px}
+.dlg-bar{display:flex;gap:8px;padding:10px 14px 6px;flex-wrap:wrap}
+
+/* ---------- quiz ---------- */
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 20px 18px;margin-bottom:14px;position:relative;overflow:hidden}
+.q-head{display:flex;gap:10px;align-items:baseline;margin-bottom:12px}
+.q-no{font-family:var(--zh);color:var(--cinnabar);font-size:.85rem;font-weight:600;flex:none}
+.q-ask{font-size:.98rem;color:var(--ink);font-weight:500}
+.q-ask .zh-q{font-family:var(--zh);font-size:1.3rem;font-weight:600;vertical-align:-2px}
+.opts{display:grid;gap:8px;grid-template-columns:repeat(2,1fr)}
+.opt{background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 14px;text-align:left;transition:.14s;color:var(--ink);font-size:.95rem}
+.opt .zh-o{font-family:var(--zh);font-size:1.1rem;font-weight:600}
+.opt:hover:not(:disabled){border-color:var(--jade);background:var(--jade-soft)}
+.opt:disabled{cursor:default;opacity:.55}
+.opt.right{border-color:var(--jade);background:var(--jade-soft);opacity:1;font-weight:500}
+.opt.wrong{border-color:var(--cinnabar);background:#F8E7E4;opacity:1}
+.fb{margin-top:12px;font-size:.87rem;padding:10px 13px;border-radius:8px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--jade-soft);color:var(--jade)}
+.fb.no{background:#F8E7E4;color:var(--cinnabar)}
+
+.wo-slot{min-height:56px;border:1px dashed var(--line);border-radius:9px;background:#fff;display:flex;align-items:center;gap:8px;padding:8px 12px;flex-wrap:wrap;margin-bottom:10px}
+.wo-slot:empty::before{content:"아래에서 순서대로 눌러 보세요";color:var(--muted);font-size:.82rem}
+.tok{font-family:var(--zh);font-size:1.18rem;font-weight:600;background:var(--jade-soft);border:1px solid var(--jade);color:var(--jade);border-radius:7px;padding:5px 12px}
+.wo-pool{display:flex;gap:8px;flex-wrap:wrap}
+.wo-pool .tok{background:#fff;border-color:var(--line);color:var(--ink);cursor:pointer}
+.wo-pool .tok:hover{border-color:var(--jade);background:var(--jade-soft);color:var(--jade)}
+.wo-pool .tok.used{opacity:.25;pointer-events:none}
+.wo-actions{display:flex;gap:8px;margin-top:4px}
+
+.seal{position:absolute;right:16px;top:14px;width:46px;height:46px;border-radius:50%;border:2.5px solid var(--cinnabar);color:var(--cinnabar);font-family:var(--zh);font-weight:900;font-size:1.35rem;display:flex;align-items:center;justify-content:center;opacity:0;transform:rotate(-14deg) scale(1.7);transition:.32s cubic-bezier(.2,1.5,.4,1);pointer-events:none}
+.seal.on{opacity:.9;transform:rotate(-14deg) scale(1)}
+
+.score{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:18px}
+.score .n{font-family:var(--zh);font-size:2.4rem;font-weight:900;color:var(--jade);line-height:1}
+.score .n span{font-size:1.1rem;color:var(--muted);font-weight:600}
+
+.recap{background:var(--card);border-radius:14px;padding:22px 24px;border:1px solid var(--line)}
+.recap ul{margin:0;padding-left:18px}
+.recap li{margin-bottom:8px;color:var(--ink-2);font-size:.93rem}
+.next{margin-top:22px;padding:20px 24px;border-radius:14px;background:var(--jade);color:#fff}
+.next .l{font-size:.7rem;letter-spacing:.24em;opacity:.75}
+.next .t{font-family:var(--kr-serif);font-size:1.15rem;font-weight:700;margin:6px 0 4px}
+.next .d{font-size:.88rem;opacity:.88;margin:0}
+
+footer{text-align:center;padding:30px 0;color:var(--muted);font-size:.78rem;border-top:1px solid var(--line)}
+
+@media(max-width:600px){
+  main{padding:0 16px 70px}
+  section{padding:44px 0}
+  .vocab{grid-template-columns:1fr}
+  .chip-grid{grid-template-columns:repeat(3,1fr)}
+  .opts{grid-template-columns:1fr}
+  .vs{grid-template-columns:1fr}
+  .face{min-width:0;width:100%}
+  .posout{text-align:center}
+  .posbtns{justify-content:center}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="badge">第六课 · 제6강</span>
+    <span class="track"><i id="bar"></i></span>
+    <span class="pct" id="pct">0%</span>
+  </div>
+</div>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="kicker">장소 · 방향 · 在와 존재문</div>
+
+  <div class="faces">
+    <div class="face">
+      <div class="fnum">동사</div>
+      <div class="fhz">我<em>在</em>家。</div>
+      <div class="fpy">Wǒ zài jiā.</div>
+      <div class="fkr">저는 집에 있습니다</div>
+    </div>
+    <div class="face">
+      <div class="fnum">전치사</div>
+      <div class="fhz">我<em>在</em>家吃饭。</div>
+      <div class="fpy">Wǒ zài jiā chīfàn.</div>
+      <div class="fkr">저는 집에서 밥을 먹습니다</div>
+    </div>
+  </div>
+
+  <p class="hero-thesis">
+    같은 글자, 다른 역할입니다.<br>
+    뒤에 동사가 <b>없으면 “있다”</b>, <b>있으면 “~에서”</b>.<br>
+    그리고 이 장소 덩어리는 5강의 시간처럼 <b>언제나 동사 앞</b>에 놓입니다.
+  </p>
+
+  <div class="tts-note" id="ttsNote">
+    이 브라우저에 중국어 음성이 없어 소리가 재생되지 않습니다. Chrome이나 Edge에서 열거나
+    기기에 중국어(간체) 음성을 추가하면 들을 수 있습니다. 학습과 문제 풀이는 그대로 진행됩니다.
+  </div>
+</section>
+
+<!-- ============ 1. 在 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">一</span><span class="lbl">The Word 在</span></div>
+  <h2>在의 두 얼굴</h2>
+
+  <h3>동사로 쓸 때 — “~에 있다”</h3>
+  <p>
+    <b>사람·사물 + 在 + 장소</b>. 뒤에 다른 동사가 오지 않습니다.<br>
+    <span class="zh-i">他在学校。</span> <span class="py-i">Tā zài xuéxiào.</span> 그는 학교에 있습니다.<br>
+    부정은 <span class="zh-i">不在</span> 입니다 — <span class="zh-i">他不在家。</span>
+  </p>
+
+  <h3>전치사로 쓸 때 — “~에서”</h3>
+  <p>
+    <b>주어 + 在 + 장소 + 동사</b>. 어디서 그 행동을 하는지 밝힙니다.<br>
+    <span class="zh-i">我在图书馆学习。</span> <span class="py-i">Wǒ zài túshūguǎn xuéxí.</span> 저는 도서관에서 공부합니다.
+  </p>
+
+  <div class="order">
+    <div class="obar">
+      <div class="oslot"><div class="ohead">주어</div><div class="obox">我</div><div class="opy">wǒ</div></div>
+      <div class="oslot time"><div class="ohead">시간</div><div class="obox">明天</div><div class="opy">míngtiān</div></div>
+      <div class="oslot place"><div class="ohead">장소</div><div class="obox">在家</div><div class="opy">zài jiā</div></div>
+      <div class="oslot"><div class="ohead">동사</div><div class="obox">看</div><div class="opy">kàn</div></div>
+      <div class="oslot"><div class="ohead">목적어</div><div class="obox">书</div><div class="opy">shū</div></div>
+    </div>
+    <div class="bad">
+      <s>我看书在家。</s> — 장소도 시간처럼 동사 뒤로 갈 수 없습니다.
+    </div>
+  </div>
+
+  <div class="tone-note">
+    <b>순서가 굳어졌습니다.</b> 주어 → 시간 → 장소 → 동사 → 목적어.
+    시간과 장소가 함께 오면 <b>시간이 먼저</b>입니다 —
+    <span class="zh-i">我明天在家看书。</span> 앞으로 배울 모든 문장이 이 틀 위에 쌓입니다.
+  </div>
+
+  <div class="warn">
+    <h4>어디에 있는지 물을 때는 哪儿</h4>
+    <p>
+      <span class="zh-i">你在哪儿？</span> <span class="py-i">Nǐ zài nǎr?</span> 어디에 있어요?<br>
+      <span class="zh-i">哪儿</span> <span class="py-i">nǎr</span> 은 북방에서, <span class="zh-i">哪里</span>
+      <span class="py-i">nǎlǐ</span> 는 남방에서 더 흔합니다. 뜻은 같습니다.
+    </p>
+  </div>
+</section>
+
+<!-- ============ 2. 방위사 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">二</span><span class="lbl">Position Words</span></div>
+  <h2>위 · 아래 · 안 · 옆</h2>
+  <p class="lead">
+    중국어는 방향을 나타내는 말이 <b>명사 뒤</b>에 붙습니다. “탁자 위”는 <span class="zh-i">桌子上</span>.
+    아래 버튼을 눌러 고양이를 옮겨 보세요.
+  </p>
+
+  <div class="pos">
+    <svg class="posbox" viewBox="0 0 220 190" aria-hidden="true">
+      <rect class="pbox" x="60" y="70" width="100" height="56" rx="4"/>
+      <line class="pbox-lid" x1="60" y1="70" x2="160" y2="70"/>
+      <g class="cat" id="cat" style="transform:translate(110px,50px)">
+        <circle r="17"/>
+        <text y="1">猫</text>
+      </g>
+    </svg>
+
+    <div class="posout">
+      <div class="phz" id="pHz"></div>
+      <div class="ppy" id="pPy"></div>
+      <div class="pkr" id="pKr"></div>
+      <div class="pshort" id="pShort"></div>
+      <div class="posbtns" id="posBtns"></div>
+      <button class="play" id="pPlay" style="margin-top:12px" aria-label="문장 듣기"></button>
+    </div>
+  </div>
+
+  <h3>더 알아둘 방위사</h3>
+  <div class="chip-grid" id="posChips"></div>
+
+  <div class="warn">
+    <h4>지명과 기관 이름에는 里를 붙이지 않습니다</h4>
+    <p>
+      <span class="zh-i">桌子上</span>, <span class="zh-i">书包里</span>처럼 사물에는 방위사를 붙이지만,
+      <span class="zh-i">中国</span>, <span class="zh-i">学校</span>, <span class="zh-i">北京</span>처럼
+      그 자체가 장소인 말에는 붙이지 않습니다.
+      <span class="zh-i">我在中国里。</span>는 틀린 문장입니다.
+    </p>
+  </div>
+
+  <div class="warn">
+    <h4>边와 面은 바꿔 쓸 수 있습니다</h4>
+    <p>
+      <span class="zh-i">上边</span> = <span class="zh-i">上面</span>,
+      <span class="zh-i">里边</span> = <span class="zh-i">里面</span>. 뜻 차이는 없습니다.
+      다만 <span class="zh-i">旁边</span>은 <span class="zh-i">旁面</span>이라고 하지 않습니다.
+    </p>
+  </div>
+</section>
+
+<!-- ============ 3. 존재문 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">三</span><span class="lbl">Existence</span></div>
+  <h2>有와 在, 무엇을 앞에 두느냐</h2>
+  <p class="lead">
+    둘 다 “어디에 무엇이 있다”를 말하지만, <b>이미 아는 것을 앞에 둡니다.</b>
+    이 원칙이 중국어 어순 전체를 관통합니다.
+  </p>
+
+  <div class="vs">
+    <div class="vs-card">
+      <h4>在</h4>
+      <div class="vpy">사물 + 在 + 장소</div>
+      <ul>
+        <li>그 사물을 <b>이미 알고 있을 때</b></li>
+        <li><span class="zh-i">书在桌子上。</span></li>
+        <li>그 책은 탁자 위에 있어요</li>
+        <li>“어디에?”에 대한 답</li>
+      </ul>
+    </div>
+    <div class="vs-card">
+      <h4>有</h4>
+      <div class="vpy">장소 + 有 + 사물</div>
+      <ul>
+        <li>그 사물이 <b>새 정보일 때</b></li>
+        <li><span class="zh-i">桌子上有一本书。</span></li>
+        <li>탁자 위에 책이 한 권 있어요</li>
+        <li>“무엇이?”에 대한 답</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tone-note">
+    <b>구분하는 요령.</b> 우리말로 옮겼을 때 “<b>그</b> 책은 어디 있어?” 쪽이면 在,
+    “저기 뭐가 <b>있어</b>?” 쪽이면 有입니다.
+    有 문장에서 사물 앞에 <span class="zh-i">一本</span> 같은 수량이 붙는 것도 새 정보이기 때문입니다.
+  </div>
+
+  <p style="margin-top:16px">
+    3강에서 배운 대로 <span class="zh-i">有</span>의 부정은 <span class="zh-i">没有</span> 입니다 —
+    <span class="zh-i">桌子上没有书。</span> 탁자 위에 책이 없습니다.
+  </p>
+</section>
+
+<!-- ============ 4. 장소와 이동 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">四</span><span class="lbl">Places &amp; Going</span></div>
+  <h2>어디로 갑니까</h2>
+  <p class="lead">
+    <span class="zh-i">去</span> <span class="py-i">qù</span> 가다 ·
+    <span class="zh-i">来</span> <span class="py-i">lái</span> 오다 ·
+    <span class="zh-i">回</span> <span class="py-i">huí</span> 돌아가다.
+    이 세 동사는 <b>在 없이 장소를 바로 받습니다</b> — <span class="zh-i">我去学校。</span>
+  </p>
+  <div class="chip-grid" id="places"></div>
+
+  <div class="warn">
+    <h4>去 뒤에는 在를 넣지 않습니다</h4>
+    <p>
+      <span class="zh-i">我去在学校。</span>는 틀린 문장입니다.
+      在는 “어디서 행동하는가”를 표시하는 말이라, 이동의 목적지에는 쓰지 않습니다.
+      <span class="zh-i">我去学校学习。</span> 학교에 공부하러 갑니다.
+    </p>
+  </div>
+</section>
+
+<!-- ============ 5. 어휘 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">五</span><span class="lbl">Vocabulary</span></div>
+  <h2>오늘의 단어</h2>
+  <div class="vocab" id="vocab"></div>
+</section>
+
+<!-- ============ 6. 회화 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">六</span><span class="lbl">Dialogue</span></div>
+  <h2>지금 어디예요?</h2>
+  <div class="dlg">
+    <div class="dlg-bar">
+      <button class="mini" id="playAll">전체 듣기</button>
+      <button class="mini" id="stopAll">멈추기</button>
+      <button class="mini" id="toggleKr">한국어 뜻 숨기기</button>
+    </div>
+    <div id="dialog"></div>
+  </div>
+</section>
+
+<!-- ============ 7. 연습 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">七</span><span class="lbl">Practice</span></div>
+  <h2>확인 문제</h2>
+  <p class="lead">답을 고르면 바로 채점되고 해설이 나옵니다.</p>
+
+  <div id="quiz"></div>
+
+  <div class="q" id="woBox">
+    <div class="seal" id="woSeal">对</div>
+    <div class="q-head">
+      <span class="q-no">七</span>
+      <span class="q-ask">“저는 오늘 도서관에서 공부합니다”가 되도록 순서대로 눌러 문장을 만드세요.</span>
+    </div>
+    <div class="wo-slot" id="woSlot"></div>
+    <div class="wo-pool" id="woPool"></div>
+    <div class="wo-actions">
+      <button class="mini" id="woReset">다시 놓기</button>
+      <button class="mini" id="woCheck">정답 확인</button>
+    </div>
+    <div class="fb" id="woFb"></div>
+  </div>
+
+  <div class="score" id="score">
+    <div class="n"><span id="sNum">0</span><span> / 7</span></div>
+    <p style="margin:8px 0 0;font-size:.88rem" id="sMsg">문제를 풀면 점수가 표시됩니다.</p>
+  </div>
+</section>
+
+<!-- ============ 8. 정리 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">八</span><span class="lbl">Recap</span></div>
+  <h2>오늘 챙겨 갈 것</h2>
+  <div class="recap">
+    <ul>
+      <li>뒤에 동사가 없으면 <span class="zh-i">在</span>는 “있다”, 있으면 “~에서”입니다.</li>
+      <li>어순은 <b>주어 → 시간 → 장소 → 동사 → 목적어</b>. 시간이 장소보다 앞입니다.</li>
+      <li>방위사는 명사 <b>뒤</b>에 붙습니다 — <span class="zh-i">桌子上</span>, <span class="zh-i">书包里</span>.</li>
+      <li>지명·기관명에는 방위사를 붙이지 않습니다 — <span class="zh-i">在中国</span>.</li>
+      <li>아는 것이 앞에 옵니다. <span class="zh-i">书在桌子上</span> vs <span class="zh-i">桌子上有一本书</span>.</li>
+      <li><span class="zh-i">去 · 来 · 回</span>는 在 없이 장소를 바로 받습니다.</li>
+      <li>위치를 물을 때는 <span class="zh-i">哪儿</span> 또는 <span class="zh-i">哪里</span>.</li>
+    </ul>
+  </div>
+
+  <div class="next">
+    <div class="l">NEXT · 제7강</div>
+    <div class="t">음식 주문하기 — 조동사 想·要·会·能</div>
+    <p class="d">
+      “하고 싶다, 할 줄 안다, 해도 된다”를 말합니다. 조동사는 부사와 마찬가지로 동사 앞에 붙어,
+      오늘 세운 어순 틀에 한 칸이 더 생깁니다. 식당에서 실제로 쓰는 표현으로 연습합니다.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>중국어 첫걸음 · 제6강 장소와 방향</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- TTS ---------- */
+var zhVoice=null, checked=false;
+function pickVoice(){
+  if(!("speechSynthesis" in window)) return;
+  var vs=speechSynthesis.getVoices()||[];
+  zhVoice=vs.find(function(v){return /^zh[-_]?CN/i.test(v.lang)})
+       || vs.find(function(v){return /^zh/i.test(v.lang)}) || null;
+  if(!checked && vs.length){ checked=true;
+    if(!zhVoice) document.getElementById("ttsNote").classList.add("show"); }
+}
+if("speechSynthesis" in window){
+  pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; setTimeout(pickVoice,900);
+}else{ document.getElementById("ttsNote").classList.add("show"); }
+function speak(text,onend){
+  if(!("speechSynthesis" in window)){ if(onend) onend(); return; }
+  try{
+    speechSynthesis.cancel();
+    var u=new SpeechSynthesisUtterance(text);
+    u.lang="zh-CN"; u.rate=.75;
+    if(zhVoice) u.voice=zhVoice;
+    if(onend) u.onend=onend;
+    speechSynthesis.speak(u);
+  }catch(e){ if(onend) onend(); }
+}
+var SPK='<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.5 4.2 4.6H1.6a.6.6 0 0 0-.6.6v5.6c0 .3.3.6.6.6h2.6L8 14.5zM11.2 5a.6.6 0 0 0-.1.9 3 3 0 0 1 0 4.2.6.6 0 1 0 .8.9 4.2 4.2 0 0 0 0-6 .6.6 0 0 0-.7 0zM13.2 2.9a.6.6 0 0 0-.1.9 6 6 0 0 1 0 8.4.6.6 0 1 0 .8.9 7.2 7.2 0 0 0 0-10.2.6.6 0 0 0-.7 0z"/></svg>';
+function flash(el){ el.classList.add("on"); setTimeout(function(){el.classList.remove("on")},520); }
+
+/* ---------- 방위 위젯 ---------- */
+var POS=[
+  {hz:"上边",py:"shàngbian",kr:"위",short:"上",x:110,y:50},
+  {hz:"里边",py:"lǐbian",kr:"안",short:"里",x:110,y:98},
+  {hz:"下边",py:"xiàbian",kr:"아래",short:"下",x:110,y:152},
+  {hz:"左边",py:"zuǒbian",kr:"왼쪽",short:"左",x:28,y:98},
+  {hz:"右边",py:"yòubian",kr:"오른쪽",short:"右",x:192,y:98},
+  {hz:"前边",py:"qiánbian",kr:"앞",short:"前",x:66,y:140}
+];
+var pi=0, curPos="";
+var cat=document.getElementById("cat");
+var pBtns=document.getElementById("posBtns");
+POS.forEach(function(p,i){
+  var b=document.createElement("button");
+  b.className="pbtn"+(i===0?" sel":""); b.type="button"; b.textContent=p.hz;
+  b.addEventListener("click",function(){
+    pBtns.querySelectorAll(".pbtn").forEach(function(x){x.classList.remove("sel")});
+    b.classList.add("sel"); pi=i; renderPos(); speak(curPos);
+  });
+  pBtns.appendChild(b);
+});
+function renderPos(){
+  var p=POS[pi];
+  cat.style.transform="translate("+p.x+"px,"+p.y+"px)";
+  curPos="猫在盒子"+p.hz;
+  document.getElementById("pHz").innerHTML='猫在盒子<em>'+p.hz+'</em>。';
+  document.getElementById("pPy").textContent="Māo zài hézi "+p.py+".";
+  document.getElementById("pKr").textContent="고양이가 상자 "+p.kr+"에 있습니다.";
+  document.getElementById("pShort").innerHTML=
+    (p.short==="上"||p.short==="里"||p.short==="下")
+      ? '짧게 <b>猫在盒子'+p.short+'。</b> 라고도 합니다. 上·里·下는 한 글자로 줄여 쓰는 일이 많습니다.'
+      : '이 방위사는 <b>'+p.hz+'</b> 형태 그대로 씁니다. 한 글자로 줄이지 않습니다.';
+}
+var pPlay=document.getElementById("pPlay"); pPlay.innerHTML=SPK;
+pPlay.addEventListener("click",function(){speak(curPos);flash(pPlay)});
+renderPos();
+
+/* ---------- 칩 ---------- */
+function fillChips(list,mount){
+  var box=document.getElementById(mount);
+  list.forEach(function(c){
+    var b=document.createElement("button");
+    b.className="chip"; b.type="button";
+    b.setAttribute("aria-label",c[2]+" 발음 듣기");
+    b.innerHTML='<span class="c-hz">'+c[0]+'</span><span class="c-py">'+c[1]+'</span><span class="c-kr">'+c[2]+'</span>';
+    b.addEventListener("click",function(){speak(c[0]);flash(b)});
+    box.appendChild(b);
+  });
+}
+fillChips([
+  ["后边","hòubian","뒤"],["外边","wàibian","밖"],
+  ["旁边","pángbiān","옆"],["中间","zhōngjiān","가운데"],
+  ["对面","duìmiàn","맞은편"],["附近","fùjìn","근처"],
+  ["这儿","zhèr","여기"],["那儿","nàr","저기"]
+],"posChips");
+
+fillChips([
+  ["家","jiā","집"],["学校","xuéxiào","학교"],
+  ["公司","gōngsī","회사"],["银行","yínháng","은행"],
+  ["医院","yīyuàn","병원"],["商店","shāngdiàn","상점"],
+  ["超市","chāoshì","슈퍼마켓"],["饭店","fàndiàn","식당"],
+  ["咖啡店","kāfēidiàn","카페"],["图书馆","túshūguǎn","도서관"],
+  ["洗手间","xǐshǒujiān","화장실"],["地铁站","dìtiězhàn","지하철역"]
+],"places");
+
+/* ---------- 어휘 ---------- */
+var vBox=document.getElementById("vocab");
+[
+  ["在","zài","~에 있다 / ~에서"],
+  ["哪儿","nǎr","어디"],
+  ["去","qù","가다"],
+  ["来","lái","오다"],
+  ["回","huí","돌아가다"],
+  ["到","dào","도착하다"],
+  ["盒子","hézi","상자"],
+  ["桌子","zhuōzi","탁자"],
+  ["学习","xuéxí","공부하다"],
+  ["工作","gōngzuò","일하다"],
+  ["等","děng","기다리다"],
+  ["见面","jiànmiàn","만나다"]
+].forEach(function(v){
+  var e=document.createElement("div"); e.className="v";
+  e.innerHTML='<div class="v-txt"><div class="v-hz">'+v[0]+'</div><div class="v-py">'+v[1]+'</div><div class="v-kr">'+v[2]+'</div></div>';
+  var b=document.createElement("button");
+  b.className="play"; b.type="button"; b.innerHTML=SPK;
+  b.setAttribute("aria-label",v[0]+" 발음 듣기");
+  b.addEventListener("click",function(){speak(v[0]);flash(b)});
+  e.appendChild(b); vBox.appendChild(e);
+});
+
+/* ---------- 대화 ---------- */
+var DIALOG=[
+  ["A","喂，你现在在哪儿？","Wéi, nǐ xiànzài zài nǎr?","여보세요, 지금 어디예요?"],
+  ["B","我在图书馆学习。你呢？","Wǒ zài túshūguǎn xuéxí. Nǐ ne?","도서관에서 공부하고 있어요. 당신은요?"],
+  ["A","我在你旁边的咖啡店。","Wǒ zài nǐ pángbiān de kāfēidiàn.","당신 옆에 있는 카페에 있어요."],
+  ["B","咖啡店里有位子吗？","Kāfēidiàn lǐ yǒu wèizi ma?","카페 안에 자리 있어요?"],
+  ["A","有，窗户旁边有两个位子。","Yǒu, chuānghu pángbiān yǒu liǎng ge wèizi.","있어요, 창가 옆에 자리가 두 개 있어요."],
+  ["B","好，我五分钟后去那儿。","Hǎo, wǒ wǔ fēnzhōng hòu qù nàr.","좋아요, 5분 뒤에 거기로 갈게요."]
+];
+var dlgBox=document.getElementById("dialog");
+DIALOG.forEach(function(l,i){
+  var row=document.createElement("div");
+  row.className="line"; row.id="ln"+i;
+  row.innerHTML='<span class="who '+(l[0]==="A"?"a":"b")+'">'+l[0]+'</span>'+
+    '<div class="ltxt"><div class="lhz">'+l[1]+'</div><div class="lpy">'+l[2]+'</div><div class="lkr">'+l[3]+'</div></div>';
+  var b=document.createElement("button");
+  b.className="play"; b.type="button"; b.innerHTML=SPK;
+  b.setAttribute("aria-label",(i+1)+"번째 대사 듣기");
+  b.addEventListener("click",function(){
+    stopAll(); speak(l[1]); flash(b);
+    row.classList.add("hl"); setTimeout(function(){row.classList.remove("hl")},2200);
+  });
+  row.appendChild(b); dlgBox.appendChild(row);
+});
+var playing=false;
+function stopAll(){
+  playing=false;
+  if("speechSynthesis" in window){ try{speechSynthesis.cancel()}catch(e){} }
+  DIALOG.forEach(function(_,i){document.getElementById("ln"+i).classList.remove("hl")});
+}
+document.getElementById("stopAll").addEventListener("click",stopAll);
+document.getElementById("playAll").addEventListener("click",function(){
+  stopAll(); playing=true;
+  (function next(i){
+    if(!playing||i>=DIALOG.length){ stopAll(); return; }
+    DIALOG.forEach(function(_,j){document.getElementById("ln"+j).classList.remove("hl")});
+    var row=document.getElementById("ln"+i);
+    row.classList.add("hl"); row.scrollIntoView({block:"center",behavior:"smooth"});
+    speak(DIALOG[i][1],function(){setTimeout(function(){next(i+1)},350)});
+  })(0);
+});
+var krOn=true;
+document.getElementById("toggleKr").addEventListener("click",function(){
+  krOn=!krOn;
+  dlgBox.querySelectorAll(".lkr").forEach(function(e){e.style.display=krOn?"":"none"});
+  this.textContent=krOn?"한국어 뜻 숨기기":"한국어 뜻 보기";
+  this.classList.toggle("act",!krOn);
+});
+
+/* ---------- 퀴즈 ---------- */
+var QUIZ=[
+  {no:"一",ask:'“저는 집에서 밥을 먹습니다.” 알맞은 문장은?',
+   opts:["我吃饭在家。","我在家吃饭。","在家我吃饭吗？","我家在吃饭。"],a:1,
+   why:"장소를 나타내는 在 구는 동사 앞에 옵니다. 동사 뒤로는 갈 수 없습니다."},
+  {no:"二",ask:'“탁자 위에 책이 한 권 있습니다.” 알맞은 문장은?',
+   opts:["书在桌子上。","一本书在桌子上有。","桌子上有一本书。","桌子上在一本书。"],a:2,
+   why:"새 정보(책 한 권)를 소개하는 문장이므로 장소 + 有 + 사물 순서를 씁니다."},
+  {no:"三",ask:"다음 중 <b>틀린</b> 문장은?",
+   opts:["我在中国。","我在学校学习。","我在中国里工作。","书在书包里。"],a:2,
+   why:"中国처럼 그 자체가 장소인 말에는 방위사를 붙이지 않습니다. 书包 같은 사물에는 붙입니다."},
+  {no:"四",ask:'“저는 학교에 갑니다.” 알맞은 문장은?',
+   opts:["我去在学校。","我在去学校。","我去学校。","我学校去。"],a:2,
+   why:"去·来·回는 在 없이 장소를 바로 받습니다."},
+  {no:"五",ask:'“그 책은 어디 있어요?”에 대한 자연스러운 답은?',
+   opts:["桌子上有书。","书在桌子上。","有书在桌子。","桌子在书上。"],a:1,
+   why:"이미 아는 책의 위치를 묻고 있으므로 사물 + 在 + 장소로 답합니다."},
+  {no:"六",ask:'“저는 내일 집에서 책을 봅니다.” 알맞은 어순은?',
+   opts:["我在家明天看书。","我明天在家看书。","明天在家看书我。","我看书明天在家。"],a:1,
+   why:"주어 → 시간 → 장소 → 동사 → 목적어 순서입니다. 시간이 장소보다 앞에 옵니다."}
+];
+var solved={}, total=7, qBox=document.getElementById("quiz");
+QUIZ.forEach(function(q,qi){
+  var card=document.createElement("div"); card.className="q";
+  var opts=q.opts.map(function(o,k){
+    return '<button class="opt" type="button" data-q="'+qi+'" data-o="'+k+'"><span class="zh-o">'+o+'</span></button>';
+  }).join("");
+  card.innerHTML='<div class="seal" id="seal'+qi+'">对</div>'+
+    '<div class="q-head"><span class="q-no">'+q.no+'</span><span class="q-ask">'+q.ask+'</span></div>'+
+    '<div class="opts">'+opts+'</div><div class="fb" id="fb'+qi+'"></div>';
+  qBox.appendChild(card);
+});
+qBox.addEventListener("click",function(e){
+  var btn=e.target.closest(".opt"); if(!btn||btn.disabled) return;
+  var qi=+btn.dataset.q, o=+btn.dataset.o, q=QUIZ[qi], card=btn.closest(".q");
+  card.querySelectorAll(".opt").forEach(function(b){b.disabled=true});
+  var ok=(o===q.a);
+  btn.classList.add(ok?"right":"wrong");
+  if(!ok) card.querySelectorAll(".opt")[q.a].classList.add("right");
+  var fb=document.getElementById("fb"+qi);
+  fb.className="fb show "+(ok?"ok":"no");
+  fb.innerHTML=(ok?"정답입니다. ":"아쉽네요. ")+q.why;
+  if(ok) document.getElementById("seal"+qi).classList.add("on");
+  solved[qi]=ok; updateScore();
+});
+
+/* ---------- 문장 배열 ---------- */
+var ANS=["我","今天","在图书馆","学习"];
+var pool=["学习","在图书馆","我","今天"], placed=[];
+var woSlot=document.getElementById("woSlot"), woPool=document.getElementById("woPool"),
+    woFb=document.getElementById("woFb"), woSeal=document.getElementById("woSeal");
+function renderWO(){
+  woSlot.innerHTML=placed.map(function(t){return '<span class="tok">'+t+'</span>'}).join("");
+  woPool.innerHTML=pool.map(function(t,i){
+    return '<button class="tok'+(placed.indexOf(t)>-1?" used":"")+'" type="button" data-i="'+i+'">'+t+'</button>';
+  }).join("");
+}
+renderWO();
+woPool.addEventListener("click",function(e){
+  var b=e.target.closest(".tok"); if(!b) return;
+  var t=pool[+b.dataset.i]; if(placed.indexOf(t)>-1) return;
+  placed.push(t); renderWO();
+});
+document.getElementById("woReset").addEventListener("click",function(){
+  placed=[]; renderWO(); woFb.className="fb"; woSeal.classList.remove("on");
+});
+document.getElementById("woCheck").addEventListener("click",function(){
+  if(placed.length<4){ woFb.className="fb show no"; woFb.textContent="네 조각을 모두 놓아 주세요."; return; }
+  var ok=placed.join("")===ANS.join("");
+  woFb.className="fb show "+(ok?"ok":"no");
+  woFb.innerHTML=ok
+    ? '정답입니다. <b>我今天在图书馆学习。 Wǒ jīntiān zài túshūguǎn xuéxí.</b> — 주어 → 시간 → 장소 → 동사 순서입니다.'
+    : '시간과 장소의 순서를 다시 보세요. 시간이 장소보다 앞이고, 둘 다 동사 앞입니다.';
+  if(ok){ woSeal.classList.add("on"); speak("我今天在图书馆学习"); }
+  solved["wo"]=ok; updateScore();
+});
+
+/* ---------- 점수 ---------- */
+function updateScore(){
+  var n=0,done=0;
+  for(var k in solved){ done++; if(solved[k]) n++; }
+  document.getElementById("sNum").textContent=n;
+  var msg=document.getElementById("sMsg");
+  if(done<total) msg.textContent=(total-done)+"문제 남았습니다.";
+  else if(n===total) msg.textContent="완벽합니다. 7강으로 넘어가도 좋습니다.";
+  else if(n>=5) msg.textContent="잘하셨습니다. 틀린 문항의 해설만 다시 읽어 보세요.";
+  else msg.textContent="有와 在의 구분, 그리고 어순 다섯 칸을 한 번 더 보고 오세요.";
+}
+
+/* ---------- 진행률 ---------- */
+var bar=document.getElementById("bar"), pct=document.getElementById("pct");
+function onScroll(){
+  var hh=document.documentElement.scrollHeight-window.innerHeight;
+  var p=hh>0?Math.min(Math.round(window.scrollY/hh*100),100):0;
+  bar.style.width=p+"%"; pct.textContent=p+"%";
+}
+window.addEventListener("scroll",onScroll,{passive:true});
+window.addEventListener("resize",onScroll);
+onScroll();
+
+})();
+</script>
+</body>
+</html>
