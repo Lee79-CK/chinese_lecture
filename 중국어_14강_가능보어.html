@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>중국어 제14강 · 가능보어</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+KR:wght@600;700&family=Noto+Serif+SC:wght@600;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E9EBE4; --card:#F7F8F3; --ink:#15201D; --ink-2:#3D4B46;
+  --muted:#79857F; --jade:#1E6F62; --jade-soft:#DDE9E5;
+  --cinnabar:#C1402C; --line:#C9CFC7;
+  --kr:"Noto Sans KR","Malgun Gothic",sans-serif;
+  --kr-serif:"Noto Serif KR","Nanum Myeongjo",serif;
+  --zh:"Noto Serif SC","Songti SC",serif;
+  --zh-sans:"Noto Sans SC","PingFang SC",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--kr);line-height:1.75;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--jade);outline-offset:3px;border-radius:3px}
+
+.topbar{position:sticky;top:0;z-index:50;background:rgba(233,235,228,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:880px;margin:0 auto;padding:10px 22px;display:flex;align-items:center;gap:14px}
+.badge{font-family:var(--zh);font-weight:600;font-size:.85rem;color:var(--jade);letter-spacing:.08em;white-space:nowrap}
+.track{flex:1;height:3px;background:var(--line);border-radius:99px;overflow:hidden}
+.track i{display:block;height:100%;width:0;background:var(--jade);transition:width .25s ease}
+.pct{font-size:.72rem;color:var(--muted);font-variant-numeric:tabular-nums;min-width:34px;text-align:right}
+
+main{max-width:880px;margin:0 auto;padding:0 22px 90px}
+section{padding:56px 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:none}
+.eyebrow{display:flex;align-items:baseline;gap:12px;margin-bottom:6px}
+.eyebrow .num{font-family:var(--zh);font-size:.95rem;color:var(--cinnabar);font-weight:600}
+.eyebrow .lbl{font-size:.72rem;letter-spacing:.22em;color:var(--muted);text-transform:uppercase}
+h2{font-family:var(--kr-serif);font-weight:700;font-size:clamp(1.4rem,4vw,1.85rem);margin:0 0 14px;line-height:1.35;letter-spacing:-.01em}
+h3{font-family:var(--kr-serif);font-weight:600;font-size:1.05rem;margin:32px 0 10px}
+p{margin:0 0 14px;color:var(--ink-2)}
+.lead{font-size:1.03rem;color:var(--ink)}
+small{color:var(--muted)}
+.zh-i{font-family:var(--zh);font-weight:600}
+.py-i{font-family:var(--zh-sans);color:var(--jade)}
+
+/* ---------- hero ---------- */
+.hero{padding:56px 0 46px;text-align:center}
+.hero .kicker{font-size:.72rem;letter-spacing:.3em;color:var(--muted);margin-bottom:28px}
+.trio{display:inline-flex;flex-direction:column;gap:12px;text-align:left}
+.trow{display:flex;align-items:baseline;gap:18px}
+.trow .tk{font-size:.66rem;letter-spacing:.14em;color:var(--muted);width:48px;flex:none;text-align:right}
+.trow .tv{font-family:var(--zh);font-size:clamp(1.6rem,6.6vw,2.4rem);font-weight:900;line-height:1.3;letter-spacing:.02em}
+.trow .tv em{font-style:normal;color:var(--cinnabar)}
+.trow .tkr{font-size:.82rem;color:var(--muted)}
+.hero-thesis{margin:32px auto 0;max-width:545px;font-family:var(--kr-serif);font-size:1.02rem;color:var(--ink);line-height:1.85}
+.hero-thesis b{color:var(--cinnabar);font-weight:700}
+
+.tts-note{display:none;background:#F8E7E4;color:var(--cinnabar);border-radius:9px;padding:11px 15px;font-size:.83rem;margin:16px auto 0;max-width:560px;text-align:left}
+.tts-note.show{display:block}
+
+/* ---------- buttons ---------- */
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+.play{border:1px solid var(--line);background:#fff;color:var(--jade);width:34px;height:34px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;transition:.16s;flex:none;padding:0}
+.play:hover{background:var(--jade);color:#fff;border-color:var(--jade)}
+.play.on{background:var(--jade);color:#fff;border-color:var(--jade)}
+.play svg{width:13px;height:13px}
+.mini{border:1px solid var(--line);background:#fff;color:var(--ink-2);border-radius:7px;padding:6px 14px;font-size:.82rem;transition:.14s}
+.mini:hover{border-color:var(--jade);color:var(--jade)}
+.mini.act{background:var(--jade);border-color:var(--jade);color:#fff}
+
+/* ---------- 삽입 위젯 ---------- */
+.builder{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:20px}
+.brow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.brow .blbl{font-size:.66rem;letter-spacing:.16em;color:var(--muted);width:56px;flex:none}
+.pill{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 14px;font-family:var(--zh);font-size:.98rem;font-weight:600;color:var(--ink);transition:.14s}
+.pill:hover{border-color:var(--jade);color:var(--jade)}
+.pill.sel{background:var(--jade);border-color:var(--jade);color:#fff}
+.pill.kr{font-family:var(--kr);font-size:.84rem;font-weight:500}
+
+.bout{background:#fff;border:1px solid var(--line);border-radius:11px;padding:24px 18px;margin-top:14px;text-align:center;position:relative}
+.wordline{display:flex;justify-content:center;align-items:center;gap:2px;font-family:var(--zh);
+          font-weight:900;font-size:clamp(2rem,8.5vw,3rem);line-height:1.2}
+.wchar{color:var(--ink)}
+.wgap{display:inline-flex;align-items:center;justify-content:center;
+      min-width:0;width:0;overflow:hidden;transition:width .3s ease,margin .3s ease;
+      color:var(--cinnabar)}
+.wgap.open{width:1.05em;margin:0 .04em}
+.wgap.neg{color:var(--cinnabar)}
+.bout .opy{font-family:var(--zh-sans);color:var(--jade);font-size:.9rem;margin-top:8px}
+.bout .okr{font-size:.92rem;color:var(--ink-2);margin-top:4px;font-weight:500}
+.bout .oex{font-family:var(--zh);font-size:1.15rem;color:var(--ink);margin-top:14px;padding-top:12px;border-top:1px dotted var(--line)}
+.bout .oexkr{font-size:.83rem;color:var(--muted);margin-top:2px}
+.bout .play{position:absolute;right:14px;top:14px}
+.bnote{font-size:.84rem;color:var(--muted);margin-top:12px;text-align:center;min-height:2.6em;line-height:1.7}
+.bnote b{color:var(--cinnabar)}
+
+/* ---------- 비교 카드 ---------- */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.vs-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+.vs-card h4{margin:0 0 6px;font-family:var(--zh);font-size:1.5rem;font-weight:600}
+.vs-card .vpy{font-family:var(--zh-sans);color:var(--jade);font-size:.8rem;margin-bottom:10px}
+.vs-card ul{margin:0;padding-left:16px;font-size:.87rem;color:var(--ink-2)}
+.vs-card li{margin-bottom:6px}
+
+/* ---------- 뒤집기 카드 ---------- */
+.flips{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:20px}
+.flip{perspective:800px;background:none;border:none;padding:0;height:118px}
+.flip-in{position:relative;width:100%;height:100%;transform-style:preserve-3d;
+         transition:transform .5s cubic-bezier(.3,1,.4,1)}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+      border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;padding:10px}
+.face.front{background:var(--card)}
+.face.back{background:#fff;transform:rotateY(180deg);border-color:var(--jade)}
+.face .fhz{font-family:var(--zh);font-size:1.5rem;font-weight:600;line-height:1.25}
+.face .fpy{font-family:var(--zh-sans);font-size:.74rem;color:var(--jade);margin-top:3px}
+.face .fkr{font-size:.85rem;color:var(--ink);font-weight:500;text-align:center;line-height:1.45}
+.face .fnote{font-size:.7rem;color:var(--muted);margin-top:5px;text-align:center;line-height:1.4}
+.face .ftap{font-size:.66rem;color:var(--muted);margin-top:8px;letter-spacing:.1em}
+
+/* ---------- 표 ---------- */
+.ptable{width:100%;border-collapse:collapse;margin-top:16px;font-size:.9rem}
+.ptable th{text-align:left;font-size:.7rem;letter-spacing:.16em;color:var(--muted);font-weight:500;padding:0 10px 8px;border-bottom:1px solid var(--line)}
+.ptable td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle;color:var(--ink-2)}
+.ptable tr:hover td{background:var(--card)}
+.ptable .hz{font-family:var(--zh);font-size:1.1rem;font-weight:600;color:var(--ink)}
+.ptable .neg{font-family:var(--zh);font-size:1.1rem;font-weight:600;color:var(--cinnabar)}
+.ptable .py{font-family:var(--zh-sans);color:var(--jade);font-size:.78rem}
+
+/* ---------- warn / note ---------- */
+.warn{border-left:3px solid var(--cinnabar);padding:4px 0 4px 16px;margin:20px 0}
+.warn h4{margin:0 0 4px;font-size:.95rem;font-family:var(--kr-serif)}
+.warn p{margin:0;font-size:.9rem}
+.warn s{font-family:var(--zh);font-weight:600;font-size:1.08rem;text-decoration-thickness:2px}
+.tone-note{background:var(--jade-soft);border-radius:10px;padding:16px 18px;margin-top:20px;font-size:.92rem;color:var(--ink-2)}
+.tone-note b{color:var(--jade)}
+
+/* ---------- vocab ---------- */
+.vocab{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}
+.v{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px;transition:.16s}
+.v:hover{background:#fff;box-shadow:0 3px 14px rgba(21,32,29,.07)}
+.v-txt{flex:1;min-width:0}
+.v-hz{font-family:var(--zh);font-size:1.32rem;font-weight:600;line-height:1.35}
+.v-py{font-family:var(--zh-sans);font-size:.83rem;color:var(--jade)}
+.v-kr{font-size:.84rem;color:var(--muted);margin-top:2px}
+
+/* ---------- 대화 ---------- */
+.dlg{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:8px 6px;margin-top:18px}
+.line{display:flex;gap:12px;padding:12px 14px;border-radius:10px;align-items:flex-start;transition:.2s}
+.line.hl{background:#fff;box-shadow:0 2px 12px rgba(21,32,29,.07)}
+.who{font-family:var(--zh);font-weight:700;font-size:.85rem;width:22px;flex:none;padding-top:5px}
+.who.a{color:var(--cinnabar)}
+.who.b{color:var(--jade)}
+.ltxt{flex:1;min-width:0}
+.lhz{font-family:var(--zh);font-size:1.2rem;font-weight:600;line-height:1.55}
+.lpy{font-family:var(--zh-sans);font-size:.81rem;color:var(--jade)}
+.lkr{font-size:.84rem;color:var(--muted);margin-top:2px}
+.dlg-bar{display:flex;gap:8px;padding:10px 14px 6px;flex-wrap:wrap}
+
+/* ---------- quiz ---------- */
+.q{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 20px 18px;margin-bottom:14px;position:relative;overflow:hidden}
+.q-head{display:flex;gap:10px;align-items:baseline;margin-bottom:12px}
+.q-no{font-family:var(--zh);color:var(--cinnabar);font-size:.85rem;font-weight:600;flex:none}
+.q-ask{font-size:.98rem;color:var(--ink);font-weight:500}
+.q-ask .zh-q{font-family:var(--zh);font-size:1.28rem;font-weight:600;vertical-align:-2px}
+.opts{display:grid;gap:8px;grid-template-columns:repeat(2,1fr)}
+.opt{background:#fff;border:1px solid var(--line);border-radius:9px;padding:11px 14px;text-align:left;transition:.14s;color:var(--ink);font-size:.95rem}
+.opt .zh-o{font-family:var(--zh);font-size:1.08rem;font-weight:600}
+.opt:hover:not(:disabled){border-color:var(--jade);background:var(--jade-soft)}
+.opt:disabled{cursor:default;opacity:.55}
+.opt.right{border-color:var(--jade);background:var(--jade-soft);opacity:1;font-weight:500}
+.opt.wrong{border-color:var(--cinnabar);background:#F8E7E4;opacity:1}
+.fb{margin-top:12px;font-size:.87rem;padding:10px 13px;border-radius:8px;display:none}
+.fb.show{display:block}
+.fb.ok{background:var(--jade-soft);color:var(--jade)}
+.fb.no{background:#F8E7E4;color:var(--cinnabar)}
+
+.wo-slot{min-height:56px;border:1px dashed var(--line);border-radius:9px;background:#fff;display:flex;align-items:center;gap:8px;padding:8px 12px;flex-wrap:wrap;margin-bottom:10px}
+.wo-slot:empty::before{content:"아래에서 순서대로 눌러 보세요";color:var(--muted);font-size:.82rem}
+.tok{font-family:var(--zh);font-size:1.16rem;font-weight:600;background:var(--jade-soft);border:1px solid var(--jade);color:var(--jade);border-radius:7px;padding:5px 12px}
+.wo-pool{display:flex;gap:8px;flex-wrap:wrap}
+.wo-pool .tok{background:#fff;border-color:var(--line);color:var(--ink);cursor:pointer}
+.wo-pool .tok:hover{border-color:var(--jade);background:var(--jade-soft);color:var(--jade)}
+.wo-pool .tok.used{opacity:.25;pointer-events:none}
+.wo-actions{display:flex;gap:8px;margin-top:4px}
+
+.seal{position:absolute;right:16px;top:14px;width:46px;height:46px;border-radius:50%;border:2.5px solid var(--cinnabar);color:var(--cinnabar);font-family:var(--zh);font-weight:900;font-size:1.35rem;display:flex;align-items:center;justify-content:center;opacity:0;transform:rotate(-14deg) scale(1.7);transition:.32s cubic-bezier(.2,1.5,.4,1);pointer-events:none}
+.seal.on{opacity:.9;transform:rotate(-14deg) scale(1)}
+
+.score{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:18px}
+.score .n{font-family:var(--zh);font-size:2.4rem;font-weight:900;color:var(--jade);line-height:1}
+.score .n span{font-size:1.1rem;color:var(--muted);font-weight:600}
+
+.recap{background:var(--card);border-radius:14px;padding:22px 24px;border:1px solid var(--line)}
+.recap ul{margin:0;padding-left:18px}
+.recap li{margin-bottom:8px;color:var(--ink-2);font-size:.93rem}
+.next{margin-top:22px;padding:20px 24px;border-radius:14px;background:var(--jade);color:#fff}
+.next .l{font-size:.7rem;letter-spacing:.24em;opacity:.75}
+.next .t{font-family:var(--kr-serif);font-size:1.15rem;font-weight:700;margin:6px 0 4px}
+.next .d{font-size:.88rem;opacity:.88;margin:0}
+
+footer{text-align:center;padding:30px 0;color:var(--muted);font-size:.78rem;border-top:1px solid var(--line)}
+
+@media(max-width:600px){
+  main{padding:0 16px 70px}
+  section{padding:44px 0}
+  .vocab{grid-template-columns:1fr}
+  .opts{grid-template-columns:1fr}
+  .vs{grid-template-columns:1fr}
+  .flips{grid-template-columns:repeat(2,1fr)}
+  .brow .blbl{width:100%}
+  .ptable td,.ptable th{padding-left:6px;padding-right:6px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <span class="badge">第十四课 · 제14강</span>
+    <span class="track"><i id="bar"></i></span>
+    <span class="pct" id="pct">0%</span>
+  </div>
+</div>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="kicker">중급 · 가능보어</div>
+
+  <div class="trio">
+    <div class="trow"><span class="tk">12강</span><span class="tv">听懂了</span><span class="tkr">알아들었다</span></div>
+    <div class="trow"><span class="tk">오늘</span><span class="tv">听<em>得</em>懂</span><span class="tkr">알아들을 수 있다</span></div>
+    <div class="trow"><span class="tk">오늘</span><span class="tv">听<em>不</em>懂</span><span class="tkr">알아들을 수 없다</span></div>
+  </div>
+
+  <p class="hero-thesis">
+    새로 배울 구조가 아닙니다.<br>
+    이미 아는 보어 덩어리 <b>사이에 한 글자를 끼우면</b> 됩니다.<br>
+    得를 넣으면 가능, 不를 넣으면 불가능.
+  </p>
+
+  <div class="tts-note" id="ttsNote">
+    이 브라우저에 중국어 음성이 없어 소리가 재생되지 않습니다. Chrome이나 Edge에서 열거나
+    기기에 중국어(간체) 음성을 추가하면 들을 수 있습니다. 학습과 문제 풀이는 그대로 진행됩니다.
+  </div>
+</section>
+
+<!-- ============ 1. 삽입 위젯 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">一</span><span class="lbl">Inserting a Character</span></div>
+  <h2>사이를 벌려 끼우기</h2>
+  <p class="lead">
+    12강의 결과보어와 13강의 방향보어 모두에 적용됩니다.
+    동사와 보어를 벌리고 그 사이에 <span class="zh-i">得</span> 나 <span class="zh-i">不</span> 를 넣어 보세요.
+  </p>
+
+  <div class="builder">
+    <div class="brow"><span class="blbl">보어</span><span id="pairs"></span></div>
+    <div class="brow"><span class="blbl">형태</span><span id="modes"></span></div>
+    <div class="bout">
+      <button class="play" id="bPlay" aria-label="발음 듣기"></button>
+      <div class="wordline">
+        <span class="wchar" id="wV"></span><span class="wgap" id="wG"></span><span class="wchar" id="wC"></span>
+      </div>
+      <div class="opy" id="oPy"></div>
+      <div class="okr" id="oKr"></div>
+      <div class="oex" id="oEx"></div>
+      <div class="oexkr" id="oExKr"></div>
+    </div>
+    <div class="bnote" id="bNote"></div>
+  </div>
+
+  <div class="tone-note">
+    <b>여기의 得도 경성입니다.</b> 11강의 정도보어 得와 글자도 발음도 같지만 하는 일이 다릅니다.<br>
+    <span class="zh-i">说得很好</span> 는 <b>이미 한 말을 평가</b>하고,
+    <span class="zh-i">说得清楚</span> 는 <b>할 수 있는지</b>를 말합니다.
+    뒤에 형용사구가 오면 평가, 결과·방향보어가 오면 가능입니다.
+  </div>
+
+  <h3>자주 쓰는 짝</h3>
+  <table class="ptable">
+    <thead><tr><th style="width:100px">가능</th><th style="width:100px">불가능</th><th>뜻</th></tr></thead>
+    <tbody id="pairTable"></tbody>
+  </table>
+</section>
+
+<!-- ============ 2. 能과 비교 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">二</span><span class="lbl">Versus 能</span></div>
+  <h2>能과 무엇이 다른가</h2>
+  <p class="lead">
+    7강에서 배운 <span class="zh-i">能</span> 도 “할 수 있다”입니다.
+    겹치는 부분이 많지만, <b>부정할 때 갈라집니다.</b>
+  </p>
+
+  <div class="vs">
+    <div class="vs-card">
+      <h4>能 <span style="font-size:1rem;color:var(--muted)">néng</span></h4>
+      <div class="vpy">동사 <b>앞</b> · 조동사</div>
+      <ul>
+        <li>능력·조건·<b>허가</b>를 두루 다룹니다</li>
+        <li><span class="zh-i">这儿能抽烟吗？</span> 여기서 담배 피워도 되나요?</li>
+        <li>허가는 가능보어로 바꿀 수 없습니다</li>
+      </ul>
+    </div>
+    <div class="vs-card">
+      <h4>得 / 不 <span style="font-size:1rem;color:var(--muted)">de / bu</span></h4>
+      <div class="vpy">동사 <b>뒤</b> · 보어 사이</div>
+      <ul>
+        <li>조건이 갖춰져 <b>결과에 닿을 수 있는가</b></li>
+        <li><span class="zh-i">我听不懂。</span> 알아들을 수가 없어요</li>
+        <li>부정에서 압도적으로 자주 쓰입니다</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warn">
+    <h4>부정할 때는 가능보어를 씁니다</h4>
+    <p>
+      <s>我不能听懂。</s> 는 어색합니다. 중국어 화자는
+      <span class="zh-i">我听不懂。</span> 라고 말합니다.<br>
+      반대로 긍정에서는 <span class="zh-i">我能听懂</span> 와 <span class="zh-i">我听得懂</span> 둘 다 자연스럽고,
+      후자가 조금 더 구어적입니다.
+    </p>
+  </div>
+
+  <h3>의문과 목적어</h3>
+  <p>
+    의문은 <span class="zh-i">你听得懂吗？</span> 또는 정반의문
+    <span class="zh-i">你听得懂听不懂？</span> 로 만듭니다.<br>
+    목적어는 보어 뒤에 붙입니다 — <span class="zh-i">我听不懂中文。</span>
+    앞으로 빼도 됩니다 — <span class="zh-i">中文我听不懂。</span>
+  </p>
+</section>
+
+<!-- ============ 3. 得了 / 不了 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">三</span><span class="lbl">The 了 that reads liǎo</span></div>
+  <h2>V + 得了 / 不了</h2>
+  <p class="lead">
+    특별한 형태 하나가 더 있습니다. 여기서 <span class="zh-i">了</span> 는
+    <b class="py-i">le</b> 가 아니라 <b class="py-i">liǎo</b> 로 읽습니다.
+    “다 감당할 수 있는가”를 뜻합니다.
+  </p>
+
+  <table class="ptable">
+    <thead><tr><th style="width:110px">표현</th><th style="width:90px">병음</th><th>뜻과 예</th></tr></thead>
+    <tbody id="liaoTable"></tbody>
+  </table>
+
+  <div class="warn">
+    <h4>吃不完과 吃不了는 다릅니다</h4>
+    <p>
+      <span class="zh-i">吃不完</span> 은 “<b>양이 많아 다 못 먹는다</b>”,
+      <span class="zh-i">吃不了</span> 는 “<b>먹을 능력·상황이 안 된다</b>”에 가깝습니다.
+      실제 회화에서는 상당히 겹쳐 쓰이지만, 몸이 아파 못 먹는 상황이라면
+      <span class="zh-i">今天我吃不了。</span> 쪽이 맞습니다.
+    </p>
+  </div>
+</section>
+
+<!-- ============ 4. 관용 표현 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">四</span><span class="lbl">Set Phrases</span></div>
+  <h2>알고 보면 가능보어</h2>
+  <p class="lead">
+    이미 통째로 외운 표현들 중에도 가능보어가 숨어 있습니다.
+    카드를 눌러 뜻을 확인해 보세요.
+  </p>
+  <div class="flips" id="flips"></div>
+  <p style="margin-top:16px">
+    <small>1강에서 배운 <span class="zh-i">对不起</span> 도 사실 <span class="zh-i">对得起</span>(떳떳이 마주할 수 있다)의
+    부정형입니다. “당신을 똑바로 볼 낯이 없다”는 뜻이지요. 구조를 알고 나면 표현이 훨씬 또렷하게 남습니다.</small>
+  </p>
+</section>
+
+<!-- ============ 5. 어휘 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">五</span><span class="lbl">Vocabulary</span></div>
+  <h2>오늘의 단어</h2>
+  <div class="vocab" id="vocab"></div>
+</section>
+
+<!-- ============ 6. 회화 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">六</span><span class="lbl">Dialogue</span></div>
+  <h2>잘 안 들려요</h2>
+  <div class="dlg">
+    <div class="dlg-bar">
+      <button class="mini" id="playAll">전체 듣기</button>
+      <button class="mini" id="stopAll">멈추기</button>
+      <button class="mini" id="toggleKr">한국어 뜻 숨기기</button>
+    </div>
+    <div id="dialog"></div>
+  </div>
+</section>
+
+<!-- ============ 7. 연습 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">七</span><span class="lbl">Practice</span></div>
+  <h2>확인 문제</h2>
+  <p class="lead">답을 고르면 바로 채점되고 해설이 나옵니다.</p>
+
+  <div id="quiz"></div>
+
+  <div class="q" id="woBox">
+    <div class="seal" id="woSeal">对</div>
+    <div class="q-head">
+      <span class="q-no">七</span>
+      <span class="q-ask">“저는 이렇게 많이는 다 못 먹어요”가 되도록 순서대로 눌러 문장을 만드세요.</span>
+    </div>
+    <div class="wo-slot" id="woSlot"></div>
+    <div class="wo-pool" id="woPool"></div>
+    <div class="wo-actions">
+      <button class="mini" id="woReset">다시 놓기</button>
+      <button class="mini" id="woCheck">정답 확인</button>
+    </div>
+    <div class="fb" id="woFb"></div>
+  </div>
+
+  <div class="score" id="score">
+    <div class="n"><span id="sNum">0</span><span> / 7</span></div>
+    <p style="margin:8px 0 0;font-size:.88rem" id="sMsg">문제를 풀면 점수가 표시됩니다.</p>
+  </div>
+</section>
+
+<!-- ============ 8. 정리 ============ -->
+<section>
+  <div class="eyebrow"><span class="num">八</span><span class="lbl">Recap</span></div>
+  <h2>오늘 챙겨 갈 것</h2>
+  <div class="recap">
+    <ul>
+      <li>동사 + <span class="zh-i">得</span> + 보어 = 할 수 있다 / 동사 + <span class="zh-i">不</span> + 보어 = 할 수 없다.</li>
+      <li>결과보어와 방향보어 <b>둘 다</b>에 끼울 수 있습니다 — <span class="zh-i">听不懂 · 起不来</span>.</li>
+      <li>뒤에 형용사구가 오면 정도보어(11강), 결과·방향보어가 오면 가능보어입니다.</li>
+      <li><b>부정할 때는 가능보어</b>를 씁니다. <span class="zh-i">不能听懂</span> 은 어색합니다.</li>
+      <li>허가를 말할 때는 <span class="zh-i">能 · 可以</span> 만 쓸 수 있습니다.</li>
+      <li>목적어는 보어 뒤에 붙습니다 — <span class="zh-i">听不懂中文</span>.</li>
+      <li><span class="zh-i">得了 · 不了</span> 의 了는 <b class="py-i">liǎo</b> 로 읽습니다.</li>
+      <li><span class="zh-i">对不起 · 来不及 · 受不了</span> 도 모두 가능보어 구조입니다.</li>
+    </ul>
+  </div>
+
+  <div class="next">
+    <div class="l">NEXT · 제15강</div>
+    <div class="t">把 구문 — 대상을 앞으로 끌어내기</div>
+    <p class="d">
+      보어 넉 자리를 마쳤으니, 이제 어순 자체를 바꿉니다.
+      <span class="zh-i">我把那本书放在桌子上。</span> 처럼 목적어를 동사 앞으로 끌어내
+      “그것을 어떻게 처리했는지”를 말하는 구문입니다. 지금까지 배운 보어가 여기서 총동원됩니다.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>중국어 중급 · 제14강 가능보어</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- TTS ---------- */
+var zhVoice=null, checked=false;
+function pickVoice(){
+  if(!("speechSynthesis" in window)) return;
+  var vs=speechSynthesis.getVoices()||[];
+  zhVoice=vs.find(function(v){return /^zh[-_]?CN/i.test(v.lang)})
+       || vs.find(function(v){return /^zh/i.test(v.lang)}) || null;
+  if(!checked && vs.length){ checked=true;
+    if(!zhVoice) document.getElementById("ttsNote").classList.add("show"); }
+}
+if("speechSynthesis" in window){
+  pickVoice(); speechSynthesis.onvoiceschanged=pickVoice; setTimeout(pickVoice,900);
+}else{ document.getElementById("ttsNote").classList.add("show"); }
+function speak(text,onend){
+  if(!("speechSynthesis" in window)){ if(onend) onend(); return; }
+  try{
+    speechSynthesis.cancel();
+    var u=new SpeechSynthesisUtterance(text);
+    u.lang="zh-CN"; u.rate=.75;
+    if(zhVoice) u.voice=zhVoice;
+    if(onend) u.onend=onend;
+    speechSynthesis.speak(u);
+  }catch(e){ if(onend) onend(); }
+}
+var SPK='<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1.5 4.2 4.6H1.6a.6.6 0 0 0-.6.6v5.6c0 .3.3.6.6.6h2.6L8 14.5zM11.2 5a.6.6 0 0 0-.1.9 3 3 0 0 1 0 4.2.6.6 0 1 0 .8.9 4.2 4.2 0 0 0 0-6 .6.6 0 0 0-.7 0zM13.2 2.9a.6.6 0 0 0-.1.9 6 6 0 0 1 0 8.4.6.6 0 1 0 .8.9 7.2 7.2 0 0 0 0-10.2.6.6 0 0 0-.7 0z"/></svg>';
+function flash(el){ el.classList.add("on"); setTimeout(function(){el.classList.remove("on")},520); }
+
+/* ---------- 삽입 위젯 ---------- */
+var PAIRS=[
+  {v:"听",c:"懂",vpy:"tīng",cpy:"dǒng",kind:"결과",
+   res:{s:"我听懂了。",py:"Wǒ tīngdǒng le.",kr:"알아들었습니다."},
+   can:{s:"我听得懂。",py:"Wǒ tīng de dǒng.",kr:"알아들을 수 있습니다."},
+   no:{s:"我听不懂。",py:"Wǒ tīng bu dǒng.",kr:"알아들을 수 없습니다."}},
+  {v:"看",c:"见",vpy:"kàn",cpy:"jiàn",kind:"결과",
+   res:{s:"我看见了。",py:"Wǒ kànjiàn le.",kr:"봤습니다."},
+   can:{s:"我看得见。",py:"Wǒ kàn de jiàn.",kr:"보입니다."},
+   no:{s:"我看不见。",py:"Wǒ kàn bu jiàn.",kr:"안 보입니다."}},
+  {v:"吃",c:"完",vpy:"chī",cpy:"wán",kind:"결과",
+   res:{s:"我吃完了。",py:"Wǒ chīwán le.",kr:"다 먹었습니다."},
+   can:{s:"我吃得完。",py:"Wǒ chī de wán.",kr:"다 먹을 수 있습니다."},
+   no:{s:"我吃不完。",py:"Wǒ chī bu wán.",kr:"다 먹을 수 없습니다."}},
+  {v:"买",c:"到",vpy:"mǎi",cpy:"dào",kind:"결과",
+   res:{s:"我买到了。",py:"Wǒ mǎidào le.",kr:"샀습니다. (구했습니다)"},
+   can:{s:"我买得到。",py:"Wǒ mǎi de dào.",kr:"구할 수 있습니다."},
+   no:{s:"我买不到。",py:"Wǒ mǎi bu dào.",kr:"구할 수 없습니다."}},
+  {v:"起",c:"来",vpy:"qǐ",cpy:"lái",kind:"방향",
+   res:{s:"我起来了。",py:"Wǒ qǐlái le.",kr:"일어났습니다."},
+   can:{s:"我起得来。",py:"Wǒ qǐ de lái.",kr:"일어날 수 있습니다."},
+   no:{s:"我起不来。",py:"Wǒ qǐ bu lái.",kr:"일어날 수가 없습니다."}},
+  {v:"进",c:"去",vpy:"jìn",cpy:"qù",kind:"방향",
+   res:{s:"我进去了。",py:"Wǒ jìnqù le.",kr:"들어갔습니다."},
+   can:{s:"我进得去。",py:"Wǒ jìn de qù.",kr:"들어갈 수 있습니다."},
+   no:{s:"我进不去。",py:"Wǒ jìn bu qù.",kr:"들어갈 수 없습니다."}}
+];
+var MODES=[
+  {n:"그대로 (결과)",key:"res",gap:"",
+   note:'12·13강에서 배운 형태입니다. 두 글자가 <b>붙어</b> 하나의 덩어리입니다.'},
+  {n:"得 (가능)",key:"can",gap:"得",
+   note:'사이에 <b>得</b>를 끼우면 “그 결과에 닿을 수 있다”가 됩니다.'},
+  {n:"不 (불가능)",key:"no",gap:"不",
+   note:'사이에 <b>不</b>를 끼우면 “닿을 수 없다”가 됩니다. 실제 회화에서 가장 자주 쓰입니다.'}
+];
+var pi=0, mi=2, curWord="", curSent="";
+function pillRow(list,mount,onPick,start,label){
+  var box=document.getElementById(mount);
+  list.forEach(function(item,i){
+    var b=document.createElement("button");
+    b.className="pill"+(i===start?" sel":"")+(label==="n"?" kr":"");
+    b.type="button"; b.textContent=(label==="n")?item.n:(item.v+item.c);
+    b.addEventListener("click",function(){
+      box.querySelectorAll(".pill").forEach(function(x){x.classList.remove("sel")});
+      b.classList.add("sel"); onPick(i); render(); speak(curSent);
+    });
+    box.appendChild(b);
+  });
+}
+pillRow(PAIRS,"pairs",function(i){pi=i},0,"v");
+pillRow(MODES,"modes",function(i){mi=i},2,"n");
+
+function render(){
+  var p=PAIRS[pi], m=MODES[mi], d=p[m.key];
+  document.getElementById("wV").textContent=p.v;
+  document.getElementById("wC").textContent=p.c;
+  var g=document.getElementById("wG");
+  g.textContent=m.gap;
+  g.classList.toggle("open",!!m.gap);
+  curWord=p.v+m.gap+p.c;
+  curSent=d.s.replace("。","");
+  document.getElementById("oPy").textContent=
+    m.gap ? p.vpy+" "+(m.gap==="得"?"de":"bu")+" "+p.cpy : p.vpy+p.cpy;
+  document.getElementById("oKr").textContent=
+    (m.gap==="得"?"~할 수 있다":m.gap==="不"?"~할 수 없다":"("+p.kind+"보어) 그렇게 되었다");
+  document.getElementById("oEx").textContent=d.s;
+  document.getElementById("oExKr").textContent=d.py+" · "+d.kr;
+  document.getElementById("bNote").innerHTML=m.note;
+}
+var bPlay=document.getElementById("bPlay"); bPlay.innerHTML=SPK;
+bPlay.addEventListener("click",function(){speak(curSent);flash(bPlay)});
+render();
+
+/* ---------- 짝 표 ---------- */
+var PT=[
+  ["听得懂","听不懂","알아들을 수 있다 / 없다"],
+  ["看得见","看不见","보인다 / 안 보인다"],
+  ["买得到","买不到","구할 수 있다 / 없다"],
+  ["吃得完","吃不完","다 먹을 수 있다 / 없다"],
+  ["找得到","找不到","찾아낼 수 있다 / 없다"],
+  ["起得来","起不来","일어날 수 있다 / 없다"],
+  ["进得去","进不去","들어갈 수 있다 / 없다"],
+  ["记得住","记不住","외울 수 있다 / 없다"]
+];
+var pt=document.getElementById("pairTable");
+PT.forEach(function(r){
+  var tr=document.createElement("tr");
+  tr.innerHTML='<td class="hz">'+r[0]+'</td><td class="neg">'+r[1]+'</td><td>'+r[2]+'</td>';
+  tr.style.cursor="pointer";
+  tr.addEventListener("click",function(){speak(r[1])});
+  pt.appendChild(tr);
+});
+
+/* ---------- 了(liǎo) 표 ---------- */
+var LIAO=[
+  ["吃得了 / 吃不了","chī de liǎo / chī bu liǎo","(양·상황상) 먹을 수 있다 / 없다 — 今天我吃不了。","今天我吃不了"],
+  ["去得了 / 去不了","qù de liǎo / qù bu liǎo","갈 수 있다 / 없다 — 明天我去不了。","明天我去不了"],
+  ["受不了","shòu bu liǎo","견딜 수 없다 — 太热了，受不了！","太热了受不了"],
+  ["忘不了","wàng bu liǎo","잊을 수 없다 — 那件事我忘不了。","那件事我忘不了"]
+];
+var lt=document.getElementById("liaoTable");
+LIAO.forEach(function(r){
+  var tr=document.createElement("tr");
+  tr.innerHTML='<td class="hz" style="font-size:1rem">'+r[0]+'</td><td class="py">'+r[1]+'</td><td>'+r[2]+'</td>';
+  tr.style.cursor="pointer";
+  tr.addEventListener("click",function(){speak(r[3])});
+  lt.appendChild(tr);
+});
+
+/* ---------- 뒤집기 카드 ---------- */
+var IDIOM=[
+  {hz:"对不起",py:"duìbuqǐ",kr:"미안합니다",note:"떳떳이 마주할 수 없다"},
+  {hz:"来不及",py:"lái bu jí",kr:"제시간에 못 댄다",note:"미치지 못한다"},
+  {hz:"受不了",py:"shòu bu liǎo",kr:"견딜 수 없다",note:"감당이 안 된다"},
+  {hz:"看不起",py:"kàn bu qǐ",kr:"얕보다, 무시하다",note:"높이 볼 수 없다"},
+  {hz:"想不到",py:"xiǎng bu dào",kr:"뜻밖이다",note:"거기까지 생각이 닿지 못했다"},
+  {hz:"差不多",py:"chàbuduō",kr:"거의 비슷하다",note:"차이가 크지 않다"}
+];
+var flips=document.getElementById("flips");
+IDIOM.forEach(function(d,i){
+  var b=document.createElement("button");
+  b.className="flip"; b.type="button";
+  b.setAttribute("aria-label",d.hz+" 뜻 보기");
+  b.innerHTML='<span class="flip-in">'+
+    '<span class="face front"><span class="fhz">'+d.hz+'</span>'+
+      '<span class="fpy">'+d.py+'</span><span class="ftap">눌러서 뜻 보기</span></span>'+
+    '<span class="face back"><span class="fkr">'+d.kr+'</span>'+
+      '<span class="fnote">글자 그대로는<br>“'+d.note+'”</span></span></span>';
+  b.addEventListener("click",function(){
+    b.classList.toggle("on");
+    if(b.classList.contains("on")) speak(d.hz);
+  });
+  flips.appendChild(b);
+});
+
+/* ---------- 어휘 ---------- */
+var vBox=document.getElementById("vocab");
+[
+  ["听得懂","tīng de dǒng","알아들을 수 있다"],["听不懂","tīng bu dǒng","알아들을 수 없다"],
+  ["看不见","kàn bu jiàn","보이지 않는다"],["买不到","mǎi bu dào","구할 수 없다"],
+  ["记不住","jì bu zhù","외워지지 않는다"],["起不来","qǐ bu lái","일어날 수 없다"],
+  ["受不了","shòu bu liǎo","견딜 수 없다"],["来不及","lái bu jí","시간이 안 된다"],
+  ["想不到","xiǎng bu dào","뜻밖이다"],["差不多","chàbuduō","거의 비슷하다"],
+  ["声音","shēngyīn","소리"],["大点儿","dà diǎnr","좀 크게"],
+  ["再说一遍","zài shuō yí biàn","한 번 더 말하다"],["慢一点儿","màn yìdiǎnr","좀 천천히"]
+].forEach(function(v){
+  var e=document.createElement("div"); e.className="v";
+  e.innerHTML='<div class="v-txt"><div class="v-hz">'+v[0]+'</div><div class="v-py">'+v[1]+'</div><div class="v-kr">'+v[2]+'</div></div>';
+  var b=document.createElement("button");
+  b.className="play"; b.type="button"; b.innerHTML=SPK;
+  b.setAttribute("aria-label",v[0]+" 발음 듣기");
+  b.addEventListener("click",function(){speak(v[0]);flash(b)});
+  e.appendChild(b); vBox.appendChild(e);
+});
+
+/* ---------- 대화 ---------- */
+var DIALOG=[
+  ["A","对不起，我听不懂。请再说一遍。","Duìbuqǐ, wǒ tīng bu dǒng. Qǐng zài shuō yí biàn.","죄송해요, 못 알아들었어요. 한 번 더 말씀해 주세요."],
+  ["B","没关系。我说得太快了吧？","Méi guānxi. Wǒ shuō de tài kuài le ba?","괜찮아요. 제가 너무 빨리 말했죠?"],
+  ["A","是啊，慢一点儿我就听得懂。","Shì a, màn yìdiǎnr wǒ jiù tīng de dǒng.","네, 조금만 천천히 하시면 알아들을 수 있어요."],
+  ["B","那本书你买到了吗？","Nà běn shū nǐ mǎidào le ma?","그 책은 구하셨어요?"],
+  ["A","没有，到处都买不到。","Méiyǒu, dàochù dōu mǎi bu dào.","아니요, 어디서도 못 구하겠어요."],
+  ["B","我家里有一本，明天带来给你。","Wǒ jiā lǐ yǒu yì běn, míngtiān dài lái gěi nǐ.","우리 집에 한 권 있어요, 내일 가져다드릴게요."]
+];
+var dlgBox=document.getElementById("dialog");
+DIALOG.forEach(function(l,i){
+  var row=document.createElement("div");
+  row.className="line"; row.id="ln"+i;
+  row.innerHTML='<span class="who '+(l[0]==="A"?"a":"b")+'">'+l[0]+'</span>'+
+    '<div class="ltxt"><div class="lhz">'+l[1]+'</div><div class="lpy">'+l[2]+'</div><div class="lkr">'+l[3]+'</div></div>';
+  var b=document.createElement("button");
+  b.className="play"; b.type="button"; b.innerHTML=SPK;
+  b.setAttribute("aria-label",(i+1)+"번째 대사 듣기");
+  b.addEventListener("click",function(){
+    stopAll(); speak(l[1]); flash(b);
+    row.classList.add("hl"); setTimeout(function(){row.classList.remove("hl")},2200);
+  });
+  row.appendChild(b); dlgBox.appendChild(row);
+});
+var playing=false;
+function stopAll(){
+  playing=false;
+  if("speechSynthesis" in window){ try{speechSynthesis.cancel()}catch(e){} }
+  DIALOG.forEach(function(_,i){document.getElementById("ln"+i).classList.remove("hl")});
+}
+document.getElementById("stopAll").addEventListener("click",stopAll);
+document.getElementById("playAll").addEventListener("click",function(){
+  stopAll(); playing=true;
+  (function next(i){
+    if(!playing||i>=DIALOG.length){ stopAll(); return; }
+    DIALOG.forEach(function(_,j){document.getElementById("ln"+j).classList.remove("hl")});
+    var row=document.getElementById("ln"+i);
+    row.classList.add("hl"); row.scrollIntoView({block:"center",behavior:"smooth"});
+    speak(DIALOG[i][1],function(){setTimeout(function(){next(i+1)},350)});
+  })(0);
+});
+var krOn=true;
+document.getElementById("toggleKr").addEventListener("click",function(){
+  krOn=!krOn;
+  dlgBox.querySelectorAll(".lkr").forEach(function(e){e.style.display=krOn?"":"none"});
+  this.textContent=krOn?"한국어 뜻 숨기기":"한국어 뜻 보기";
+  this.classList.toggle("act",!krOn);
+});
+
+/* ---------- 퀴즈 ---------- */
+var QUIZ=[
+  {no:"一",ask:'“알아들을 수 없어요.” 중국어 화자가 가장 자주 쓰는 표현은?',
+   opts:["我不能听懂。","我听不懂。","我没听得懂。","我不听得懂。"],a:1,
+   why:"부정할 때는 가능보어를 씁니다. 不能听懂은 문법적으로 불가능하진 않지만 매우 어색합니다."},
+  {no:"二",ask:'<span class="zh-q">看得见</span> 의 구조는?',
+   opts:["동사 + 得 + 형용사","동사 + 得 + 결과보어","동사 + 결과보어 + 得","得 + 동사 + 보어"],a:1,
+   why:"동사 看과 결과보어 见 사이에 得를 끼운 형태입니다. 뒤에 형용사구가 오면 11강의 정도보어가 됩니다."},
+  {no:"三",ask:'“여기서 담배 피워도 되나요?” 알맞은 문장은?',
+   opts:["这儿抽得了烟吗？","这儿能抽烟吗？","这儿抽不了烟吗？","这儿抽得烟吗？"],a:1,
+   why:"허가를 물을 때는 能이나 可以만 쓸 수 있습니다. 가능보어는 허가를 나타내지 못합니다."},
+  {no:"四",ask:'<span class="zh-q">吃不了</span> 에서 <span class="zh-q">了</span> 는 어떻게 읽을까요?',
+   opts:["le","liǎo","liào","lā"],a:1,
+   why:"得了·不了의 了는 liǎo로 읽습니다. 완료의 le와 글자만 같습니다."},
+  {no:"五",ask:'<span class="zh-q">来不及</span> 는 무슨 뜻일까요?',
+   opts:["올 수 없다","시간이 안 된다, 늦었다","오기 싫다","자주 오지 않는다"],a:1,
+   why:"及는 “미치다, 닿다”입니다. 시간에 닿지 못한다는 뜻이라 “늦었다”가 됩니다."},
+  {no:"六",ask:'“저는 중국어를 알아들을 수 있어요.” 알맞은 문장은?',
+   opts:["我听得懂中文。","我中文听得懂吗。","我听中文得懂。","我得听懂中文。"],a:0,
+   why:"목적어는 보어 뒤에 붙입니다. 中文我听得懂。처럼 앞으로 빼도 됩니다."}
+];
+var solved={}, total=7, qBox=document.getElementById("quiz");
+QUIZ.forEach(function(q,qi){
+  var card=document.createElement("div"); card.className="q";
+  var opts=q.opts.map(function(o,k){
+    var zh=/[\u4e00-\u9fff]/.test(o);
+    return '<button class="opt" type="button" data-q="'+qi+'" data-o="'+k+'">'+
+      (zh?'<span class="zh-o">'+o+'</span>':o)+'</button>';
+  }).join("");
+  card.innerHTML='<div class="seal" id="seal'+qi+'">对</div>'+
+    '<div class="q-head"><span class="q-no">'+q.no+'</span><span class="q-ask">'+q.ask+'</span></div>'+
+    '<div class="opts">'+opts+'</div><div class="fb" id="fb'+qi+'"></div>';
+  qBox.appendChild(card);
+});
+qBox.addEventListener("click",function(e){
+  var btn=e.target.closest(".opt"); if(!btn||btn.disabled) return;
+  var qi=+btn.dataset.q, o=+btn.dataset.o, q=QUIZ[qi], card=btn.closest(".q");
+  card.querySelectorAll(".opt").forEach(function(b){b.disabled=true});
+  var ok=(o===q.a);
+  btn.classList.add(ok?"right":"wrong");
+  if(!ok) card.querySelectorAll(".opt")[q.a].classList.add("right");
+  var fb=document.getElementById("fb"+qi);
+  fb.className="fb show "+(ok?"ok":"no");
+  fb.innerHTML=(ok?"정답입니다. ":"아쉽네요. ")+q.why;
+  if(ok) document.getElementById("seal"+qi).classList.add("on");
+  solved[qi]=ok; updateScore();
+});
+
+/* ---------- 문장 배열 ---------- */
+var ANS=["我","吃","不","完","这么多"];
+var pool=["完","这么多","我","不","吃"], placed=[];
+var woSlot=document.getElementById("woSlot"), woPool=document.getElementById("woPool"),
+    woFb=document.getElementById("woFb"), woSeal=document.getElementById("woSeal");
+function renderWO(){
+  woSlot.innerHTML=placed.map(function(t){return '<span class="tok">'+t+'</span>'}).join("");
+  woPool.innerHTML=pool.map(function(t,i){
+    return '<button class="tok'+(placed.indexOf(t)>-1?" used":"")+'" type="button" data-i="'+i+'">'+t+'</button>';
+  }).join("");
+}
+renderWO();
+woPool.addEventListener("click",function(e){
+  var b=e.target.closest(".tok"); if(!b) return;
+  var t=pool[+b.dataset.i]; if(placed.indexOf(t)>-1) return;
+  placed.push(t); renderWO();
+});
+document.getElementById("woReset").addEventListener("click",function(){
+  placed=[]; renderWO(); woFb.className="fb"; woSeal.classList.remove("on");
+});
+document.getElementById("woCheck").addEventListener("click",function(){
+  if(placed.length<5){ woFb.className="fb show no"; woFb.textContent="다섯 조각을 모두 놓아 주세요."; return; }
+  var ok=placed.join("")===ANS.join("");
+  woFb.className="fb show "+(ok?"ok":"no");
+  woFb.innerHTML=ok
+    ? '정답입니다. <b>我吃不完这么多。 Wǒ chī bu wán zhème duō.</b> — 不는 동사와 보어 사이에 들어가고, 목적어는 보어 뒤입니다.'
+    : '不의 자리를 다시 보세요. 동사 앞이 아니라 동사와 보어 <b>사이</b>입니다.';
+  if(ok){ woSeal.classList.add("on"); speak("我吃不完这么多"); }
+  solved["wo"]=ok; updateScore();
+});
+
+/* ---------- 점수 ---------- */
+function updateScore(){
+  var n=0,done=0;
+  for(var k in solved){ done++; if(solved[k]) n++; }
+  document.getElementById("sNum").textContent=n;
+  var msg=document.getElementById("sMsg");
+  if(done<total) msg.textContent=(total-done)+"문제 남았습니다.";
+  else if(n===total) msg.textContent="완벽합니다. 15강으로 넘어가도 좋습니다.";
+  else if(n>=5) msg.textContent="잘하셨습니다. 틀린 문항의 해설만 다시 읽어 보세요.";
+  else msg.textContent="不의 자리와 能과의 차이를 한 번 더 보고 오세요.";
+}
+
+/* ---------- 진행률 ---------- */
+var bar=document.getElementById("bar"), pct=document.getElementById("pct");
+function onScroll(){
+  var hh=document.documentElement.scrollHeight-window.innerHeight;
+  var p=hh>0?Math.min(Math.round(window.scrollY/hh*100),100):0;
+  bar.style.width=p+"%"; pct.textContent=p+"%";
+}
+window.addEventListener("scroll",onScroll,{passive:true});
+window.addEventListener("resize",onScroll);
+onScroll();
+
+})();
+</script>
+</body>
+</html>
